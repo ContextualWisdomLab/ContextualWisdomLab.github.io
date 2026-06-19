@@ -332,12 +332,37 @@ h1 {
 .work-list p,
 .dikw-grid p,
 .evidence-grid p,
+.detail-list dd,
 .logo-story p,
 .logo-points dd,
+.reference-list,
 .site-footer p {
   color: var(--muted);
   font-size: 18px;
   word-break: keep-all;
+}
+
+.detail-list {
+  display: grid;
+  gap: 16px;
+  margin: 28px 0 0;
+  padding: 0;
+}
+
+.detail-list div {
+  padding-top: 16px;
+  border-top: 1px solid rgba(22, 38, 61, 0.14);
+}
+
+.detail-list dt {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.detail-list dd {
+  margin: 5px 0 0;
+  line-height: 1.58;
 }
 
 .problem {
@@ -430,21 +455,29 @@ h1 {
   line-height: 1.18;
 }
 
-.source-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
+.references {
+  background: var(--white);
 }
 
-.source-list a {
-  padding: 8px 11px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.64);
+.reference-list {
+  display: grid;
+  gap: 18px;
+  max-width: 980px;
+  margin: 42px 0 0;
+  padding-left: 24px;
+  line-height: 1.58;
+}
+
+.reference-list li {
+  padding-left: 8px;
+  overflow-wrap: anywhere;
+}
+
+.reference-list a {
   color: var(--teal);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 850;
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .logo-story {
@@ -641,8 +674,10 @@ h1 {
   .problem-strip p,
   .dikw-grid p,
   .evidence-grid p,
+  .detail-list dd,
   .logo-story p,
   .logo-points dd,
+  .reference-list,
   .work-list p {
     overflow-wrap: anywhere;
     word-break: break-word;
