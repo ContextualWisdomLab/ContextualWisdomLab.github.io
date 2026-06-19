@@ -16,6 +16,8 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/context-wisdom-lab-avatar.png">
     <link rel="icon" href="assets/context-wisdom-lab-avatar.png">
+    <!-- ⚡ Bolt: Preload custom font to reduce time to first paint -->
+    <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script src="i18n.js" defer></script>
   </head>
@@ -186,7 +188,8 @@
             PPTX의 흐름은 기업 자료, 맥락화, 판단 포인트, 실행 연결입니다. DIKW는 이 흐름을 자동 상승 위계로 보자는 말이 아니라, 자료가 판단 근거로 쓰일 준비가 되었는지 묻는 점검 질문입니다.
           </p>
         </div>
-        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true">
+        <!-- ⚡ Bolt: Lazy load off-screen image -->
+        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy">
         <div class="dikw-grid">
           <article>
             <span>Data</span>
@@ -263,7 +266,8 @@
 
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
-          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark">
+          <!-- ⚡ Bolt: Lazy load off-screen image -->
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy">
         </div>
         <div>
           <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
@@ -400,10 +404,12 @@
     </main>
 
     <footer class="site-footer">
+      <!-- ⚡ Bolt: Lazy load off-screen image -->
       <img
         id="footer-logo"
         src="assets/context-wisdom-lab-logo.svg"
         alt="맥락지혜 연구실 · Contextual Wisdom Lab"
+        loading="lazy"
       >
       <p>
         <span data-i18n="footer.founded">Founded by</span>
