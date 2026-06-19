@@ -32,6 +32,9 @@ body {
   color: var(--ink);
   font-family: "Pretendard CWL", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
   line-height: 1.65;
+  line-break: keep-all;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 a {
@@ -251,7 +254,7 @@ h1 {
   content: "";
   position: absolute;
   top: 21px;
-  left: -18px;
+  left: -10px;
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -275,7 +278,7 @@ h1 {
   margin-top: 4px;
   font-size: clamp(16px, 1.6vw, 21px);
   line-height: 1.35;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   word-break: keep-all;
 }
 
@@ -707,8 +710,8 @@ h1 {
   .logo-points dd,
   .reference-list,
   .work-list p {
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: normal;
+    word-break: keep-all;
   }
 
   .thesis {
