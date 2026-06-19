@@ -1,11 +1,14 @@
 const messages = {
   ko: {
-    metaTitle: "ContextWisdomLab | 맥락과 지혜 연구실",
+    metaTitle: "Contextual Wisdom Lab | 맥락과 지혜 연구실",
     metaDescription: "흩어진 기업 자료를 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템.",
+    logoSrc: "assets/context-wisdom-lab-logo.svg",
+    logoAlt: "Contextual Wisdom Lab · 맥락과 지혜 연구실",
     "nav.principles": "원칙",
     "nav.dikw": "DIKW",
     "nav.logo": "로고",
     "nav.work": "작업",
+    "hero.labName": "맥락과 지혜 연구실",
     "hero.thesis": "흩어진 기업 자료를 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
     "hero.primaryCta": "GitHub 보기",
     "hero.secondaryCta": "DIKW 보기",
@@ -53,12 +56,15 @@ const messages = {
     "footer.line": "Context into judgment. Judgment into action."
   },
   en: {
-    metaTitle: "ContextWisdomLab | Context into judgment",
+    metaTitle: "Contextual Wisdom Lab",
     metaDescription: "AI decision support systems that turn scattered enterprise material into judgment-ready structure.",
+    logoSrc: "assets/context-wisdom-lab-logo-en.svg",
+    logoAlt: "Contextual Wisdom Lab",
     "nav.principles": "Principles",
     "nav.dikw": "DIKW",
     "nav.logo": "Logo",
     "nav.work": "Work",
+    "hero.labName": "Contextual Wisdom Lab",
     "hero.thesis": "We build AI decision support systems that turn scattered enterprise material into judgment-ready structure.",
     "hero.primaryCta": "Explore GitHub",
     "hero.secondaryCta": "Read DIKW",
@@ -120,6 +126,11 @@ function setLanguage(lang) {
   document.title = dict.metaTitle;
   document.querySelector('meta[name="description"]')?.setAttribute("content", dict.metaDescription);
   document.querySelector('meta[property="og:description"]')?.setAttribute("content", dict.metaDescription);
+  const footerLogo = document.querySelector("#footer-logo");
+  if (footerLogo) {
+    footerLogo.src = dict.logoSrc;
+    footerLogo.alt = dict.logoAlt;
+  }
   document.querySelectorAll("[data-i18n]").forEach((node) => {
     node.textContent = dict[node.dataset.i18n] || node.textContent;
   });

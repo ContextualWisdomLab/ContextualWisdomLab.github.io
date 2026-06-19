@@ -1,6 +1,6 @@
-# ContextWisdomLab.github.io
+# Contextual Wisdom Lab Homepage
 
-Static homepage for [ContextWisdomLab](https://github.com/ContextWisdomLab).
+Static homepage for [Contextual Wisdom Lab](https://github.com/ContextWisdomLab).
 
 Local preview:
 

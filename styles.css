@@ -129,7 +129,7 @@ h1 {
   letter-spacing: 0;
 }
 
-.korean-name {
+.lab-name {
   margin-bottom: 30px;
   color: var(--teal);
   font-size: clamp(24px, 3vw, 38px);
