@@ -17,6 +17,7 @@
     <meta property="og:image" content="assets/context-wisdom-lab-avatar.png">
     <link rel="icon" href="assets/context-wisdom-lab-avatar.png">
     <link rel="stylesheet" href="styles.css">
+    <script src="i18n.js" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -25,10 +26,16 @@
         <span>ContextWisdomLab</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#principles">Principles</a>
-        <a href="#work">Work</a>
+        <a href="#principles" data-i18n="nav.principles">원칙</a>
+        <a href="#dikw" data-i18n="nav.dikw">DIKW</a>
+        <a href="#logo" data-i18n="nav.logo">로고</a>
+        <a href="#work" data-i18n="nav.work">작업</a>
         <a href="https://github.com/ContextWisdomLab">GitHub</a>
       </nav>
+      <div class="language-switch" aria-label="Language">
+        <button type="button" data-lang="ko" aria-pressed="true">KO</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
     </header>
 
     <main id="top">
@@ -36,84 +43,141 @@
         <div class="hero-copy">
           <h1>ContextWisdomLab</h1>
           <p class="korean-name">맥락과 지혜 연구실</p>
-          <p class="thesis">
-            흩어진 기업 자료를 판단 가능한 구조로 바꾸는<span class="mobile-break"><br></span>
-            AI 의사결정 지원 시스템을 연구하고 만듭니다.
+          <p class="thesis" data-i18n="hero.thesis">
+            흩어진 기업 자료를 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.
           </p>
           <div class="hero-actions" aria-label="Homepage actions">
-            <a class="button primary" href="https://github.com/ContextWisdomLab">Explore GitHub</a>
-            <a class="button secondary" href="#principles">Read Principles</a>
+            <a class="button primary" href="https://github.com/ContextWisdomLab" data-i18n="hero.primaryCta">GitHub 보기</a>
+            <a class="button secondary" href="#dikw" data-i18n="hero.secondaryCta">DIKW 보기</a>
           </div>
         </div>
 
         <div class="ladder" aria-label="Data to wisdom ladder">
           <div class="ladder-row">
             <span>Data</span>
-            <strong>문서 · 메일 · 로그 · VOC · 일정</strong>
+            <strong data-i18n="ladder.data">문서 · 메일 · 로그 · VOC · 일정</strong>
           </div>
           <div class="ladder-row">
             <span>Information</span>
-            <strong>필터링되고 맥락화된 사실</strong>
+            <strong data-i18n="ladder.information">필터링되고 맥락화된 사실</strong>
           </div>
           <div class="ladder-row">
             <span>Knowledge</span>
-            <strong>관계와 패턴으로 설명 가능한 구조</strong>
+            <strong data-i18n="ladder.knowledge">관계와 패턴으로 설명 가능한 구조</strong>
           </div>
           <div class="ladder-row">
             <span>Wisdom</span>
-            <strong>무엇을 선택하고 실행할 것인가</strong>
+            <strong data-i18n="ladder.wisdom">무엇을 선택하고 실행할 것인가</strong>
           </div>
         </div>
       </section>
 
       <section id="principles" class="section principles">
         <div class="section-heading">
-          <h2>종합은 요약이 아닙니다</h2>
-          <p>요약은 길이를 줄이고, 종합은 판단 가능한 구조를 만듭니다.</p>
+          <h2 data-i18n="principles.title">종합은 요약이 아닙니다</h2>
+          <p data-i18n="principles.lead">요약은 길이를 줄이고, 종합은 판단 가능한 구조를 만듭니다.</p>
         </div>
         <div class="principle-grid">
           <article>
-            <h3>Cognitive load is a product metric</h3>
-            <p>좋은 AI 제품은 더 많이 말하는 도구가 아니라 사람이 덜 소모되게 하는 시스템입니다.</p>
+            <h3 data-i18n="principles.oneTitle">Cognitive load is a product metric</h3>
+            <p data-i18n="principles.oneBody">좋은 AI 제품은 더 많이 말하는 도구가 아니라 사람이 덜 소모되게 하는 시스템입니다.</p>
           </article>
           <article>
-            <h3>Context precedes wisdom</h3>
-            <p>데이터는 정보로, 정보는 지식으로, 지식은 실행 가능한 지혜로 올라가야 합니다.</p>
+            <h3 data-i18n="principles.twoTitle">Context precedes wisdom</h3>
+            <p data-i18n="principles.twoBody">데이터는 정보로, 정보는 지식으로, 지식은 실행 가능한 지혜로 올라가야 합니다.</p>
           </article>
           <article>
-            <h3>Operations are part of the product</h3>
-            <p>기업 AI는 권한, 감사, 비용, 보안 위에서 실제로 굴러가야 합니다.</p>
+            <h3 data-i18n="principles.threeTitle">Operations are part of the product</h3>
+            <p data-i18n="principles.threeBody">기업 AI는 권한, 감사, 비용, 보안 위에서 실제로 굴러가야 합니다.</p>
           </article>
+        </div>
+      </section>
+
+      <section id="dikw" class="section dikw">
+        <div class="section-heading">
+          <h2 data-i18n="dikw.title">DIKW 위계는 맥락과 지혜를 잇는 언어입니다</h2>
+          <p data-i18n="dikw.lead">
+            맥락은 데이터를 정보와 지식으로 올리는 조건이고, 지혜는 그 조건 위에서 선택하고 실행하는 능력입니다.
+          </p>
+        </div>
+        <div class="dikw-grid">
+          <article>
+            <span>Data</span>
+            <h3 data-i18n="dikw.dataTitle">아직 해석되지 않은 흔적</h3>
+            <p data-i18n="dikw.dataBody">문서, 메일, 로그, VOC, 일정처럼 각각 흩어진 원자료입니다.</p>
+          </article>
+          <article>
+            <span>Information</span>
+            <h3 data-i18n="dikw.infoTitle">맥락이 붙은 사실</h3>
+            <p data-i18n="dikw.infoBody">누가, 언제, 어떤 기준으로 남긴 것인지 알 수 있을 때 판단 재료가 됩니다.</p>
+          </article>
+          <article>
+            <span>Knowledge</span>
+            <h3 data-i18n="dikw.knowledgeTitle">관계로 설명되는 구조</h3>
+            <p data-i18n="dikw.knowledgeBody">사실 사이의 원인, 패턴, 예외, 리스크가 연결될 때 이해 가능한 구조가 됩니다.</p>
+          </article>
+          <article>
+            <span>Wisdom</span>
+            <h3 data-i18n="dikw.wisdomTitle">선택과 실행의 기준</h3>
+            <p data-i18n="dikw.wisdomBody">충분히 연결된 맥락 위에서 무엇을 선택하고 실행할지 정하는 단계입니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="logo" class="section logo-story">
+        <div class="logo-mark">
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="ContextWisdomLab square mark">
+        </div>
+        <div>
+          <h2 data-i18n="logo.title">로고는 맥락의 상승을 그립니다</h2>
+          <p data-i18n="logo.lead">
+            겹친 블록은 흩어진 자료를, 상승하는 곡선은 DIKW 위계를 따라 판단 가능성이 높아지는 흐름을 뜻합니다.
+            마지막 금색 점은 사람이 선택하고 실행할 수 있는 순간을 가리킵니다.
+          </p>
+          <dl class="logo-points">
+            <div>
+              <dt data-i18n="logo.layerTitle">Layered context</dt>
+              <dd data-i18n="logo.layerBody">문서, 메일, 로그, VOC처럼 분산된 단서가 하나의 구조로 겹쳐집니다.</dd>
+            </div>
+            <div>
+              <dt data-i18n="logo.pathTitle">Rising path</dt>
+              <dd data-i18n="logo.pathBody">데이터는 맥락을 얻어 정보와 지식이 되고, 지혜는 그 위에서 선택을 가능하게 합니다.</dd>
+            </div>
+            <div>
+              <dt data-i18n="logo.colorTitle">Color system</dt>
+              <dd data-i18n="logo.colorBody">짙은 남색은 판단의 기준, 틸은 맥락화, 금색은 선택과 실행을 나타냅니다.</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
       <section id="work" class="section work">
         <div>
-          <h2>오늘의 초점</h2>
-          <p>
+          <h2 data-i18n="work.title">오늘의 초점</h2>
+          <p data-i18n="work.lead">
             LLM 시스템이 분산된 기업 자료를 어떻게 낮은 인지 부하의 의사결정으로 바꿀 수 있는지 탐구합니다.
           </p>
         </div>
         <ul class="work-list">
           <li>
             <span>01</span>
-            <strong>Context systems</strong>
-            <p>관계, 출처, 기준, 리스크를 함께 보존하는 지식 구조.</p>
+            <strong data-i18n="work.oneTitle">Context systems</strong>
+            <p data-i18n="work.oneBody">관계, 출처, 기준, 리스크를 함께 보존하는 지식 구조.</p>
           </li>
           <li>
             <span>02</span>
-            <strong>Decision interfaces</strong>
-            <p>오늘 결정할 것과 확인할 가정을 드러내는 화면.</p>
+            <strong data-i18n="work.twoTitle">Decision interfaces</strong>
+            <p data-i18n="work.twoBody">오늘 결정할 것과 확인할 가정을 드러내는 화면.</p>
           </li>
           <li>
             <span>03</span>
-            <strong>Enterprise AI rails</strong>
-            <p>인증, 권한, 보안, 감사, 사용량 책임이 작동하는 운영 기반.</p>
+            <strong data-i18n="work.threeTitle">Enterprise AI rails</strong>
+            <p data-i18n="work.threeBody">인증, 권한, 보안, 감사, 사용량 책임이 작동하는 운영 기반.</p>
           </li>
           <li>
             <span>04</span>
-            <strong>Agentic workflows</strong>
-            <p>반복 탐색은 줄이고 근거 확인과 사람의 판단은 남기는 흐름.</p>
+            <strong data-i18n="work.fourTitle">Agentic workflows</strong>
+            <p data-i18n="work.fourBody">반복 탐색은 줄이고 근거 확인과 사람의 판단은 남기는 흐름.</p>
           </li>
         </ul>
       </section>
@@ -122,8 +186,9 @@
     <footer class="site-footer">
       <img src="assets/context-wisdom-lab-logo.svg" alt="ContextWisdomLab · 맥락과 지혜 연구실">
       <p>
-        Founded by <a href="https://github.com/seonghobae">Seongho Bae</a>.
-        Context into judgment. Judgment into action.
+        <span data-i18n="footer.founded">Founded by</span>
+        <a href="https://github.com/seonghobae">Seongho Bae</a>.
+        <span data-i18n="footer.line">Context into judgment. Judgment into action.</span>
       </p>
     </footer>
   </body>
