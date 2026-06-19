@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contextual Wisdom Lab | 맥락과 지혜 연구실</title>
+    <title>맥락지혜 연구실 | Contextual Wisdom Lab</title>
     <meta
       name="description"
-      content="Contextual Wisdom Lab builds AI decision support systems that turn scattered enterprise material into context, judgment, and action."
+      content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다."
     >
     <meta property="og:title" content="Contextual Wisdom Lab">
     <meta
       property="og:description"
-      content="흩어진 기업 자료를 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템."
+      content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 연구 기반 프로젝트입니다."
     >
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/context-wisdom-lab-avatar.png">
@@ -25,10 +25,11 @@
         <img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44">
         <span>Contextual Wisdom Lab</span>
       </a>
-      <nav aria-label="Primary navigation">
-        <a href="#principles" data-i18n="nav.principles">원칙</a>
-        <a href="#dikw" data-i18n="nav.dikw">DIKW</a>
-        <a href="#logo" data-i18n="nav.logo">로고</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#principles" data-i18n="nav.intro">소개</a>
+        <a href="#problem" data-i18n="nav.problem">문제의식</a>
+        <a href="#dikw" data-i18n="nav.model">연구모형</a>
+        <a href="#evidence" data-i18n="nav.evidence">근거</a>
         <a href="#work" data-i18n="nav.work">작업</a>
         <a href="https://github.com/ContextualWisdomLab">GitHub</a>
       </nav>
@@ -41,10 +42,10 @@
     <main id="top">
       <section class="hero">
         <div class="hero-copy">
-          <h1>Contextual Wisdom Lab</h1>
-          <p class="lab-name" data-i18n="hero.labName">맥락과 지혜 연구실</p>
+          <h1 data-i18n="hero.title">맥락지혜 연구실</h1>
+          <p class="lab-name" data-i18n="hero.labName">Contextual Wisdom Lab</p>
           <p class="thesis" data-i18n="hero.thesis">
-            구슬이 서 말이어도 꿰어야 보배입니다. 흩어진 기업 자료를 판단 가능한 구조로 꿰는 AI 의사결정 지원 시스템을 연구하고 만듭니다.
+            구슬이 서 말이어도 꿰어야 보배이듯, 문서, 메일, 로그, 회의록을 맥락 안에서 엮어 사람이 무엇을 결정하고 무엇을 실행할지 보이게 하는 AI 의사결정 지원 시스템을 연구하고 만듭니다.
           </p>
           <div class="hero-actions" aria-label="Homepage actions">
             <a class="button primary" href="https://github.com/ContextualWisdomLab" data-i18n="hero.primaryCta">GitHub 보기</a>
@@ -52,75 +53,142 @@
           </div>
         </div>
 
-        <div class="ladder" aria-label="Data to wisdom ladder">
-          <div class="ladder-row">
-            <span>Data</span>
-            <strong data-i18n="ladder.data">문서 · 메일 · 로그 · VOC · 일정</strong>
-          </div>
-          <div class="ladder-row">
-            <span>Information</span>
-            <strong data-i18n="ladder.information">필터링되고 맥락화된 사실</strong>
-          </div>
-          <div class="ladder-row">
-            <span>Knowledge</span>
-            <strong data-i18n="ladder.knowledge">관계와 패턴으로 설명 가능한 구조</strong>
-          </div>
-          <div class="ladder-row">
-            <span>Wisdom</span>
-            <strong data-i18n="ladder.wisdom">무엇을 선택하고 실행할 것인가</strong>
+        <div class="hero-visual">
+          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true">
+          <div class="ladder" aria-label="Data to wisdom ladder">
+            <div class="ladder-row">
+              <span>Data</span>
+              <strong data-i18n="ladder.data">기록된 흔적 · 문서 · 메일 · 로그</strong>
+            </div>
+            <div class="ladder-row">
+              <span>Information</span>
+              <strong data-i18n="ladder.information">질문과 기준 안에서 해석된 자료</strong>
+            </div>
+            <div class="ladder-row">
+              <span>Knowledge</span>
+              <strong data-i18n="ladder.knowledge">관계, 원인, 제약으로 설명되는 구조</strong>
+            </div>
+            <div class="ladder-row">
+              <span>Wisdom</span>
+              <strong data-i18n="ladder.wisdom">판단과 실행으로 건너가기</strong>
+            </div>
           </div>
         </div>
       </section>
 
+      <nav class="intro-lnb" aria-label="Introduction navigation">
+        <a href="#principles" data-i18n="nav.contextualWisdom">이름 뜻</a>
+        <a href="#problem" data-i18n="nav.problem">문제의식</a>
+        <a href="#dikw" data-i18n="nav.dikw">DIKW</a>
+        <a href="#evidence" data-i18n="nav.evidence">근거</a>
+        <a href="#logo" data-i18n="nav.logo">로고</a>
+      </nav>
+
       <section id="principles" class="section principles">
         <div class="section-heading">
-          <h2 data-i18n="principles.title">종합은 요약이 아닙니다</h2>
-          <p data-i18n="principles.lead">요약은 길이를 줄이고, 종합은 판단 가능한 구조를 만듭니다.</p>
+          <h2 data-i18n="principles.title">맥락지혜는 맥락 안에서 판단을 세우는 방향입니다</h2>
+          <p data-i18n="principles.lead">Contextual Wisdom은 많이 아는 상태가 아니라, 구체적인 맥락 안에서 판단과 실행으로 건너가는 과정을 뜻합니다. 메일, 문서, 로그, 일정 사이의 흩어진 맥락을 묶어 오늘 결정할 것과 다음 행동을 보이게 합니다.</p>
         </div>
         <div class="principle-grid">
           <article>
-            <h3 data-i18n="principles.oneTitle">Cognitive load is a product metric</h3>
-            <p data-i18n="principles.oneBody">좋은 AI 제품은 더 많이 말하는 도구가 아니라 사람이 덜 소모되게 하는 시스템입니다.</p>
+            <h3 data-i18n="principles.oneTitle">앞뒤 사정 보기</h3>
+            <p data-i18n="principles.oneBody">같은 말과 기록도 상황이 바뀌면 뜻이 달라집니다. 목적, 제약, 이해관계, 시간 압박을 함께 봅니다.</p>
           </article>
           <article>
-            <h3 data-i18n="principles.twoTitle">Context precedes wisdom</h3>
-            <p data-i18n="principles.twoBody">데이터는 정보로, 정보는 지식으로, 지식은 실행 가능한 지혜로 올라가야 합니다.</p>
+            <h3 data-i18n="principles.twoTitle">종합은 요약이 아닙니다</h3>
+            <p data-i18n="principles.twoBody">길이를 줄이는 데서 멈추지 않습니다. 증거, 맥락, 리스크, 선택지를 엮어 사람이 판단할 수 있는 구조를 만듭니다.</p>
           </article>
           <article>
-            <h3 data-i18n="principles.threeTitle">Operations are part of the product</h3>
-            <p data-i18n="principles.threeBody">기업 AI는 권한, 감사, 비용, 보안 위에서 실제로 굴러가야 합니다.</p>
+            <h3 data-i18n="principles.threeTitle">실행으로 이어가기</h3>
+            <p data-i18n="principles.threeBody">좋은 구조는 읽고 끝나지 않습니다. 결정할 것, 확인할 가정, 다음 행동, 위임과 기록으로 이어져야 합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="problem" class="section problem">
+        <div class="section-heading">
+          <h2 data-i18n="problem.title">시작점은 인지 부하입니다</h2>
+          <p data-i18n="problem.lead">정보가 부족해서가 아니라, 판단해야 할 맥락이 흩어져 있어서 어렵습니다. 사람이 버거워지는 순간은 데이터가 많을 때가 아니라 맥락을 다시 조립해야 할 때입니다.</p>
+        </div>
+        <div class="problem-strip">
+          <article>
+            <h3 data-i18n="problem.oneTitle">흩어진 자료</h3>
+            <p data-i18n="problem.oneBody">메일, 문서, 로그, VOC, 회의록, 일정이 각자의 저장소에 남습니다.</p>
+          </article>
+          <article>
+            <h3 data-i18n="problem.twoTitle">사라지는 기준</h3>
+            <p data-i18n="problem.twoBody">누가 무엇을 기준으로 판단했는지 시간이 지나면 흐려집니다.</p>
+          </article>
+          <article>
+            <h3 data-i18n="problem.threeTitle">필요한 구조</h3>
+            <p data-i18n="problem.threeBody">오늘 결정할 것, 확인할 가정, 다음 행동이 보이는 구조가 필요합니다.</p>
           </article>
         </div>
       </section>
 
       <section id="dikw" class="section dikw">
         <div class="section-heading">
-          <h2 data-i18n="dikw.title">DIKW 위계는 맥락과 지혜를 잇는 언어입니다</h2>
+          <h2 data-i18n="dikw.title">DIKW는 판단 흐름을 점검하는 질문입니다</h2>
           <p data-i18n="dikw.lead">
-            맥락은 데이터를 정보와 지식으로 올리는 조건이고, 지혜는 그 조건 위에서 선택하고 실행하는 능력입니다.
+            PPTX의 흐름은 기업 자료, 맥락화, 판단 포인트, 실행 연결입니다. DIKW는 이 흐름을 자동 상승 위계로 보자는 말이 아니라, 자료가 판단 근거로 쓰일 준비가 되었는지 묻는 점검 질문입니다.
           </p>
         </div>
+        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true">
         <div class="dikw-grid">
           <article>
             <span>Data</span>
-            <h3 data-i18n="dikw.dataTitle">아직 해석되지 않은 흔적</h3>
-            <p data-i18n="dikw.dataBody">문서, 메일, 로그, VOC, 일정처럼 각각 흩어진 원자료입니다.</p>
+            <h3 data-i18n="dikw.dataTitle">기업 자료</h3>
+            <p data-i18n="dikw.dataBody">문서, 메일, 로그, VOC, 일정은 아직 증거로 해석되기 전의 기록입니다.</p>
           </article>
           <article>
             <span>Information</span>
-            <h3 data-i18n="dikw.infoTitle">맥락이 붙은 사실</h3>
-            <p data-i18n="dikw.infoBody">누가, 언제, 어떤 기준으로 남긴 것인지 알 수 있을 때 판단 재료가 됩니다.</p>
+            <h3 data-i18n="dikw.infoTitle">맥락화</h3>
+            <p data-i18n="dikw.infoBody">누가, 언제, 어디서, 어떤 목적과 기준으로 남긴 것인지 알 때 정보가 됩니다.</p>
           </article>
           <article>
             <span>Knowledge</span>
-            <h3 data-i18n="dikw.knowledgeTitle">관계로 설명되는 구조</h3>
-            <p data-i18n="dikw.knowledgeBody">사실 사이의 원인, 패턴, 예외, 리스크가 연결될 때 이해 가능한 구조가 됩니다.</p>
+            <h3 data-i18n="dikw.knowledgeTitle">판단 포인트</h3>
+            <p data-i18n="dikw.knowledgeBody">원인, 패턴, 예외, 제약, 절차가 연결될 때 한 사례를 넘어 쓸 수 있는 구조가 됩니다.</p>
           </article>
           <article>
             <span>Wisdom</span>
-            <h3 data-i18n="dikw.wisdomTitle">선택과 실행의 기준</h3>
-            <p data-i18n="dikw.wisdomBody">충분히 연결된 맥락 위에서 무엇을 선택하고 실행할지 정하는 단계입니다.</p>
+            <h3 data-i18n="dikw.wisdomTitle">실행 연결</h3>
+            <p data-i18n="dikw.wisdomBody">목적과 제약 안에서 가치, 트레이드오프, 반례, 실패 가능성을 드러내고 무엇을 할지 선택한 뒤 다음 행동으로 연결합니다.</p>
           </article>
+        </div>
+      </section>
+
+      <section id="evidence" class="section evidence">
+        <div class="section-heading">
+          <h2 data-i18n="evidence.title">논문 리뷰에서 남긴 경계</h2>
+          <p data-i18n="evidence.lead">홈페이지 문장은 연구 근거가 허용하는 만큼만 말합니다. 그래서 쓰는 표현과 버린 표현을 구분합니다.</p>
+        </div>
+        <div class="evidence-grid">
+          <article>
+            <h3 data-i18n="evidence.dikwTitle">DIKW: 유용한 구분, 위험한 피라미드</h3>
+            <p data-i18n="evidence.dikwBody">Ackoff는 data, information, knowledge, wisdom의 구분을 제시했지만 Rowley, Baskarada와 Koronios, Frické는 정의 합의 부족과 선형 위계의 취약성을 지적합니다. 그래서 자동 상승 모델로 쓰지 않습니다.</p>
+          </article>
+          <article>
+            <h3 data-i18n="evidence.wisdomTitle">Wisdom: 많이 아는 것이 아니라 맥락에서 판단하는 것</h3>
+            <p data-i18n="evidence.wisdomBody">Baltes와 Staudinger, Sternberg 계열의 지혜 연구는 생애 문제, 가치 균형, 불확실성, 실천적 판단을 다룹니다. 지혜는 단순한 정보량보다 판단 조건에 가깝습니다.</p>
+          </article>
+          <article>
+            <h3 data-i18n="evidence.situatedTitle">Wisdom: 상황 안에서 달라지는 판단</h3>
+            <p data-i18n="evidence.situatedBody">Grossmann과 Brienza의 situated wise reasoning 연구는 지혜 관련 추론이 구체적 상황과 관점에 따라 달라진다는 점을 보여줍니다. 그래서 이 연구실은 지혜를 맥락 밖의 정답으로 말하지 않습니다.</p>
+          </article>
+          <article>
+            <h3 data-i18n="evidence.synthesisTitle">Synthesis: 요약이 아니라 판단 구조</h3>
+            <p data-i18n="evidence.synthesisBody">PPTX의 핵심은 더 짧게 말하는 AI가 아니라, 맥락을 다시 조립하는 인지 부하를 줄이는 DSS입니다. 자료는 판단 포인트와 실행 연결을 만들 때 비로소 쓸모가 생깁니다.</p>
+          </article>
+        </div>
+        <div class="source-list" aria-label="Reviewed literature">
+          <a href="https://faculty.ung.edu/kmelton/documents/datawisdom.pdf">Ackoff 1989</a>
+          <a href="https://journals.sagepub.com/doi/10.1177/0165551506070706">Rowley 2007</a>
+          <a href="https://cmapspublic2.ihmc.us/rid%3D1TM7GJ9H3-25MK0CQ-43N/Frick%C3%A9%20-%202009%20-%20The%20knowledge%20pyramid%20A%20critique%20of%20the%20DIKW%20hier.pdf">Frické 2009</a>
+          <a href="https://ajis.aaisnet.org/index.php/ajis/article/view/748">Baskarada &amp; Koronios 2013</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/20822439/">Staudinger &amp; Glück 2011</a>
+          <a href="https://uwaterloo.ca/fairness-at-work-lab/sites/default/files/uploads/files/wisdom_bias_and_balance_toward_a_process-sensitive_measurement_ofwisdom-related_cognition.pdf">Brienza et al. 2018</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/28346113/">Grossmann 2017</a>
         </div>
       </section>
 
@@ -129,10 +197,10 @@
           <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark">
         </div>
         <div>
-          <h2 data-i18n="logo.title">로고는 맥락의 상승을 그립니다</h2>
+          <h2 data-i18n="logo.title">로고는 상승보다 연결을 그립니다</h2>
           <p data-i18n="logo.lead">
-            겹친 블록은 흩어진 자료를, 상승하는 곡선은 DIKW 위계를 따라 판단 가능성이 높아지는 흐름을 뜻합니다.
-            마지막 금색 점은 사람이 선택하고 실행할 수 있는 순간을 가리킵니다.
+            겹친 블록은 흩어진 기록을, 선은 그 기록이 특정 질문과 제약 속에서 연결되는 경로를 뜻합니다.
+            마지막 금색 점은 자동 도달점이 아니라 사람이 책임 있게 선택해야 하는 판단 순간입니다.
           </p>
           <dl class="logo-points">
             <div>
@@ -141,7 +209,7 @@
             </div>
             <div>
               <dt data-i18n="logo.pathTitle">Rising path</dt>
-              <dd data-i18n="logo.pathBody">데이터는 맥락을 얻어 정보와 지식이 되고, 지혜는 그 위에서 선택을 가능하게 합니다.</dd>
+              <dd data-i18n="logo.pathBody">선은 자료가 스스로 올라가는 길이 아니라 질문, 기준, 반례 검토를 통과해 판단과 실행으로 건너가는 과정입니다.</dd>
             </div>
             <div>
               <dt data-i18n="logo.colorTitle">Color system</dt>
@@ -155,7 +223,7 @@
         <div>
           <h2 data-i18n="work.title">오늘의 초점</h2>
           <p data-i18n="work.lead">
-            LLM 시스템이 분산된 기업 자료를 어떻게 낮은 인지 부하의 의사결정으로 바꿀 수 있는지 탐구합니다.
+            LLM 시스템이 분산된 기업 자료의 맥락을 이어 어떻게 낮은 인지 부하의 판단과 실행으로 바꿀 수 있는지 탐구합니다. 목표는 개인은 덜 소모되고 조직은 더 원활하게 움직이도록 돕는 것입니다. Naruon은 이 문제를 메일 흐름에서 검증하는 제품 실험입니다.
           </p>
         </div>
         <ul class="work-list">
@@ -187,7 +255,7 @@
       <img
         id="footer-logo"
         src="assets/context-wisdom-lab-logo.svg"
-        alt="Contextual Wisdom Lab · 맥락과 지혜 연구실"
+        alt="맥락지혜 연구실 · Contextual Wisdom Lab"
       >
       <p>
         <span data-i18n="footer.founded">Founded by</span>
