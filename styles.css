@@ -484,6 +484,16 @@ h1 {
   line-height: 1.16;
 }
 
+.project-grid h3 a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.project-grid h3 a:hover {
+  color: var(--ink);
+}
+
 .references {
   background: var(--white);
 }
