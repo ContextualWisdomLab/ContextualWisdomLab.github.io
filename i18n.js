@@ -286,10 +286,14 @@ const messages = {
 };
 
 function preferredLanguage() {
+  const allowed = ["ko", "en"];
   const query = new URLSearchParams(window.location.search).get("lang");
+  if (allowed.includes(query)) return query;
+
   const saved = localStorage.getItem("cwl-language");
-  const browser = navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
-  return messages[query] ? query : messages[saved] ? saved : browser;
+  if (allowed.includes(saved)) return saved;
+
+  return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
 
 function setLanguage(lang) {
