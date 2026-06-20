@@ -754,3 +754,12 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+
+/* Accessibility enhancements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
