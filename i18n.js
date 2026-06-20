@@ -296,26 +296,70 @@ function preferredLanguage() {
   return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
 
+// ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
+let i18nNodes = null;
+let langButtons = null;
+let metaDesc = null;
+let ogDesc = null;
+let footerLogo = null;
+let currentLang = null;
+
 function setLanguage(lang) {
+  if (currentLang === lang) return; // Skip if already in the requested language
+
   const dict = messages[lang] || messages.ko;
-  document.documentElement.lang = lang;
-  document.title = dict.metaTitle;
-  document.querySelector('meta[name="description"]')?.setAttribute("content", dict.metaDescription);
-  document.querySelector('meta[property="og:description"]')?.setAttribute("content", dict.metaDescription);
-  const footerLogo = document.querySelector("#footer-logo");
-  if (footerLogo) {
-    footerLogo.src = dict.logoSrc;
-    footerLogo.alt = dict.logoAlt;
+
+  if (!i18nNodes) {
+    i18nNodes = document.querySelectorAll("[data-i18n]");
+    langButtons = document.querySelectorAll("[data-lang]");
+    metaDesc = document.querySelector('meta[name="description"]');
+    ogDesc = document.querySelector('meta[property="og:description"]');
+    footerLogo = document.querySelector("#footer-logo");
   }
-  document.querySelectorAll("[data-i18n]").forEach((node) => {
-    node.textContent = dict[node.dataset.i18n] || node.textContent;
+
+  if (document.documentElement.lang !== lang) {
+    document.documentElement.lang = lang;
+  }
+  if (document.title !== dict.metaTitle) {
+    document.title = dict.metaTitle;
+  }
+
+  if (metaDesc && metaDesc.getAttribute("content") !== dict.metaDescription) {
+    metaDesc.setAttribute("content", dict.metaDescription);
+  }
+  if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
+    ogDesc.setAttribute("content", dict.metaDescription);
+  }
+
+  if (footerLogo) {
+    if (footerLogo.getAttribute("src") !== dict.logoSrc) {
+      footerLogo.setAttribute("src", dict.logoSrc);
+    }
+    if (footerLogo.getAttribute("alt") !== dict.logoAlt) {
+      footerLogo.setAttribute("alt", dict.logoAlt);
+    }
+  }
+
+  // Only update textContent if it actually changed to avoid layout recalculations
+  i18nNodes.forEach((node) => {
+    const newText = dict[node.dataset.i18n];
+    if (newText && node.textContent !== newText) {
+      node.textContent = newText;
+    }
   });
-  document.querySelectorAll("[data-lang]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.lang === lang));
+
+  langButtons.forEach((button) => {
+    const pressed = String(button.dataset.lang === lang);
+    if (button.getAttribute("aria-pressed") !== pressed) {
+      button.setAttribute("aria-pressed", pressed);
+    }
   });
+
   localStorage.setItem("cwl-language", lang);
+  currentLang = lang;
 }
 
+// Event listeners can just use the initial querySelectorAll
 document.querySelectorAll("[data-lang]").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
