@@ -19,6 +19,8 @@
     <link rel="icon" href="assets/context-wisdom-lab-avatar.png">
     <!-- ⚡ Bolt: Preload custom font to reduce time to first paint -->
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- ⚡ Bolt: Preload hero image to optimize Largest Contentful Paint (LCP) -->
+    <link rel="preload" href="assets/context-thread-map.svg" as="image" fetchpriority="high">
     <link rel="stylesheet" href="styles.css">
     <script src="i18n.js" defer></script>
   </head>
@@ -60,7 +62,7 @@
         </div>
 
         <div class="hero-visual">
-          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true">
+          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high">
           <div class="ladder" role="list" aria-label="Data to wisdom ladder">
             <div class="ladder-row" role="listitem">
               <span>Data</span>
@@ -190,7 +192,7 @@
           </p>
         </div>
         <!-- ⚡ Bolt: Lazy load off-screen image -->
-        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy">
+        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy" width="1120" height="330">
         <div class="dikw-grid">
           <article>
             <span>Data</span>
@@ -268,7 +270,7 @@
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
           <!-- ⚡ Bolt: Lazy load off-screen image -->
-          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy">
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500">
         </div>
         <div>
           <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
@@ -411,6 +413,8 @@
         src="assets/context-wisdom-lab-logo.svg"
         alt="맥락지혜 연구실 · Contextual Wisdom Lab"
         loading="lazy"
+        width="920"
+        height="260"
       >
       <p>
         <span data-i18n="footer.founded">Founded by</span>
