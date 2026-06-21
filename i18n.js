@@ -292,8 +292,12 @@ function preferredLanguage() {
   const query = new URLSearchParams(window.location.search).get("lang");
   if (allowed.includes(query)) return query;
 
-  const saved = localStorage.getItem("cwl-language");
-  if (allowed.includes(saved)) return saved;
+  try {
+    const saved = localStorage.getItem("cwl-language");
+    if (allowed.includes(saved)) return saved;
+  } catch (error) {
+    // Fail securely: ignore localStorage errors in strict privacy modes
+  }
 
   return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
@@ -357,7 +361,11 @@ function setLanguage(lang) {
     }
   });
 
-  localStorage.setItem("cwl-language", lang);
+  try {
+    localStorage.setItem("cwl-language", lang);
+  } catch (error) {
+    // Fail securely: ignore localStorage errors
+  }
   currentLang = lang;
 }
 
