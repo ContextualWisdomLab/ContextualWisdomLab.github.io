@@ -308,7 +308,7 @@ let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let currentLang = null;
+let currentLang = document.documentElement.lang;
 
 function setLanguage(lang) {
   if (currentLang === lang) return; // Skip if already in the requested language
@@ -361,17 +361,19 @@ function setLanguage(lang) {
     }
   });
 
-  try {
-    localStorage.setItem("cwl-language", lang);
-  } catch (error) {
-    // Fail securely: ignore localStorage errors
-  }
   currentLang = lang;
 }
 
 // Event listeners can just use the initial querySelectorAll
 document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  button.addEventListener("click", () => {
+    try {
+      localStorage.setItem("cwl-language", button.dataset.lang);
+    } catch (error) {
+      // Fail securely: ignore localStorage errors
+    }
+    setLanguage(button.dataset.lang);
+  });
 });
 
 setLanguage(preferredLanguage());
