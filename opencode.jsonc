@@ -8,6 +8,7 @@
       "type": "local",
       "command": ["npx", "-y", "@colbymchenry/codegraph@0.9.9", "serve", "--mcp"],
       "enabled": true,
+      "timeout": 10000,
       "environment": {
         "NPM_CONFIG_IGNORE_SCRIPTS": "true",
         "NPM_CONFIG_LOGLEVEL": "error"
@@ -58,7 +59,7 @@
       "name": "GitHub Models",
       "options": {
         "baseURL": "https://models.github.ai/inference",
-        "apiKey": "{env:GITHUB_TOKEN}"
+        "apiKey": "{env:STRIX_GITHUB_MODELS_TOKEN}"
       },
       "models": {
         "openai/gpt-5": {
