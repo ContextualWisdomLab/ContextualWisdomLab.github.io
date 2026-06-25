@@ -308,9 +308,15 @@ let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let currentLang = null;
+let currentLang = document.documentElement.lang || "ko";
 
 function setLanguage(lang) {
+  try {
+    localStorage.setItem("cwl-language", lang);
+  } catch (error) {
+    // Fail securely: ignore localStorage errors
+  }
+
   if (currentLang === lang) return; // Skip if already in the requested language
 
   const dict = messages[lang] || messages.ko;
@@ -361,11 +367,6 @@ function setLanguage(lang) {
     }
   });
 
-  try {
-    localStorage.setItem("cwl-language", lang);
-  } catch (error) {
-    // Fail securely: ignore localStorage errors
-  }
   currentLang = lang;
 }
 
