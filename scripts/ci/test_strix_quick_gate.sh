@@ -331,6 +331,22 @@ assert_opencode_review_uses_codegraph_and_gpt5_fallback() {
 	local workflow_file="$REPO_ROOT/.github/workflows/opencode-review.yml"
 	local opencode_config="$REPO_ROOT/opencode.jsonc"
 
+	# Bootstrapping fallback: when opencode.jsonc is being introduced for the
+	# first time via a PR, the trusted workspace (base branch) does not yet have
+	# the file. In that case, extract it from the PR HEAD ref that was already
+	# fetched into the trusted workspace git repo so that the content assertions
+	# below can still validate the incoming file before merge.
+	if [ ! -f "$opencode_config" ]; then
+		local pr_head_ref
+		pr_head_ref="$(git -C "$REPO_ROOT" for-each-ref --format='%(refname)' 'refs/remotes/pull/*/head' 2>/dev/null | head -n1)"
+		if [ -n "$pr_head_ref" ] && git -C "$REPO_ROOT" cat-file -e "${pr_head_ref}:opencode.jsonc" 2>/dev/null; then
+			local tmp_opencode_config
+			tmp_opencode_config="$(mktemp --suffix=.jsonc)"
+			git -C "$REPO_ROOT" show "${pr_head_ref}:opencode.jsonc" >"$tmp_opencode_config"
+			opencode_config="$tmp_opencode_config"
+		fi
+	fi
+
 	assert_file_contains "$workflow_file" "pull_request_target:" "opencode review workflow runs on the trusted PR trigger so merge-conflict PRs still get the standard review surface"
 	assert_file_contains "$workflow_file" "pull_request:" "opencode review workflow publishes a PR-associated required check while trusted review side effects stay on pull_request_target"
 	assert_file_contains "$workflow_file" "Wait for trusted OpenCode approval review" "opencode pull_request bridge only waits for a trusted same-head OpenCode approval"
