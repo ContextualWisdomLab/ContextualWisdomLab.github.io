@@ -128,6 +128,21 @@ jobs:
           echo "::error::PR head ref did not resolve to expected commit $PR_HEAD_SHA after retries." >&2
           exit 1
 
+      - name: Overlay PR head opencode config for self-test validation
+        if: github.event_name == 'pull_request_target' || github.event.inputs.pr_number != ''
+        env:
+          PR_HEAD_SHA: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.event.inputs.pr_head_sha }}
+        run: |
+          set -euo pipefail
+          # opencode.jsonc is a static JSON config file (not executable code).
+          # Overlaying it from the PR head lets the self-test validate any
+          # configuration changes in this PR without compromising the trusted
+          # workspace model — all scripts still come from the base branch.
+          if git -C "$TRUSTED_WORKSPACE" cat-file -e "${PR_HEAD_SHA}:opencode.jsonc" 2>/dev/null; then
+            git -C "$TRUSTED_WORKSPACE" show "${PR_HEAD_SHA}:opencode.jsonc" \
+              > "$TRUSTED_WORKSPACE/opencode.jsonc"
+          fi
+
       - name: Self-test Strix gate script
         working-directory: ${{ runner.temp }}/trusted-workspace
         run: bash "$TRUSTED_STRIX_GATE_TEST"
