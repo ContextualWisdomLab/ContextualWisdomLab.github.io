@@ -367,12 +367,21 @@ function setLanguage(lang) {
 // Event listeners can just use the initial querySelectorAll
 document.querySelectorAll("[data-lang]").forEach((button) => {
   button.addEventListener("click", () => {
+    const selectedLang = button.dataset.lang;
+    if (selectedLang === currentLang) {
+      return;
+    }
+
+    setLanguage(selectedLang);
+    if (currentLang !== selectedLang) {
+      return;
+    }
+
     try {
-      localStorage.setItem("cwl-language", button.dataset.lang);
+      localStorage.setItem("cwl-language", selectedLang);
     } catch (error) {
       // Fail securely: ignore localStorage errors
     }
-    setLanguage(button.dataset.lang);
   });
 });
 
