@@ -10,3 +10,7 @@
 **Vulnerability:** Unhandled exceptions when accessing `localStorage` in strict browser privacy modes (e.g., when cookies are blocked).
 **Learning:** Browsers throw a `SecurityError` when `localStorage` is accessed and the user has blocked third-party cookies or is in a strict privacy mode. If unhandled, this crashes the executing script, leading to a degraded user experience (DoS-like behavior for privacy-conscious users).
 **Prevention:** Always wrap `localStorage.getItem` and `localStorage.setItem` in `try-catch` blocks to fail securely and fall back to sensible defaults.
+## 2025-06-25 - Fix missing noopener noreferrer on external links
+**Vulnerability:** External links (target="_blank") lacked rel="noopener noreferrer", allowing target pages to access window.opener and potentially execute reverse tabnabbing attacks.
+**Learning:** Even simple static HTML sites are vulnerable to reverse tabnabbing if external links open in a new tab without proper rel attributes.
+**Prevention:** Always append rel="noopener noreferrer" when adding target="_blank" to anchor tags pointing to external domains.
