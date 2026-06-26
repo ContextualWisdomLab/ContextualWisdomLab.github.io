@@ -313,6 +313,35 @@ let currentLang = null;
 function setLanguage(lang) {
   if (currentLang === lang) return; // Skip if already in the requested language
 
+  // ⚡ Bolt: 대상 언어가 HTML 문서 언어와 일치하는 초기 로드 시 빠른 경로 적용
+  // HTML에 이미 렌더링된 언어인 경우 무거운 DOM 쿼리(querySelectorAll)를 완전히 생략합니다
+  if (currentLang === null && document.documentElement.lang === lang) {
+    currentLang = lang;
+
+    // 이후 언어 전환을 위해 노드 초기화는 필요합니다
+    if (!i18nNodes) {
+      // requestIdleCallback을 사용하여 메인 스레드가 유휴 상태일 때까지 무거운 DOM 쿼리를 지연시킵니다
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          i18nNodes = document.querySelectorAll("[data-i18n]");
+          langButtons = document.querySelectorAll("[data-lang]");
+          metaDesc = document.querySelector('meta[name="description"]');
+          ogDesc = document.querySelector('meta[property="og:description"]');
+          footerLogo = document.querySelector("#footer-logo");
+        });
+      } else {
+        setTimeout(() => {
+          i18nNodes = document.querySelectorAll("[data-i18n]");
+          langButtons = document.querySelectorAll("[data-lang]");
+          metaDesc = document.querySelector('meta[name="description"]');
+          ogDesc = document.querySelector('meta[property="og:description"]');
+          footerLogo = document.querySelector("#footer-logo");
+        }, 1);
+      }
+    }
+    return; // 버튼은 HTML에서 이미 올바르게 설정되어 있습니다
+  }
+
   const dict = messages[lang] || messages.ko;
 
   if (!i18nNodes) {
