@@ -23,6 +23,11 @@ on:
         description: "Merge behavior for current-head approved PRs: auto, direct, or disabled"
         required: false
         default: auto
+        type: choice
+        options:
+          - auto
+          - direct
+          - disabled
       update_branches:
         description: Update outdated PR branches after OpenCode approval
         required: false
