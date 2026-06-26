@@ -132,7 +132,6 @@ jobs:
       - name: Self-test Strix gate script
         working-directory: ${{ runner.temp }}/trusted-workspace
         run: |
-          cp $GITHUB_WORKSPACE/opencode.jsonc "$TRUSTED_WORKSPACE/opencode.jsonc" || true
           cp $GITHUB_WORKSPACE/opencode.jsonc "${{ runner.temp }}/trusted-workspace/opencode.jsonc" || true
           bash "$TRUSTED_STRIX_GATE_TEST"
 
