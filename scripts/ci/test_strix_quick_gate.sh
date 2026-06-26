@@ -332,6 +332,9 @@ assert_opencode_review_uses_codegraph_and_gpt5_fallback() {
 	local opencode_config="$REPO_ROOT/opencode.jsonc"
 	[ -f "$opencode_config" ] || opencode_config="${GITHUB_WORKSPACE:-}/opencode.jsonc"
 	[ -f "$opencode_config" ] || opencode_config="${RUNNER_TEMP:-}/trusted-workspace/opencode.jsonc"
+	[ -f "$opencode_config" ] || opencode_config="$TRUSTED_WORKSPACE/opencode.jsonc"
+	[ -f "$opencode_config" ] || opencode_config="${GITHUB_WORKSPACE:-}/.github/workflows/opencode.jsonc"
+	[ -f "$opencode_config" ] || opencode_config="$SCRIPT_DIR/../../opencode.jsonc"
 
 	assert_file_contains "$workflow_file" "pull_request_target:" "opencode review workflow runs on the trusted PR trigger so merge-conflict PRs still get the standard review surface"
 	assert_file_contains "$workflow_file" "pull_request:" "opencode review workflow publishes a PR-associated required check while trusted review side effects stay on pull_request_target"
