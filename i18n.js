@@ -346,13 +346,18 @@ function setLanguage(lang) {
     }
   }
 
-  // Only update textContent if it actually changed to avoid layout recalculations
-  i18nNodes.forEach((node) => {
-    const newText = dict[node.dataset.i18n];
-    if (newText && node.textContent !== newText) {
-      node.textContent = newText;
-    }
-  });
+  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
+  const isInitialDefault = currentLang === null && lang === "ko";
+
+  if (!isInitialDefault) {
+    // Only update textContent if it actually changed to avoid layout recalculations
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
+      if (newText && node.textContent !== newText) {
+        node.textContent = newText;
+      }
+    });
+  }
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
