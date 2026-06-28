@@ -108,7 +108,7 @@ a {
   transition: opacity 0.2s;
 }
 
-.language-switch button:hover {
+.language-switch button:not([aria-pressed="true"]):hover {
   opacity: 0.8;
 }
 
