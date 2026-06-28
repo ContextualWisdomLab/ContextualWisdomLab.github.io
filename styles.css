@@ -647,10 +647,6 @@ h1 {
 }
 
 @media (max-width: 900px) {
-  html {
-    scroll-padding-top: 180px;
-  }
-
   .site-header,
   .site-footer {
     align-items: flex-start;
@@ -695,10 +691,6 @@ h1 {
 }
 
 @media (max-width: 560px) {
-  html {
-    scroll-padding-top: 220px;
-  }
-
   .brand span {
     font-size: 15px;
   }
