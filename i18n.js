@@ -302,13 +302,18 @@ function preferredLanguage() {
   return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
 
+function normalizedLanguage(lang) {
+  const primary = String(lang || "").toLowerCase().split("-")[0];
+  return primary === "en" ? "en" : "ko";
+}
+
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
 let i18nNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let currentLang = document.documentElement.lang || "ko";
+let currentLang = normalizedLanguage(document.documentElement.lang);
 
 function setLanguage(lang) {
   try {
