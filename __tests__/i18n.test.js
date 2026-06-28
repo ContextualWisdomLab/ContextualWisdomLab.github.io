@@ -4,6 +4,7 @@
 
 describe('i18n.js tests', () => {
   beforeEach(() => {
+    window.history.pushState({}, '', '/');
     document.documentElement.lang = 'ko';
     document.title = '맥락지혜 연구실 | Contextual Wisdom Lab';
     document.head.innerHTML = `
@@ -25,16 +26,23 @@ describe('i18n.js tests', () => {
         setItem: jest.fn(),
         clear: jest.fn()
       },
-      writable: true
+      writable: true,
+      configurable: true
     });
 
     jest.resetModules();
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should initialize without updating DOM when lang matches', () => {
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
+    const querySelectorAll = jest.spyOn(document, 'querySelectorAll');
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('ko');
+    expect(querySelectorAll).not.toHaveBeenCalledWith('[data-i18n]');
   });
 
   it('should update DOM when lang does not match', () => {
@@ -61,16 +69,14 @@ describe('i18n.js tests', () => {
   });
 
   it('should read from URL query if available', () => {
-    delete window.location;
-    window.location = new URL('http://localhost/?lang=en');
+    window.history.pushState({}, '', '/?lang=en');
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('en');
   });
 
   it('should fallback if URL query is invalid', () => {
-    delete window.location;
-    window.location = new URL('http://localhost/?lang=fr');
+    window.history.pushState({}, '', '/?lang=fr');
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('ko');
