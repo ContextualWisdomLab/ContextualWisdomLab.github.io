@@ -346,7 +346,7 @@ function setLanguage(lang) {
   }
 
   // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
-  const isInitialDefault = currentLang === null && lang === "ko";
+  const isInitialDefault = lang === "ko" && !i18nNodes;
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
