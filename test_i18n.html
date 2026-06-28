@@ -8,9 +8,9 @@
 </head>
 <body>
   <div data-i18n="hero.title">맥락지혜 연구실</div>
-  <button data-lang="ko" aria-pressed="true">KO</button>
-  <button data-lang="en" aria-pressed="false">EN</button>
-  <img id="footer-logo" src="test.png" alt="test">
+  <button type="button" data-lang="ko" aria-pressed="true">KO</button>
+  <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  <img id="footer-logo" src="assets/context-wisdom-lab-logo.svg" alt="맥락지혜 연구실 · Contextual Wisdom Lab">
   <script>
     // Mock for global storage and initial test state
     window.localStorageMock = {
@@ -35,8 +35,7 @@
       }
     }
 
-    // Delay to let i18n logic run
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       console.log("Running tests...");
 
       assertEqual(currentLang, "ko", "Initial language should be 'ko'");
@@ -58,7 +57,7 @@
         // Output special string for script to catch
         console.log("ALL_TESTS_PASSED_SUCCESSFULLY");
       }
-    }, 100);
+    });
   </script>
 </body>
 </html>

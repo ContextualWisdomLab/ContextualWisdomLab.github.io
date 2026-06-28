@@ -315,8 +315,7 @@ function setLanguage(lang) {
 
   const dict = messages[lang] || messages.ko;
 
-  if (!i18nNodes) {
-    i18nNodes = document.querySelectorAll("[data-i18n]");
+  if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
@@ -350,6 +349,10 @@ function setLanguage(lang) {
   const isInitialDefault = currentLang === null && lang === "ko";
 
   if (!isInitialDefault) {
+    if (!i18nNodes) {
+      i18nNodes = document.querySelectorAll("[data-i18n]");
+    }
+
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
       const newText = dict[node.dataset.i18n];
