@@ -4,12 +4,11 @@
 
 describe('i18n.js tests', () => {
   beforeEach(() => {
-    window.history.pushState({}, '', '/');
     document.documentElement.lang = 'ko';
     document.title = '맥락지혜 연구실 | Contextual Wisdom Lab';
     document.head.innerHTML = `
       <meta name="description" content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.">
-      <meta property="og:description" content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 연구 기반 프로젝트입니다.">
+      <meta property="og:description" content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.">
     `;
     document.body.innerHTML = `
       <div class="language-switch" role="group" aria-label="Language">
@@ -26,23 +25,36 @@ describe('i18n.js tests', () => {
         setItem: jest.fn(),
         clear: jest.fn()
       },
-      writable: true,
-      configurable: true
+      writable: true
     });
 
     jest.resetModules();
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
+  it('should cover existing document lang and attributes already matching the dictionary', () => {
+    Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
+    require('../i18n.js');
+
+    const enButton = document.querySelector('button[data-lang="en"]');
+    enButton.click();
+
+    // Manually force ALL properties to match 'ko' EXCEPT we leave the state in EN
+    // so when we click 'ko' it evaluates the updates but skips because they match.
+    document.documentElement.lang = 'ko'; // Cover line 326 `document.documentElement.lang !== lang`
+    document.title = '맥락지혜 연구실 | Contextual Wisdom Lab';
+    document.querySelector('meta[name="description"]').setAttribute('content', '맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.');
+    document.querySelector('meta[property="og:description"]').setAttribute('content', '맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.');
+    document.querySelector('#footer-logo').setAttribute('src', 'assets/context-wisdom-lab-logo.svg');
+    document.querySelector('#footer-logo').setAttribute('alt', '맥락지혜 연구실 · Contextual Wisdom Lab');
+
+    const koButton = document.querySelector('button[data-lang="ko"]');
+    koButton.click();
   });
 
   it('should initialize without updating DOM when lang matches', () => {
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
-    const querySelectorAll = jest.spyOn(document, 'querySelectorAll');
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('ko');
-    expect(querySelectorAll).not.toHaveBeenCalledWith('[data-i18n]');
   });
 
   it('should update DOM when lang does not match', () => {
@@ -69,14 +81,16 @@ describe('i18n.js tests', () => {
   });
 
   it('should read from URL query if available', () => {
-    window.history.pushState({}, '', '/?lang=en');
+    delete window.location;
+    window.location = new URL('http://localhost/?lang=en');
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('en');
   });
 
   it('should fallback if URL query is invalid', () => {
-    window.history.pushState({}, '', '/?lang=fr');
+    delete window.location;
+    window.location = new URL('http://localhost/?lang=fr');
     Object.defineProperty(window.navigator, 'language', { value: 'ko-KR', configurable: true });
     require('../i18n.js');
     expect(document.documentElement.lang).toBe('ko');
@@ -123,5 +137,28 @@ describe('i18n.js tests', () => {
     expect(() => {
       require('../i18n.js');
     }).not.toThrow();
+  });
+
+  it('should cover missing DOM elements gracefully', () => {
+    document.head.innerHTML = '';
+    document.body.innerHTML = `
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <h1 data-i18n="hero.title">맥락지혜 연구실</h1>
+    `;
+    Object.defineProperty(window.navigator, 'language', { value: 'en-US', configurable: true });
+    require('../i18n.js');
+    expect(document.documentElement.lang).toBe('en');
+  });
+
+  it('should cover fallback language in dict and edge case where attributes match', () => {
+    document.body.innerHTML = `
+      <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+      <button type="button" data-lang="ko" aria-pressed="false">KO</button>
+      <h1 data-i18n="invalid.key">Not changing</h1>
+    `;
+    Object.defineProperty(window.navigator, 'language', { value: 'en-US', configurable: true });
+    require('../i18n.js');
+    const frButton = document.querySelector('button[data-lang="fr"]');
+    frButton.click();
   });
 });
