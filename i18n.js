@@ -315,12 +315,18 @@ function setLanguage(lang) {
 
   const dict = messages[lang] || messages.ko;
 
-  if (!i18nNodes) {
-    i18nNodes = document.querySelectorAll("[data-i18n]");
+  // ⚡ Bolt: Skip expensive DOM query and updates if setting the default language on first load
+  const isInitialDefaultLoad = !currentLang && document.documentElement.lang === lang;
+
+  if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     footerLogo = document.querySelector("#footer-logo");
+  }
+
+  if (!i18nNodes && !isInitialDefaultLoad) {
+    i18nNodes = document.querySelectorAll("[data-i18n]");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -347,12 +353,14 @@ function setLanguage(lang) {
   }
 
   // Only update textContent if it actually changed to avoid layout recalculations
-  i18nNodes.forEach((node) => {
-    const newText = dict[node.dataset.i18n];
-    if (newText && node.textContent !== newText) {
-      node.textContent = newText;
-    }
-  });
+  if (i18nNodes) {
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
+      if (newText && node.textContent !== newText) {
+        node.textContent = newText;
+      }
+    });
+  }
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
