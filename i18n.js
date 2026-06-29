@@ -308,7 +308,7 @@ let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let currentLang = null;
+let currentLang = document.documentElement.lang || "ko";
 
 function setLanguage(lang) {
   if (currentLang === lang) return; // Skip if already in the requested language
