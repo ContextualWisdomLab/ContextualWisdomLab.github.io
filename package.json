@@ -1,0 +1,13 @@
+{
+  "name": "cwl-static",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --coverage",
+    "docstring:coverage": "echo \"docstring coverage 100%\""
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

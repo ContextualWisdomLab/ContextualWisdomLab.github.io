@@ -374,4 +374,10 @@ document.querySelectorAll("[data-lang]").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
 
-setLanguage(preferredLanguage());
+// ⚡ Bolt: 초기 로드 시 문서의 기본 언어와 선호 언어가 일치하면 불필요한 DOM 쿼리와 리렌더링을 방지하여 TTI를 최적화합니다.
+const initLang = preferredLanguage();
+if (initLang === document.documentElement.lang) {
+  currentLang = initLang;
+} else {
+  setLanguage(initLang);
+}
