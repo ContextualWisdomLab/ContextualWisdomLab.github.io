@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>i18n Test</title>
+  <meta name="description" content="test">
+  <meta property="og:description" content="test">
+</head>
+<body>
+  <div data-i18n="hero.title">맥락지혜 연구실</div>
+  <button type="button" data-lang="ko" aria-pressed="true">KO</button>
+  <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  <img id="footer-logo" src="assets/context-wisdom-lab-logo.svg" alt="맥락지혜 연구실 · Contextual Wisdom Lab">
+  <script>
+    // Mock for global storage and initial test state
+    window.localStorageMock = {
+      getItem: function() { return null; },
+      setItem: function() {}
+    };
+    Object.defineProperty(window, 'localStorage', { value: window.localStorageMock });
+  </script>
+  <script src="i18n.js"></script>
+  <script>
+    // Simple test harness
+    let testsPassed = 0;
+    let testsTotal = 0;
+
+    function assertEqual(actual, expected, testName) {
+      testsTotal++;
+      if (actual === expected) {
+        testsPassed++;
+        console.log(`[PASS] ${testName}`);
+      } else {
+        console.error(`[FAIL] ${testName} - Expected '${expected}', got '${actual}'`);
+      }
+    }
+
+    requestAnimationFrame(() => {
+      console.log("Running tests...");
+
+      assertEqual(currentLang, "ko", "Initial language should be 'ko'");
+
+      // Test 2: Switch to EN updates nodes correctly
+      setLanguage("en");
+      assertEqual(currentLang, "en", "Language should be 'en' after setting");
+      const titleNode = document.querySelector('[data-i18n="hero.title"]');
+      assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
+
+      // Test 3: Switch back to KO updates nodes correctly
+      setLanguage("ko");
+      assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
+      assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
+
+      console.log(`Test Summary: ${testsPassed}/${testsTotal} passed.`);
+
+      if (testsPassed === testsTotal) {
+        // Output special string for script to catch
+        console.log("ALL_TESTS_PASSED_SUCCESSFULLY");
+      }
+    });
+  </script>
+</body>
+</html>
