@@ -297,6 +297,9 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
+  /* ⚡ Bolt: Skip off-screen rendering to reduce initial layout time */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 }
 
 .section-heading {
@@ -638,6 +641,9 @@ h1 {
   gap: 28px;
   padding: 42px clamp(20px, 5vw, 72px);
   background: var(--white);
+  /* ⚡ Bolt: Skip off-screen rendering to reduce initial layout time */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
 }
 
 .site-footer img {
