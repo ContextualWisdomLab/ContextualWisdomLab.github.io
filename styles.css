@@ -41,6 +41,7 @@ body {
 
 a {
   color: inherit;
+  transition: color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .site-header {
@@ -107,7 +108,7 @@ a {
   font-size: 13px;
   font-weight: 850;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s;
 }
 
 .language-switch button:not([aria-pressed="true"]):hover {
@@ -217,11 +218,15 @@ h1 {
   text-decoration: none;
   font-size: 15px;
   font-weight: 800;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s;
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.98);
 }
 
 .button.primary {
@@ -442,7 +447,7 @@ h1 {
 .dikw-grid span {
   display: block;
   margin-bottom: 38px;
-  color: var(--gold);
+  color: var(--teal);
   font-size: 14px;
   font-weight: 900;
 }
