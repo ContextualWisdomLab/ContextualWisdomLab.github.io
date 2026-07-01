@@ -302,32 +302,20 @@ function preferredLanguage() {
   return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
 
-function normalizedLanguage(lang) {
-  const primary = String(lang || "").toLowerCase().split("-")[0];
-  return primary === "en" ? "en" : "ko";
-}
-
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
 let i18nNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let currentLang = normalizedLanguage(document.documentElement.lang);
+let currentLang = null;
 
 function setLanguage(lang) {
-  try {
-    localStorage.setItem("cwl-language", lang);
-  } catch (error) {
-    // Fail securely: ignore localStorage errors
-  }
-
   if (currentLang === lang) return; // Skip if already in the requested language
 
   const dict = messages[lang] || messages.ko;
 
-  if (!i18nNodes) {
-    i18nNodes = document.querySelectorAll("[data-i18n]");
+  if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
@@ -357,13 +345,22 @@ function setLanguage(lang) {
     }
   }
 
-  // Only update textContent if it actually changed to avoid layout recalculations
-  i18nNodes.forEach((node) => {
-    const newText = dict[node.dataset.i18n];
-    if (newText && node.textContent !== newText) {
-      node.textContent = newText;
+  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
+  const isInitialDefault = lang === "ko" && !i18nNodes;
+
+  if (!isInitialDefault) {
+    if (!i18nNodes) {
+      i18nNodes = document.querySelectorAll("[data-i18n]");
     }
-  });
+
+    // Only update textContent if it actually changed to avoid layout recalculations
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
+      if (newText && node.textContent !== newText) {
+        node.textContent = newText;
+      }
+    });
+  }
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
@@ -372,6 +369,11 @@ function setLanguage(lang) {
     }
   });
 
+  try {
+    localStorage.setItem("cwl-language", lang);
+  } catch (error) {
+    // Fail securely: ignore localStorage errors
+  }
   currentLang = lang;
 }
 
