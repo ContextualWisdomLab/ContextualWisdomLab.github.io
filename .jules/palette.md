@@ -1,0 +1,3 @@
+## 2025-02-18 - Improve Color Contrast & Micro-interactions
+**Learning:** Some elements like `.dikw-grid span` used `--gold` on white backgrounds which resulted in a low contrast ratio (around 2.9:1), violating WCAG AA accessibility standards. Additionally, the lack of hover transitions on buttons and links made interactions feel abrupt.
+**Action:** Always verify color contrast ratios against background colors, swapping to higher contrast colors (like `--teal`) where necessary to ensure accessibility. Apply smooth transition timings to opacity, transform, and color properties on interactive elements to provide clear tactile feedback.
