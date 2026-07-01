@@ -315,8 +315,7 @@ function setLanguage(lang) {
 
   const dict = messages[lang] || messages.ko;
 
-  if (!i18nNodes) {
-    i18nNodes = document.querySelectorAll("[data-i18n]");
+  if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
@@ -346,13 +345,22 @@ function setLanguage(lang) {
     }
   }
 
-  // Only update textContent if it actually changed to avoid layout recalculations
-  i18nNodes.forEach((node) => {
-    const newText = dict[node.dataset.i18n];
-    if (newText && node.textContent !== newText) {
-      node.textContent = newText;
+  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
+  const isInitialDefault = lang === "ko" && !i18nNodes;
+
+  if (!isInitialDefault) {
+    if (!i18nNodes) {
+      i18nNodes = document.querySelectorAll("[data-i18n]");
     }
-  });
+
+    // Only update textContent if it actually changed to avoid layout recalculations
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
+      if (newText && node.textContent !== newText) {
+        node.textContent = newText;
+      }
+    });
+  }
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
