@@ -25,5 +25,6 @@
     ]
   },
   "context": 200000,
-  "output": 100000
+  "output": 100000,
+  "temperature": 0
 }
