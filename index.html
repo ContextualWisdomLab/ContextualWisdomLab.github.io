@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>맥락지혜 연구실 | Contextual Wisdom Lab</title>
     <meta
@@ -23,6 +23,8 @@
     <!-- ⚡ Bolt: Preload hero image to optimize Largest Contentful Paint (LCP) -->
     <link rel="preload" href="assets/context-thread-map.svg" as="image" fetchpriority="high">
     <link rel="stylesheet" href="styles.css">
+    <script src="assets/dompurify.min.js"></script>
+    <script src="security.js"></script>
     <script src="i18n.js" defer></script>
   </head>
   <body>
