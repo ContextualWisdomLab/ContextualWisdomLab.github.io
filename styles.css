@@ -297,6 +297,9 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
+  /* ⚡ Bolt: Off-screen sections are skipped for layout and paint */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 .section-heading {
