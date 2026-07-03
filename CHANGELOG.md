@@ -8,3 +8,5 @@
 * `index.html`에 Trusted Types CSP 적용 (`require-trusted-types-for 'script'`)
 
 * 보안성 향상을 위해 CSP 설정 적용 (Trusted Types)
+
+* CI 워크플로우 타임아웃 오류를 우회하고 리뷰 프로세스를 다시 트리거하기 위해 변경사항 추가
