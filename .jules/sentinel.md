@@ -14,3 +14,7 @@
 **Vulnerability:** 외부 링크(특히 참조문헌 링크 등)에 `target="_blank"` 속성을 사용하거나 새 탭으로 여는 동작을 유도할 때, `rel="noopener noreferrer"` 속성이 누락되어 Reverse Tabnabbing 공격에 노출될 수 있음.
 **Learning:** `rel="noopener noreferrer"`가 없으면 새로 열린 탭의 페이지가 `window.opener` 객체를 통해 원래 페이지의 `location`을 악의적인 사이트로 변경할 수 있습니다.
 **Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
+## 2026-07-03 - Native Trusted Types enforcement
+**Vulnerability:** Trusted Types 정책 부재로 인한 DOM 기반 XSS (Cross-Site Scripting) 취약점 위험.
+**Learning:** 이 정적 웹사이트는 `innerHTML` 같은 위험한 Sink를 사용하지 않고 `textContent`, `setAttribute` 등 안전한 DOM API만을 사용하고 있으므로, 별도의 Trusted Types 정책이나 외부 Sanitizer(예: DOMPurify) 없이도 CSP에서 `require-trusted-types-for 'script'`를 안전하게 기본 강제할 수 있음을 확인했습니다.
+**Prevention:** CSP에 `require-trusted-types-for 'script'`를 적용하여 XSS를 방어하고, 앞으로도 안전한 DOM API만 사용하도록 합니다. 부득이하게 `innerHTML`을 도입해야 할 경우에는 반드시 적절한 Sanitizer를 함께 구성해야 합니다.
