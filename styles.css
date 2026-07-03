@@ -299,8 +299,16 @@ h1 {
   border-top: 1px solid var(--line);
   /* ⚡ Bolt: Off-screen sections are skipped for layout and paint */
   content-visibility: auto;
+  contain-intrinsic-size: 600px; /* fallback for older browsers */
   contain-intrinsic-size: auto 600px;
 }
+
+/* ⚡ Bolt: Adjust intrinsic sizes per section to prevent scroll jumps */
+.section.principles { contain-intrinsic-size: auto 800px; }
+.section.dikw { contain-intrinsic-size: auto 900px; }
+.section.evidence { contain-intrinsic-size: auto 450px; }
+.section.naruon { contain-intrinsic-size: auto 450px; }
+.section.projects { contain-intrinsic-size: auto 700px; }
 
 .section-heading {
   max-width: 900px;
