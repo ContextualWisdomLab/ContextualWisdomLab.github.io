@@ -6,3 +6,5 @@
 
 ### Security
 * `index.html`에 Trusted Types CSP 적용 (`require-trusted-types-for 'script'`)
+
+* 보안성 향상을 위해 CSP 설정 적용 (Trusted Types)
