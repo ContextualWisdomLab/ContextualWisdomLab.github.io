@@ -4,3 +4,6 @@
 ## 2024-06-27 - 초기 언어 로드 시 불필요한 DOM 탐색 제거
 **Learning:** 초기 로드 시 요청된 언어가 HTML의 기본 언어(ko)와 동일한 경우, 모든 DOM 텍스트 노드를 탐색하고 치환하는 불필요한 작업을 생략하면 성능이 향상됨을 확인했습니다.
 **Action:** `isInitialDefault` 조건을 추가하여 초기 로드 시 불필요한 DOM 순회 코드가 실행되지 않도록 개선했습니다.
+## 2024-07-04 - Optimize rendering of long off-screen sections
+**Learning:** Using `content-visibility: auto` on elements that are off-screen significantly reduces rendering time, but without explicit intrinsic sizes, the browser miscalculates layout heights leading to severe scrollbar jumping.
+**Action:** Always pair `content-visibility: auto` with `contain-intrinsic-size` with a suitable fallback length (e.g., `contain-intrinsic-size: 600px;`) and an auto value (`contain-intrinsic-size: auto 600px;`) for newer browsers to ensure a smooth scrolling experience.
