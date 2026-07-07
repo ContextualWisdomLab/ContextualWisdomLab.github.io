@@ -13,3 +13,7 @@
 ## 2024-06-25 - Improve Color Contrast
 **Learning:** Found that using `--gold` for text on white or light backgrounds (like `--paper`) fails WCAG AA contrast standards, making the text difficult to read for some users.
 **Action:** Avoid using `--gold` on light backgrounds. Instead, use alternatives with better contrast like `--teal`. Retain `--gold` for dark backgrounds (like `--ink`) where it provides excellent contrast.
+
+## 2024-06-25 - Respect prefers-reduced-motion
+**Learning:** Users who have a vestibular disorder or prefer reduced motion can be negatively impacted by smooth scrolling or CSS transitions.
+**Action:** Always include a `@media (prefers-reduced-motion: reduce)` media query that disables smooth scrolling (`scroll-behavior: auto !important`) and removes animation/transition durations globally.
