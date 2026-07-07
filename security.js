@@ -3,14 +3,14 @@
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   try {
     window.trustedTypes.createPolicy('default', {
-      createHTML: (string) =>
-        window.DOMPurify
-          ? window.DOMPurify.sanitize(string, { RETURN_TRUSTED_TYPE: true })
-          : string
+      createHTML: (string) => {
+        if (window.DOMPurify) {
+          return window.DOMPurify.sanitize(string, { RETURN_TRUSTED_TYPE: true });
+        }
+        return '';
+      }
     });
   } catch (e) {
-    // Creating the default policy can throw (e.g. a 'default' policy already exists,
-    // or CSP disallows it). Swallow the error so the page still loads.
-    console.warn('Trusted Types default policy creation failed:', e);
+    // Fail securely: ignore if policy already exists or if CSP restricts policy creation
   }
 }
