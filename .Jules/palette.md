@@ -9,6 +9,3 @@
 ## 2026-06-25 - Fix Header Overlap
 **Learning:** When using a sticky header, clicking anchor links can cause the target element to scroll under the header, hindering the user experience.
 **Action:** Use `scroll-padding-top` on the `html` element with the height of the sticky header to ensure anchor links scroll to a position just below the header.
-## 2026-07-02 - Improve color contrast for readability
-**Learning:** The CSS variable '--gold' fails WCAG AA contrast standards when used for text on white or light backgrounds.
-**Action:** Always prefer higher-contrast alternatives like '--teal' for text on light backgrounds to ensure accessibility.
