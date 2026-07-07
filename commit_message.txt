@@ -1,0 +1,6 @@
+🎨 Palette: [UX improvement] 언어 전환 버튼 접근성 및 호버 스타일 개선
+
+💡 What: 언어 전환 버튼에 `aria-label` 추가 및 버튼 요소들에 `hover` 시 `opacity` 변화 트랜지션 추가
+🎯 Why: 스크린 리더 사용자가 축약어(KO, EN) 대신 명확한 언어명을 인지하게 하고, 일반 사용자가 인터랙티브 요소에 대한 시각적 피드백을 받을 수 있도록 개선
+📸 Before/After: 버튼 호버 시 opacity가 0.8로 부드럽게 변경됨
+♿ Accessibility: `aria-label`을 통한 스크린 리더 음성 피드백 최적화

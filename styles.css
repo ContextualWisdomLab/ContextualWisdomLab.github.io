@@ -15,6 +15,7 @@
   --line: #d6dad8;
   --white: #ffffff;
   --shadow: 0 24px 70px rgba(22, 38, 61, 0.12);
+  --header-offset: 81px;
 }
 
 * {
@@ -23,6 +24,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-offset);
 }
 
 body {
@@ -105,6 +107,11 @@ a {
   font-size: 13px;
   font-weight: 850;
   cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.language-switch button:not([aria-pressed="true"]):hover {
+  opacity: 0.8;
 }
 
 .language-switch button[aria-pressed="true"] {
@@ -113,7 +120,7 @@ a {
 }
 
 .hero {
-  min-height: min(620px, calc(100vh - 81px));
+  min-height: min(620px, calc(100vh - var(--header-offset)));
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
   gap: clamp(32px, 5vw, 72px);
@@ -210,6 +217,11 @@ h1 {
   text-decoration: none;
   font-size: 15px;
   font-weight: 800;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.8;
 }
 
 .button.primary {
