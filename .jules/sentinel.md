@@ -16,5 +16,5 @@
 **Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
 ## 2026-07-01 - Add Trusted Types Policy via DOMPurify
 **Vulnerability:** Application lacked Trusted Types enforcement, which left it potentially vulnerable to DOM-based XSS if DOM sinks (like `innerHTML`) were manipulated.
-**Learning:** Enforcing `require-trusted-types-for 'script'` in CSP will crash Chromium-based browsers if they assign strings to DOM sinks without a registered policy.
+**Learning:** Enforcing `require-trusted-types-for 'script'` in CSP causes Chromium-based browsers to throw a Trusted Types violation (a `TypeError`) when a string is assigned to a DOM sink without a registered policy, rather than crashing the browser.
 **Prevention:** Always pair the CSP `require-trusted-types-for 'script'` directive with a default Trusted Types policy that securely sanitizes input using an established library like DOMPurify.
