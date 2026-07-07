@@ -10,7 +10,7 @@
 **Vulnerability:** Unhandled exceptions when accessing `localStorage` in strict browser privacy modes (e.g., when cookies are blocked).
 **Learning:** Browsers throw a `SecurityError` when `localStorage` is accessed and the user has blocked third-party cookies or is in a strict privacy mode. If unhandled, this crashes the executing script, leading to a degraded user experience (DoS-like behavior for privacy-conscious users).
 **Prevention:** Always wrap `localStorage.getItem` and `localStorage.setItem` in `try-catch` blocks to fail securely and fall back to sensible defaults.
-## 2025-06-25 - Fix missing noopener noreferrer on external links
-**Vulnerability:** External links (target="_blank") lacked rel="noopener noreferrer", allowing target pages to access window.opener and potentially execute reverse tabnabbing attacks.
-**Learning:** Even simple static HTML sites are vulnerable to reverse tabnabbing if external links open in a new tab without proper rel attributes.
-**Prevention:** Always append rel="noopener noreferrer" when adding target="_blank" to anchor tags pointing to external domains.
+## 2026-06-27 - 외부 링크의 reverse tabnabbing 취약점 완화
+**Vulnerability:** 외부 링크(특히 참조문헌 링크 등)에 `target="_blank"` 속성을 사용하거나 새 탭으로 여는 동작을 유도할 때, `rel="noopener noreferrer"` 속성이 누락되어 Reverse Tabnabbing 공격에 노출될 수 있음.
+**Learning:** `rel="noopener noreferrer"`가 없으면 새로 열린 탭의 페이지가 `window.opener` 객체를 통해 원래 페이지의 `location`을 악의적인 사이트로 변경할 수 있습니다.
+**Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
