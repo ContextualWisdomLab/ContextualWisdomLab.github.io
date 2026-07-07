@@ -5,3 +5,7 @@
 ## 2024-06-21 - Added skip-to-content link
 **Learning:** Found a missing skip-to-content link, which is a key accessibility feature to help keyboard and screen reader users bypass navigation. Additionally learned that giving `<main>` `tabindex="-1"` and removing its outline when `:focus-visible` ensures proper focus handling after clicking the skip link without disruptive visual outlines.
 **Action:** Always include a skip-to-content link near the start of the `body` and manage target focus appropriately.
+
+## 2026-06-25 - Fix Header Overlap
+**Learning:** When using a sticky header, clicking anchor links can cause the target element to scroll under the header, hindering the user experience.
+**Action:** Use `scroll-padding-top` on the `html` element with the height of the sticky header to ensure anchor links scroll to a position just below the header.
