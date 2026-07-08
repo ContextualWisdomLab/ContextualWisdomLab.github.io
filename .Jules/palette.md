@@ -13,3 +13,7 @@
 ## 2024-06-25 - Improve Color Contrast
 **Learning:** Found that using `--gold` for text on white or light backgrounds (like `--paper`) fails WCAG AA contrast standards, making the text difficult to read for some users.
 **Action:** Avoid using `--gold` on light backgrounds. Instead, use alternatives with better contrast like `--teal`. Retain `--gold` for dark backgrounds (like `--ink`) where it provides excellent contrast.
+
+## 2026-07-08 - [접근성] prefers-reduced-motion 설정 지원
+**Learning:** 시스템에서 애니메이션 축소 옵션을 켠 사용자에게도 스무스 스크롤링과 페이드 전환 효과가 불쾌감을 줄 수 있음을 확인했습니다.
+**Action:** 사용자 시스템 설정에 맞춰 CSS의 `scroll-behavior`와 `transition-duration`을 비활성화하는 `@media (prefers-reduced-motion: reduce)` 쿼리를 전역으로 추가하도록 개선해야 합니다.
