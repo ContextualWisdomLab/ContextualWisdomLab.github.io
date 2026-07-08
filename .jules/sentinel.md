@@ -18,3 +18,7 @@
 **Vulnerability:** The application was not enforcing Trusted Types in its Content Security Policy, leaving it theoretically vulnerable to DOM XSS if unsafe DOM sinks (like innerHTML) were ever introduced in the future.
 **Learning:** When an application exclusively uses safe DOM APIs (like `textContent`) and lacks risky sinks, `require-trusted-types-for 'script'` can be enforced natively via CSP without needing to define a Trusted Types policy or use external sanitizers like DOMPurify. This provides a zero-dependency defense-in-depth layer against future regressions.
 **Prevention:** For static sites using safe DOM manipulation, always add `require-trusted-types-for 'script'` to the CSP to proactively block any future usage of unsafe DOM sinks.
+## 2026-07-08 - Trusted Types 기본 방어 적용
+**Vulnerability:** DOM 기반 XSS (안전하지 않은 DOM 싱크 노출 위험)
+**Learning:** 이 앱은 `textContent`와 같은 안전한 DOM API만 사용하고 `innerHTML` 등의 위험한 싱크를 사용하지 않음. 이러한 환경에서는 Trusted Types 정책을 정의하거나 외부 DOMPurify 라이브러리를 추가하지 않아도 브라우저 네이티브인 `require-trusted-types-for 'script'` CSP 규칙을 적용하여 원천 방어가 가능함.
+**Prevention:** 새로운 기능을 추가할 때 무거운 보안 라이브러리를 무조건 추가하기 전에, 앱의 DOM API 사용 방식을 먼저 파악하고 네이티브 정책(Trusted Types)이 호환되는지 점검할 것.
