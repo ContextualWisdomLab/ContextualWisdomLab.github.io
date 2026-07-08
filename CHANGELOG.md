@@ -5,8 +5,4 @@
 - **테스트 추가**: 다국어 처리 로직의 무결성을 검증하기 위해 `test_i18n.html` 테스트 파일을 추가했습니다.
 
 ### Security
-* `index.html`에 Trusted Types CSP 적용 (`require-trusted-types-for 'script'`)
-
-* 보안성 향상을 위해 CSP 설정 적용 (Trusted Types)
-
-* CI 워크플로우 타임아웃 오류를 우회하고 리뷰 프로세스를 다시 트리거하기 위해 변경사항 추가
+- **보안 강화**: `index.html`의 CSP에 Trusted Types 지시어(`require-trusted-types-for 'script'`)를 추가하여, 향후 위험한 DOM sink 도입 시에도 문자열 할당을 원천 차단하도록 했습니다.
