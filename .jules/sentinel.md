@@ -14,7 +14,7 @@
 **Vulnerability:** 외부 링크(특히 참조문헌 링크 등)에 `target="_blank"` 속성을 사용하거나 새 탭으로 여는 동작을 유도할 때, `rel="noopener noreferrer"` 속성이 누락되어 Reverse Tabnabbing 공격에 노출될 수 있음.
 **Learning:** `rel="noopener noreferrer"`가 없으면 새로 열린 탭의 페이지가 `window.opener` 객체를 통해 원래 페이지의 `location`을 악의적인 사이트로 변경할 수 있습니다.
 **Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
-## 2026-07-07 - Enforce Trusted Types in CSP
-**Vulnerability:** Without `require-trusted-types-for 'script'`, the application may be vulnerable to DOM-based XSS if risky DOM sinks like `innerHTML` are introduced later.
-**Learning:** Applications that exclusively use safe DOM APIs (like `textContent`) and lack risky sinks can enforce Trusted Types natively without an external policy or sanitizer. This provides a strong defense-in-depth measure against future DOM XSS introductions.
-**Prevention:** Always enforce `require-trusted-types-for 'script'` in the CSP when the application uses safe DOM APIs, to prevent accidental introduction of DOM XSS vulnerabilities.
+## 2026-07-07 - CSP에 Trusted Types 강제 적용
+**Vulnerability:** `require-trusted-types-for 'script'` 지시문이 없으면, 향후 `innerHTML`과 같은 위험한 DOM 싱크가 코드베이스에 도입될 경우 DOM 기반 XSS(크로스 사이트 스크립팅) 취약점에 노출될 수 있습니다.
+**Learning:** `textContent`와 같은 안전한 DOM API만을 독점적으로 사용하고 위험한 싱크를 포함하지 않는 애플리케이션은, 외부 정책 객체(policy)나 새니타이저(sanitizer) 없이도 네이티브하게 Trusted Types를 강제할 수 있습니다. 이는 미래의 DOM XSS 도입을 원천 차단하는 강력한 다층 방어(defense-in-depth) 수단을 제공합니다.
+**Prevention:** 애플리케이션이 안전한 DOM API만을 사용할 때 CSP에 `require-trusted-types-for 'script'`를 항상 강제하여, 실수로 DOM XSS 취약점이 도입되는 것을 예방해야 합니다.
