@@ -297,7 +297,20 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
+  content-visibility: auto;
 }
+
+/* ⚡ Bolt: Provide fallback and auto sizing for content-visibility to prevent scroll jumping */
+.principles { contain-intrinsic-size: 1650px; contain-intrinsic-size: auto 1650px; }
+.problem { contain-intrinsic-size: 900px; contain-intrinsic-size: auto 900px; }
+.dikw { contain-intrinsic-size: 1515px; contain-intrinsic-size: auto 1515px; }
+.evidence { contain-intrinsic-size: 1100px; contain-intrinsic-size: auto 1100px; }
+.references { contain-intrinsic-size: 810px; contain-intrinsic-size: auto 810px; }
+.logo-story { contain-intrinsic-size: 1000px; contain-intrinsic-size: auto 1000px; }
+.naruon { contain-intrinsic-size: 950px; contain-intrinsic-size: auto 950px; }
+.projects { contain-intrinsic-size: 1350px; contain-intrinsic-size: auto 1350px; }
+.forks { contain-intrinsic-size: 870px; contain-intrinsic-size: auto 870px; }
+.work { contain-intrinsic-size: 890px; contain-intrinsic-size: auto 890px; }
 
 .section-heading {
   max-width: 900px;
