@@ -18,3 +18,8 @@
 **Vulnerability:** The application was not enforcing Trusted Types in its Content Security Policy, leaving it theoretically vulnerable to DOM XSS if unsafe DOM sinks (like innerHTML) were ever introduced in the future.
 **Learning:** When an application exclusively uses safe DOM APIs (like `textContent`) and lacks risky sinks, `require-trusted-types-for 'script'` can be enforced natively via CSP without needing to define a Trusted Types policy or use external sanitizers like DOMPurify. This provides a zero-dependency defense-in-depth layer against future regressions.
 **Prevention:** For static sites using safe DOM manipulation, always add `require-trusted-types-for 'script'` to the CSP to proactively block any future usage of unsafe DOM sinks.
+
+## 2024-05-24 - Add Input Validation for Language Selection
+**Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.
+**Learning:** The global `setLanguage` function assumed inputs would only come from predefined button clicks, skipping runtime validation.
+**Prevention:** Always sanitize and validate function arguments at the application boundary, even if the primary caller is trusted, to enforce defense in depth.

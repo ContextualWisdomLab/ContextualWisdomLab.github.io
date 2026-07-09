@@ -311,6 +311,13 @@ let footerLogo = null;
 let currentLang = null;
 
 function setLanguage(lang) {
+  // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
+  const allowedLanguages = ["ko", "en"];
+  if (!allowedLanguages.includes(lang)) {
+    console.warn(`[Security] Invalid language requested: ${lang}. Falling back to default.`);
+    lang = "ko";
+  }
+
   if (currentLang === lang) return; // Skip if already in the requested language
 
   const dict = messages[lang] || messages.ko;

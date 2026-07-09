@@ -51,6 +51,12 @@
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
 
+      // Test 4: Sentinel Security - Input Validation for untrusted inputs
+      setLanguage("__proto__");
+      assertEqual(currentLang, "ko", "Language should safely fallback to 'ko' on invalid input");
+      setLanguage("<script>alert(1)<\/script>");
+      assertEqual(currentLang, "ko", "Language should safely fallback to 'ko' on XSS payloads");
+
       console.log(`Test Summary: ${testsPassed}/${testsTotal} passed.`);
 
       if (testsPassed === testsTotal) {
