@@ -15,7 +15,7 @@
 **Learning:** `rel="noopener noreferrer"`가 없으면 새로 열린 탭의 페이지가 `window.opener` 객체를 통해 원래 페이지의 `location`을 악의적인 사이트로 변경할 수 있습니다.
 **Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
 
-## 2026-07-02 - Zero-Dependency Trusted Types Enforcement
-**Vulnerability:** Missing protection against potential future DOM-based XSS if risky sinks are introduced.
-**Learning:** Because the application uses safe DOM properties like `textContent` instead of `innerHTML`, we can natively enforce Trusted Types via CSP without needing a default policy or an external sanitizer like DOMPurify.
-**Prevention:** Enforce `require-trusted-types-for 'script'` in CSP for applications that exclusively use safe DOM APIs to proactively block future insecure sink usage.
+## 2026-07-02 - 외부 의존성 없는 Trusted Types CSP 적용
+**Vulnerability:** 잠재적인 DOM 기반 XSS 취약점
+**Learning:** 애플리케이션이 `innerHTML` 대신 안전한 `textContent`와 같은 DOM 속성을 사용하기 때문에, DOMPurify와 같은 외부 살균제(sanitizer)나 기본 정책 없이 CSP를 통해 Trusted Types를 기본적으로 강제할 수 있습니다.
+**Prevention:** 안전한 DOM API만을 사용하는 애플리케이션의 경우, CSP에 `require-trusted-types-for 'script'`를 추가하여 미래에 발생할 수 있는 안전하지 않은 sink 사용을 선제적으로 차단합니다.
