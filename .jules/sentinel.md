@@ -14,8 +14,11 @@
 **Vulnerability:** 외부 링크(특히 참조문헌 링크 등)에 `target="_blank"` 속성을 사용하거나 새 탭으로 여는 동작을 유도할 때, `rel="noopener noreferrer"` 속성이 누락되어 Reverse Tabnabbing 공격에 노출될 수 있음.
 **Learning:** `rel="noopener noreferrer"`가 없으면 새로 열린 탭의 페이지가 `window.opener` 객체를 통해 원래 페이지의 `location`을 악의적인 사이트로 변경할 수 있습니다.
 **Prevention:** 외부 링크를 새 탭으로 열기 위해 `target="_blank"`를 사용할 때만 `rel="noopener noreferrer"`를 함께 추가하여 부모 창에 대한 접근을 차단해야 합니다.
-
-## 2026-07-02 - 외부 의존성 없는 Trusted Types CSP 적용
-**Vulnerability:** 잠재적인 DOM 기반 XSS 취약점
-**Learning:** 애플리케이션이 `innerHTML` 대신 안전한 `textContent`와 같은 DOM 속성을 사용하기 때문에, DOMPurify와 같은 외부 살균제(sanitizer)나 기본 정책 없이 CSP를 통해 Trusted Types를 기본적으로 강제할 수 있습니다.
-**Prevention:** 안전한 DOM API만을 사용하는 애플리케이션의 경우, CSP에 `require-trusted-types-for 'script'`를 추가하여 미래에 발생할 수 있는 안전하지 않은 sink 사용을 선제적으로 차단합니다.
+## 2026-07-01 - Add Trusted Types Policy via DOMPurify
+**Vulnerability:** Application lacked Trusted Types enforcement, which left it potentially vulnerable to DOM-based XSS if DOM sinks (like `innerHTML`) were manipulated.
+**Learning:** Enforcing `require-trusted-types-for 'script'` in CSP causes Chromium-based browsers to throw a Trusted Types violation (a `TypeError`) when a string is assigned to a DOM sink without a registered policy, rather than crashing the browser.
+**Prevention:** When a default Trusted Types policy is needed, pair the CSP `require-trusted-types-for 'script'` directive with a defensively loaded sanitizer such as DOMPurify, defer the scripts in dependency order, and keep policy creation wrapped so an existing policy or CSP restriction does not break page load.
+## 2026-07-08 - Trusted Types 기본 방어 적용
+**Vulnerability:** DOM 기반 XSS (안전하지 않은 DOM 싱크 노출 위험)
+**Learning:** 이 앱은 주로 `textContent`와 같은 안전한 DOM API를 사용하고 `innerHTML` 등의 위험한 싱크를 피함. 이러한 환경에서는 브라우저 네이티브인 `require-trusted-types-for 'script'` CSP 규칙이 1차 방어선이며, 기본 Trusted Types 정책과 DOMPurify는 실제 HTML 싱크 또는 호환성 요구가 있을 때 방어적으로 로드해야 함.
+**Prevention:** 새로운 기능을 추가할 때 앱의 DOM API 사용 방식을 먼저 파악하고, 네이티브 Trusted Types CSP만으로 충분한지 또는 DOMPurify 기반 기본 정책이 필요한지 판단할 것. 기본 정책을 유지한다면 `window.trustedTypes`와 `window.DOMPurify`를 확인하고 `try/catch`로 감싸 페이지 로드를 깨지 않도록 할 것.
