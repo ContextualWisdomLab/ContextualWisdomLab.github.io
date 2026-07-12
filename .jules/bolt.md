@@ -4,6 +4,7 @@
 ## 2024-06-27 - 초기 언어 로드 시 불필요한 DOM 탐색 제거
 **Learning:** 초기 로드 시 요청된 언어가 HTML의 기본 언어(ko)와 동일한 경우, 모든 DOM 텍스트 노드를 탐색하고 치환하는 불필요한 작업을 생략하면 성능이 향상됨을 확인했습니다.
 **Action:** `isInitialDefault` 조건을 추가하여 초기 로드 시 불필요한 DOM 순회 코드가 실행되지 않도록 개선했습니다.
+
 ## 2026-07-05 - content-visibility와 scrollbar jumping 방지
 **Learning:** 긴 단일 페이지(static site)에서 `content-visibility: auto`를 사용하여 오프스크린 섹션의 렌더링을 최적화할 때, `contain-intrinsic-size`를 함께 지정하지 않으면 스크롤바가 튀거나 레이아웃 시프트가 발생할 수 있습니다.
 **Action:** 항상 길이 기반 폴백(예: `contain-intrinsic-size: 600px;`)을 선행하고, 브라우저가 실제 높이를 기억할 수 있도록 `auto` 키워드를 포함한 속성을 설정합니다. 섹션별 실제 높이에 맞춰 크기를 조정합니다.
@@ -13,3 +14,7 @@
 ## 2024-05-24 - LCP 최적화 및 SVG 이미지 처리 패턴
 **Learning:** LCP(가장 큰 콘텐츠 풀 페인트) 대상 이미지에 `decoding="async"` 속성을 부여하면 브라우저가 디코딩을 백그라운드로 넘기게 되어 초기 페인팅이 지연되는 안티패턴이 될 수 있습니다. 또한, SVG 이미지는 래스터 이미지처럼 디코딩되는 것이 아니라 파싱되므로 `decoding="async"`의 효과가 거의 없음을 확인했습니다.
 **Action:** LCP 이미지에는 `fetchpriority="high"`를 유지하되 `decoding="async"`는 사용하지 않아 빠르게 동기적으로 그려지도록 하며, 다른 요소들에서 SVG를 사용할 때는 이 사실을 인지하고 무분별한 속성 적용을 지양합니다.
+
+## 2026-07-10 - Remove unnecessary DOMPurify for performance
+**Learning:** 애플리케이션이 `textContent`와 같은 안전한 DOM API만 사용하고 `innerHTML` 등의 위험한 싱크를 사용하지 않는다면 DOMPurify와 같은 라이브러리를 통해 Trusted Types 정책을 생성할 필요가 없음.
+**Action:** 불필요한 번들 다운로드 및 스크립트 실행을 방지하기 위해 사용하지 않는 라이브러리를 식별하고 제거할 것.
