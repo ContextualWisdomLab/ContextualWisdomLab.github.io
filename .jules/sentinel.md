@@ -1,7 +1,3 @@
-## 2026-07-12 - 컴포넌트 갤러리의 엄격한 CSP 적용
-**Vulnerability:** `components/index.html`에 보안 헤더가 누락되어 있고 인라인 스크립트/스타일을 사용하여 XSS 공격 등에 취약할 수 있음.
-**Learning:** 엄격한 CSP(`style-src 'self'`)를 추가하면 인라인 HTML 스타일 속성과 CSS 내 인라인 `data:` 이미지 URI가 차단됩니다. 이를 해결하려면 CSS 클래스로 추출하고 명시적으로 스킴을 추가(`img-src 'self' data:;`)해야 합니다.
-**Prevention:** 엄격한 CSP를 도입하기 전에 항상 인라인 `<script>` 및 `<style>` 블록을 외부 파일로 리팩터링하고, 인라인 `style="..."` 속성을 유틸리티 클래스로 대체해야 합니다.
 ## 2026-06-19 - Added Content Security Policy
 **Vulnerability:** Missing Content Security Policy (CSP) header.
 **Learning:** Static HTML sites often neglect CSP, leaving them exposed to XSS or data injection if they later add dynamic content or if third-party scripts are compromised.

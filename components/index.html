@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'; style-src 'self';">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>KRDS Component Library · 맥락지혜 연구실</title>
   <meta name="description" content="맥락지혜 연구실 KRDS 컴포넌트 라이브러리 — 브랜드 토큰 기반 바닐라 구현" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="krds-components.css" />
-  <link rel="stylesheet" href="krds-gallery.css" />
-  <script src="krds-gallery.js" defer></script>
+  <style>
+    /* gallery chrome only — components themselves live in krds-components.css */
+    .gallery { max-width: 960px; margin: 0 auto; padding: 48px clamp(20px, 5vw, 48px); }
+    .gallery h1 { font-size: clamp(32px, 5vw, 48px); margin: 0 0 8px; }
+    .gallery > p.lead { color: var(--muted); font-size: 18px; margin: 0 0 40px; }
+    .story { margin: 40px 0; padding: 28px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; }
+    .story > h2 { font-size: 22px; margin: 0 0 4px; }
+    .story > .src { font-size: 13px; color: var(--muted); margin: 0 0 20px; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .row.col { flex-direction: column; }
+    .stack { display: grid; gap: 16px; max-width: 420px; }
+  </style>
 </head>
 <body class="krds-scope">
   <main class="gallery">
@@ -28,7 +36,7 @@
         <button class="krds-btn krds-btn--primary" disabled>Disabled</button>
         <button class="krds-btn krds-btn--primary krds-btn--loading">Loading</button>
       </div>
-      <div class="row mt-16">
+      <div class="row" style="margin-top:16px">
         <button class="krds-btn krds-btn--primary krds-btn--sm">Small</button>
         <button class="krds-btn krds-btn--primary">Medium</button>
         <button class="krds-btn krds-btn--primary krds-btn--lg">Large</button>
@@ -71,7 +79,7 @@
     <section class="story" id="s-select">
       <h2>Select</h2>
       <p class="src">.krds-select · Figma Selection/Select 56:29</p>
-      <label class="krds-field max-w-320">
+      <label class="krds-field" style="max-width:320px">
         <span class="krds-field__label">정렬</span>
         <select class="krds-select">
           <option>최신순</option>
@@ -91,7 +99,7 @@
         <span class="krds-badge krds-badge--warning">Warning</span>
         <span class="krds-badge krds-badge--danger">Danger</span>
       </div>
-      <div class="row mt-16">
+      <div class="row" style="margin-top:16px">
         <span class="krds-tag">필터 A <button class="krds-tag__remove" aria-label="필터 A 제거">×</button></span>
         <span class="krds-tag">필터 B <button class="krds-tag__remove" aria-label="필터 B 제거">×</button></span>
       </div>
@@ -119,7 +127,7 @@
         <summary>DIKW란 무엇인가</summary>
         <div class="krds-accordion__body">자료·정보·지식·지혜를 점검하는 질문 체계입니다.</div>
       </details>
-      <details class="krds-accordion mt-8">
+      <details class="krds-accordion" style="margin-top:8px">
         <summary>왜 위계가 아닌가</summary>
         <div class="krds-accordion__body">맥락에 따라 순환·재구성되기 때문입니다.</div>
       </details>
@@ -144,7 +152,7 @@
     <section class="story" id="s-alert">
       <h2>Alert</h2>
       <p class="src">.krds-alert · Figma Layout/Critical Alert</p>
-      <div class="stack max-w-640">
+      <div class="stack" style="max-width:640px">
         <div class="krds-alert krds-alert--info"><span><strong class="krds-alert__title">안내</strong> 정보 메시지입니다.</span></div>
         <div class="krds-alert krds-alert--success"><span><strong class="krds-alert__title">완료</strong> 성공적으로 처리되었습니다.</span></div>
         <div class="krds-alert krds-alert--warning"><span><strong class="krds-alert__title">주의</strong> 확인이 필요합니다.</span></div>
@@ -158,5 +166,25 @@
       <div class="krds-toast">저장되었습니다. <button class="krds-toast__action">실행 취소</button></div>
     </section>
   </main>
+
+  <script>
+    // Tabs: minimal roving behavior. ponytail: native buttons + aria, no framework.
+    document.querySelectorAll(".krds-tabs").forEach((tabs) => {
+      const tabList = [...tabs.querySelectorAll('[role="tab"]')];
+      tabList.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabList.forEach((t) => {
+            const sel = t === tab;
+            t.setAttribute("aria-selected", sel);
+            document.getElementById(t.getAttribute("aria-controls")).hidden = !sel;
+          });
+        });
+      });
+    });
+    // Tag remove
+    document.querySelectorAll(".krds-tag__remove").forEach((btn) =>
+      btn.addEventListener("click", () => btn.closest(".krds-tag").remove())
+    );
+  </script>
 </body>
 </html>
