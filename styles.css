@@ -297,7 +297,6 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
-  /* ⚡ Bolt: Defer rendering of off-screen sections to improve initial page load performance */
   content-visibility: auto;
   contain-intrinsic-size: 600px;
   contain-intrinsic-size: auto 600px;
@@ -451,7 +450,7 @@ h1 {
 .dikw-grid span {
   display: block;
   margin-bottom: 38px;
-  color: var(--teal);
+  color: var(--gold);
   font-size: 14px;
   font-weight: 900;
 }
@@ -806,7 +805,6 @@ main:focus-visible {
   top: 0;
 }
 
-/* Accessibility enhancements */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
