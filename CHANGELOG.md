@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **성능 개선**: 오프스크린 섹션의 렌더링 최적화를 위해 `.section`에 `content-visibility: auto`를 적용하였으며, 스크롤바 튐 현상을 방지하기 위해 각 섹션별 예상 렌더링 높이를 `contain-intrinsic-size`에 지정했습니다.
 - **보안 개선**: Trusted Types 기반 CSP 강화: 잠재적인 DOM 기반 XSS 공격을 방지하기 위해 `require-trusted-types-for 'script'` 지시어 추가
 - **UX/접근성 개선**: `.dikw-grid span`의 텍스트 색상을 `var(--gold)`에서 `var(--teal)`로 변경하여 밝은 배경에서의 대비(Color Contrast)를 개선하고 WCAG 접근성 기준을 충족하도록 하였습니다.
 - **UX/접근성 개선**: 시스템 설정에서 '애니메이션 줄이기(prefers-reduced-motion)'를 활성화한 사용자를 위해 과도한 애니메이션과 트랜지션을 비활성화(`0.01ms`)하고 부드러운 스크롤을 끄도록 CSS 미디어 쿼리를 추가했습니다.

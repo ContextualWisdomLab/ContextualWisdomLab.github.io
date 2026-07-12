@@ -297,7 +297,24 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
+
+  /* ⚡ Bolt: Off-screen rendering optimization */
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px; /* Fallback for browsers that don't support auto sizing */
+  contain-intrinsic-size: auto 1000px;
 }
+
+/* ⚡ Bolt: Provide accurate height estimates for sections to prevent scrollbar jumping */
+#principles { contain-intrinsic-size: auto 1650px; }
+#problem { contain-intrinsic-size: auto 900px; }
+#dikw { contain-intrinsic-size: auto 1500px; }
+#evidence { contain-intrinsic-size: auto 1100px; }
+#references { contain-intrinsic-size: auto 800px; }
+#logo { contain-intrinsic-size: auto 1000px; }
+#naruon { contain-intrinsic-size: auto 950px; }
+#projects { contain-intrinsic-size: auto 1350px; }
+#forks { contain-intrinsic-size: auto 870px; }
+#work { contain-intrinsic-size: auto 890px; }
 
 .section-heading {
   max-width: 900px;
