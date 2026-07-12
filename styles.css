@@ -298,7 +298,6 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
-  /* ⚡ Bolt: Defer rendering of off-screen sections to improve initial page load performance */
   content-visibility: auto;
   contain-intrinsic-size: 600px;
   contain-intrinsic-size: auto 600px;
@@ -452,7 +451,7 @@ h1 {
 .dikw-grid span {
   display: block;
   margin-bottom: 38px;
-  color: var(--teal);
+  color: var(--gold);
   font-size: 14px;
   font-weight: 900;
 }
@@ -778,19 +777,6 @@ h1 {
 }
 
 /* Accessibility enhancements */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto !important;
-  }
-
-  *, *::before, *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -818,4 +804,15 @@ main:focus-visible {
 
 .skip-link:focus-visible {
   top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
