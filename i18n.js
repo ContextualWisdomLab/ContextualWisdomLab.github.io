@@ -121,6 +121,10 @@ const messages = {
     "projects.scopeweaveBody": "트리 편집, 진행률 계산, CSV/JSON, 주간 Gantt를 지원하는 정적 HTML/CSS/JS WBS 플래너입니다.",
     "projects.vibesecTitle": "VibeSec",
     "projects.vibesecBody": "바이브코딩 앱을 위한 보안 가드레일입니다. AI 개발 도구 규칙, 정적 점검, 리뷰와 수정 프롬프트를 다룹니다.",
+    "projects.fastMlsirmTitle": "fast-mlsirm",
+    "projects.fastMlsirmBody": "MLSIRM/MLS2PLM 모형의 시뮬레이션, 적합, 복원 진단을 빠르게 수행하는 Python/Rust 패키지입니다.",
+    "projects.wafIdsTitle": "waf-ids-ai-soc",
+    "projects.wafIdsBody": "DNSBL 게시 기능을 갖춘 Rust 우선 WAF/IDS/AI SOC 게이트웨이입니다.",
     "forks.title": "Fork 프로젝트는 따로 봅니다",
     "forks.lead": "맥락지혜 연구실이 직접 만든 프로젝트와 구분해, 외부 upstream에서 출발해 조직 안에서 검토하거나 확장하는 저장소입니다.",
     "forks.argosTitle": "argos",
@@ -264,6 +268,10 @@ const messages = {
     "projects.scopeweaveBody": "A static HTML/CSS/JS WBS planner with tree editing, progress calculation, CSV/JSON, and weekly Gantt support.",
     "projects.vibesecTitle": "VibeSec",
     "projects.vibesecBody": "Security guardrails for vibe-coded apps, covering AI tool rules, static checks, and review and remediation prompts.",
+    "projects.fastMlsirmTitle": "fast-mlsirm",
+    "projects.fastMlsirmBody": "A Python/Rust package for fast MLSIRM/MLS2PLM simulation, fitting, and recovery diagnostics.",
+    "projects.wafIdsTitle": "waf-ids-ai-soc",
+    "projects.wafIdsBody": "A Rust-first WAF/IDS/AI SOC gateway with DNSBL publishing surfaces.",
     "forks.title": "Forked projects are shown separately",
     "forks.lead": "These repositories started from external upstream projects and are reviewed or extended inside the organization, separate from projects originated by the lab.",
     "forks.argosTitle": "argos",
@@ -311,6 +319,13 @@ let footerLogo = null;
 let currentLang = null;
 
 function setLanguage(lang) {
+  // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
+  const allowedLanguages = ["ko", "en"];
+  if (!allowedLanguages.includes(lang)) {
+    console.warn(`[Security] Invalid language requested: ${lang}. Falling back to default.`);
+    lang = "ko";
+  }
+
   if (currentLang === lang) return; // Skip if already in the requested language
 
   const dict = messages[lang] || messages.ko;

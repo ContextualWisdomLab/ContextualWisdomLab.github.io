@@ -82,6 +82,7 @@ a {
 .site-nav a,
 .intro-lnb a {
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .site-nav a:hover,
@@ -297,6 +298,14 @@ h1 {
 .section {
   padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
   border-top: 1px solid var(--line);
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
+  contain-intrinsic-size: auto 600px;
+}
+
+.section.dikw, .section.projects {
+  contain-intrinsic-size: 1000px;
+  contain-intrinsic-size: auto 1000px;
 }
 
 .section-heading {
@@ -442,7 +451,7 @@ h1 {
 .dikw-grid span {
   display: block;
   margin-bottom: 38px;
-  color: var(--gold);
+  color: var(--teal);
   font-size: 14px;
   font-weight: 900;
 }
@@ -795,4 +804,15 @@ main:focus-visible {
 
 .skip-link:focus-visible {
   top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
