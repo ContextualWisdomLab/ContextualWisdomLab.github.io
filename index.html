@@ -64,8 +64,7 @@
         </div>
 
         <div class="hero-visual">
-          <!-- ⚡ Bolt: Removed decoding="async" for LCP image to paint synchronously and as fast as possible -->
-          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high">
+          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high" decoding="async">
           <div class="ladder" role="list" aria-label="Data to wisdom ladder">
             <div class="ladder-row" role="listitem">
               <span>Data</span>
@@ -194,7 +193,7 @@
             PPTX의 흐름은 기업 자료, 맥락화, 판단 포인트, 실행 연결입니다. DIKW는 이 흐름을 자동 상승 위계로 보자는 말이 아니라, 자료가 판단 근거로 쓰일 준비가 되었는지 묻는 점검 질문입니다.
           </p>
         </div>
-        <!-- ⚡ Bolt: Lazy load off-screen image. Decoding="async" is kept as a minor optimization, though its effect on SVGs is negligible. -->
+        <!-- ⚡ Bolt: Lazy load off-screen image -->
         <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy" width="1120" height="330" decoding="async">
         <div class="dikw-grid">
           <article>
@@ -272,7 +271,7 @@
 
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
-          <!-- ⚡ Bolt: Lazy load off-screen image. Decoding="async" is kept as a minor optimization. -->
+          <!-- ⚡ Bolt: Lazy load off-screen image -->
           <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async">
         </div>
         <div>
@@ -418,7 +417,7 @@
     </main>
 
     <footer class="site-footer">
-      <!-- ⚡ Bolt: Lazy load off-screen image. Decoding="async" is kept as a minor optimization. -->
+      <!-- ⚡ Bolt: Lazy load off-screen image -->
       <img
         id="footer-logo"
         src="assets/context-wisdom-lab-logo.svg"
