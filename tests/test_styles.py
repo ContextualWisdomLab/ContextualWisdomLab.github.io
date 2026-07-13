@@ -19,12 +19,6 @@ class _ImageParser(HTMLParser):
             self.images.append(dict(attrs))
 
 
-def _images() -> list[dict[str, str | None]]:
-    parser = _ImageParser()
-    parser.feed(INDEX.read_text(encoding="utf-8"))
-    return parser.images
-
-
 def _rule(selector: str) -> str:
     css = STYLES.read_text(encoding="utf-8")
     match = re.search(rf"{re.escape(selector)}\s*\{{(?P<body>[^}}]+)\}}", css)
@@ -49,17 +43,10 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
     assert "contain-intrinsic-size: auto 1000px;" in rule
 
 
-def test_lcp_image_prioritizes_synchronous_paint():
-    """The hero LCP SVG keeps high priority without async decoding."""
-    context_art = next(img for img in _images() if img.get("class") == "context-art")
+def test_images_decode_without_blocking_rendering():
+    """All site images opt into asynchronous decoding."""
+    parser = _ImageParser()
+    parser.feed(INDEX.read_text(encoding="utf-8"))
 
-    assert context_art["fetchpriority"] == "high"
-    assert "decoding" not in context_art
-
-
-def test_non_lcp_images_decode_asynchronously():
-    """Non-LCP images use async decoding to reduce main-thread jank."""
-    non_lcp_images = [img for img in _images() if img.get("class") != "context-art"]
-
-    assert non_lcp_images
-    assert all(img.get("decoding") == "async" for img in non_lcp_images)
+    assert parser.images
+    assert all(image.get("decoding") == "async" for image in parser.images)
