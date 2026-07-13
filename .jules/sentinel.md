@@ -33,6 +33,10 @@
 **Vulnerability:** DOM 기반 XSS (안전하지 않은 DOM 싱크 노출 위험)
 **Learning:** 이 앱은 주로 `textContent`와 같은 안전한 DOM API를 사용하고 `innerHTML` 등의 위험한 싱크를 피함. 이러한 환경에서는 브라우저 네이티브인 `require-trusted-types-for 'script'` CSP 규칙이 1차 방어선이며, 기본 Trusted Types 정책과 DOMPurify는 실제 HTML 싱크 또는 호환성 요구가 있을 때 방어적으로 로드해야 함.
 **Prevention:** 새로운 기능을 추가할 때 앱의 DOM API 사용 방식을 먼저 파악하고, 네이티브 Trusted Types CSP만으로 충분한지 또는 DOMPurify 기반 기본 정책이 필요한지 판단할 것. 기본 정책을 유지한다면 `window.trustedTypes`와 `window.DOMPurify`를 확인하고 `try/catch`로 감싸 페이지 로드를 깨지 않도록 할 것.
+## 2026-07-12 - Strict CSP in Component Gallery
+**Vulnerability:** Weak Content-Security Policy due to lack of headers and usage of inline scripts/styles in `components/index.html`.
+**Learning:** Adding a strict CSP (`style-src 'self'`) breaks inline HTML style attributes and inline `data:` image URIs in CSS, requiring extraction into CSS classes and explicit scheme additions (e.g., `img-src 'self' data:;`).
+**Prevention:** Always refactor inline `<script>` and `<style>` blocks to external files, and replace inline `style="..."` attributes with utility classes before rolling out a strict CSP.
 
 ## 2024-05-24 - Add Input Validation for Language Selection
 **Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.

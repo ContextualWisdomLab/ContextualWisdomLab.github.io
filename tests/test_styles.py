@@ -1,10 +1,22 @@
 """Regression tests for performance-sensitive site CSS."""
 
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 
+INDEX = Path(__file__).resolve().parents[1] / "index.html"
 STYLES = Path(__file__).resolve().parents[1] / "styles.css"
+
+
+class _ImageParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.images: list[dict[str, str | None]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "img":
+            self.images.append(dict(attrs))
 
 
 def _rule(selector: str) -> str:
@@ -29,3 +41,12 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
     assert "contain-intrinsic-size: 1000px;" in rule
     assert "contain-intrinsic-size: auto 1000px;" in rule
+
+
+def test_images_decode_without_blocking_rendering():
+    """All site images opt into asynchronous decoding."""
+    parser = _ImageParser()
+    parser.feed(INDEX.read_text(encoding="utf-8"))
+
+    assert parser.images
+    assert all(image.get("decoding") == "async" for image in parser.images)
