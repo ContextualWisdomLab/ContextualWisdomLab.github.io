@@ -1,7 +1,7 @@
 """Regression tests for performance-sensitive site CSS."""
 
-from html.parser import HTMLParser
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 
@@ -9,8 +9,8 @@ INDEX = Path(__file__).resolve().parents[1] / "index.html"
 STYLES = Path(__file__).resolve().parents[1] / "styles.css"
 
 
-class ImageCollector(HTMLParser):
-    def __init__(self) -> None:
+class _ImageParser(HTMLParser):
+    def __init__(self):
         super().__init__()
         self.images: list[dict[str, str | None]] = []
 
@@ -20,7 +20,7 @@ class ImageCollector(HTMLParser):
 
 
 def _images() -> list[dict[str, str | None]]:
-    parser = ImageCollector()
+    parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
     return parser.images
 

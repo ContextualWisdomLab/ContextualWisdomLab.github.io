@@ -82,6 +82,7 @@ a {
 .site-nav a,
 .intro-lnb a {
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .site-nav a:hover,
