@@ -73,3 +73,12 @@ def test_component_gallery_script_avoids_unsafe_dom_sinks() -> None:
     assert "outerHTML" not in script
     assert "eval(" not in script
     assert "new Function" not in script
+
+def test_component_gallery_inputs_have_length_limits() -> None:
+    """Ensure all text-based inputs have maxlength defined to mitigate DoS risks."""
+    html = _gallery_html()
+    inputs = re.findall(r'<input[^>]+>', html)
+    for inp in inputs:
+        if 'type="checkbox"' in inp or 'type="radio"' in inp:
+            continue
+        assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
