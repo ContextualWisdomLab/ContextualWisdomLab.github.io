@@ -43,6 +43,14 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
     assert "contain-intrinsic-size: auto 1000px;" in rule
 
 
+def test_dikw_labels_keep_accessible_contrast_on_light_background():
+    """DIKW labels avoid low-contrast gold on the paper background."""
+    rule = _rule(".dikw-grid span")
+
+    assert "color: var(--teal);" in rule
+    assert "color: var(--gold);" not in rule
+
+
 def test_images_decode_without_blocking_rendering():
     """All site images opt into asynchronous decoding."""
     parser = _ImageParser()
