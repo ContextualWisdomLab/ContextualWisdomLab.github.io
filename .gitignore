@@ -1,3 +1,5 @@
 node_modules
 venv/
 .codegraph/
+__pycache__/
+*.py[cod]

@@ -41,17 +41,17 @@
       <div class="stack">
         <label class="krds-field">
           <span class="krds-field__label">이름<span class="krds-req" aria-hidden="true">*</span></span>
-          <input class="krds-field__control" type="text" placeholder="이름을 입력하세요" required />
+          <input class="krds-field__control" type="text" placeholder="이름을 입력하세요" maxlength="64" required />
           <span class="krds-field__help">공백 없이 입력합니다.</span>
         </label>
         <div class="krds-field krds-field--error">
           <label class="krds-field__label" for="email-err">이메일</label>
-          <input class="krds-field__control" id="email-err" type="email" value="not-an-email" aria-invalid="true" aria-describedby="email-err-msg" />
+          <input class="krds-field__control" id="email-err" type="email" value="not-an-email" maxlength="64" aria-invalid="true" aria-describedby="email-err-msg" />
           <span class="krds-field__error" id="email-err-msg">올바른 이메일 형식이 아닙니다.</span>
         </div>
         <label class="krds-field">
           <span class="krds-field__label">비활성</span>
-          <input class="krds-field__control" type="text" value="수정 불가" disabled />
+          <input class="krds-field__control" type="text" value="수정 불가" maxlength="64" disabled />
         </label>
       </div>
     </section>
