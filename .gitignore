@@ -3,3 +3,4 @@ venv/
 .codegraph/
 __pycache__/
 *.py[cod]
+test_venv/
