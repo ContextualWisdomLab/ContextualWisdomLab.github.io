@@ -12,3 +12,7 @@
 ## 2026-07-10 - Remove unnecessary DOMPurify for performance
 **Learning:** 애플리케이션이 `textContent`와 같은 안전한 DOM API만 사용하고 `innerHTML` 등의 위험한 싱크를 사용하지 않는다면 DOMPurify와 같은 라이브러리를 통해 Trusted Types 정책을 생성할 필요가 없음.
 **Action:** 불필요한 번들 다운로드 및 스크립트 실행을 방지하기 위해 사용하지 않는 라이브러리를 식별하고 제거할 것.
+
+## 2024-07-14 - SVG 및 LCP 이미지의 잘못된 decoding="async" 적용 방지
+**Learning:** LCP(Largest Contentful Paint) 대상 이미지나 SVG 파일에 `decoding="async"`를 적용하면 렌더링이 지연되어 오히려 성능 저하를 일으키는 안티패턴이 됩니다. SVG는 디코딩이 아닌 파싱 과정을 거치며, LCP 이미지는 렌더링을 지연시키지 않아야 합니다.
+**Action:** 오프스크린이거나 지연 로드되는 래스터 이미지에만 `decoding="async"`를 적용하고, SVG 및 우선순위가 높은 LCP 이미지에는 적용하지 않도록 합니다.
