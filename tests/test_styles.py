@@ -50,3 +50,12 @@ def test_images_decode_without_blocking_rendering():
 
     assert parser.images
     assert all(image.get("decoding") == "async" for image in parser.images)
+
+def test_project_cards_are_fully_clickable_via_pseudo_element():
+    """Project cards expand clickable area to entire card without wrapping the whole block in an anchor."""
+    article_rule = _rule(".project-grid article")
+    assert "position: relative;" in article_rule
+
+    after_rule = _rule(".project-grid h3 a::after")
+    assert "position: absolute;" in after_rule
+    assert "inset: 0;" in after_rule
