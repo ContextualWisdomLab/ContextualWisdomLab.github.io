@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **UX/접근성 개선**: 프로젝트 카드의 클릭 영역을 카드 전체로 확장하여 사용자 편의성을 높였습니다. <a> 태그를 확장하는 대신 가상 요소(pseudo-element) 겹침 방식을 사용하여 스크린 리더 접근성을 유지했습니다.
 - **보안 개선**: 컴포넌트 갤러리의 인라인 스크립트와 스타일을 외부 파일로 분리하고, 엄격한 Content-Security-Policy를 적용해 XSS 방어를 강화했습니다.
 - **성능 회귀 복원**: 오프스크린 `.section` 렌더링을 `content-visibility: auto`로 지연하고, 일반 섹션은 600px·콘텐츠가 큰 DIKW/projects 섹션은 1000px의 `contain-intrinsic-size` placeholder를 유지해 초기 렌더링 비용과 스크롤바 이동을 함께 줄였습니다.
 - **보안 개선**: Trusted Types 기반 CSP 강화: 잠재적인 DOM 기반 XSS 공격을 방지하기 위해 `require-trusted-types-for 'script'` 지시어 추가
