@@ -486,9 +486,23 @@ h1 {
 }
 
 .naruon-grid article {
+  position: relative;
   min-height: 220px;
   padding: clamp(26px, 4vw, 42px);
   background: var(--white);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.naruon-grid article:hover,
+.naruon-grid article:focus-within {
+  background: var(--paper);
+  box-shadow: 0 4px 12px rgba(22, 38, 61, 0.05);
+}
+
+.naruon-grid article h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 .evidence-grid h3 {
