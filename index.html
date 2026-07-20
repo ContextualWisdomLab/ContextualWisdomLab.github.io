@@ -29,7 +29,8 @@
     <a href="#top" class="skip-link" data-i18n="nav.skipToContent">본문으로 건너뛰기</a>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Contextual Wisdom Lab home">
-        <img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44" decoding="async">
+        <!-- ⚡ Bolt: Removed decoding="async" for SVG optimization as SVGs are parsed, not decoded -->
+        <img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44">
         <span>Contextual Wisdom Lab</span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
@@ -64,7 +65,8 @@
         </div>
 
         <div class="hero-visual">
-          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high" decoding="async">
+          <!-- ⚡ Bolt: Removed decoding="async" for LCP/SVG optimization to avoid delaying critical rendering -->
+          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high">
           <div class="ladder" role="list" aria-label="Data to wisdom ladder">
             <div class="ladder-row" role="listitem">
               <span>Data</span>
@@ -194,7 +196,8 @@
           </p>
         </div>
         <!-- ⚡ Bolt: Lazy load off-screen image -->
-        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy" width="1120" height="330" decoding="async">
+        <!-- ⚡ Bolt: Removed decoding="async" for SVG optimization as SVGs are parsed, not decoded -->
+        <img class="section-diagram" src="assets/dikw-checkpoints.svg" alt="" aria-hidden="true" loading="lazy" width="1120" height="330">
         <div class="dikw-grid">
           <article>
             <span>Data</span>
@@ -272,7 +275,8 @@
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
           <!-- ⚡ Bolt: Lazy load off-screen image -->
-          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async">
+          <!-- ⚡ Bolt: Removed decoding="async" for SVG optimization as SVGs are parsed, not decoded -->
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500">
         </div>
         <div>
           <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
@@ -418,6 +422,7 @@
 
     <footer class="site-footer">
       <!-- ⚡ Bolt: Lazy load off-screen image -->
+      <!-- ⚡ Bolt: Removed decoding="async" for SVG optimization as SVGs are parsed, not decoded -->
       <img
         id="footer-logo"
         src="assets/context-wisdom-lab-logo.svg"
@@ -425,7 +430,6 @@
         loading="lazy"
         width="920"
         height="260"
-        decoding="async"
       >
       <p>
         <span data-i18n="footer.founded">Founded by</span>
