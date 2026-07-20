@@ -102,13 +102,18 @@ a {
   min-width: 38px;
   min-height: 32px;
   border: 0;
+  border-radius: 4px;
   background: transparent;
   color: var(--muted);
   font: inherit;
   font-size: 13px;
   font-weight: 850;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s, transform 0.1s ease-out;
+}
+
+.language-switch button:active {
+  transform: scale(0.94);
 }
 
 .language-switch button:not([aria-pressed="true"]):hover {
@@ -218,11 +223,15 @@ h1 {
   text-decoration: none;
   font-size: 15px;
   font-weight: 800;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s ease-out;
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.97);
 }
 
 .button.primary {
