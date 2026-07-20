@@ -50,3 +50,12 @@ def test_images_decode_without_blocking_rendering():
 
     assert parser.images
     assert all(image.get("decoding") == "async" for image in parser.images)
+
+
+def test_interactive_elements_have_tactile_active_states():
+    """Buttons and interactive elements scale down slightly on active state."""
+    button_active = _rule(".button:active")
+    lang_button_active = _rule(".language-switch button:active")
+
+    assert "transform: scale(0.97);" in button_active
+    assert "transform: scale(0.94);" in lang_button_active
