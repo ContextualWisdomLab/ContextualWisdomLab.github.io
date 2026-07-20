@@ -38,3 +38,7 @@
 **Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.
 **Learning:** The global `setLanguage` function assumed inputs would only come from predefined button clicks, skipping runtime validation.
 **Prevention:** Always sanitize and validate function arguments at the application boundary, even if the primary caller is trusted, to enforce defense in depth.
+## 2026-07-20 - Enforce strict default-src 'none' CSP on index.html
+**Vulnerability:** Weak CSP utilizing `default-src 'self'` could inadvertently allow loading unexpected resource types if they share the same origin, potentially widening the attack surface.
+**Learning:** It is more secure to use an explicit allowlist approach (`default-src 'none'`) and explicitly grant `self` only to required resource types (script, style, img, font, connect).
+**Prevention:** Always default to `default-src 'none'` and explicitly add directives for what is strictly needed, rather than relying on an implicitly broad `default-src 'self'`.
