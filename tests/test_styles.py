@@ -44,9 +44,10 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
 
 def test_images_decode_without_blocking_rendering():
-    """All site images opt into asynchronous decoding."""
+    """All site raster images opt into asynchronous decoding (SVGs excluded)."""
     parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    assert all(image.get("decoding") == "async" for image in parser.images)
+    raster_images = [img for img in parser.images if not str(img.get("src")).endswith(".svg")]
+    assert all(image.get("decoding") == "async" for image in raster_images)
