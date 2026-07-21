@@ -505,10 +505,28 @@ h1 {
   line-height: 1.16;
 }
 
+.project-grid article {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-grid article:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  z-index: 1;
+}
+
 .project-grid h3 a {
   color: inherit;
   text-decoration-thickness: 1px;
   text-underline-offset: 5px;
+}
+
+.project-grid h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .project-grid h3 a:hover {
