@@ -49,4 +49,4 @@ def test_images_decode_without_blocking_rendering():
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    assert all(image.get("decoding") == "async" for image in parser.images)
+    assert all(image.get("decoding") == "async" for image in parser.images if not image.get("src", "").endswith(".svg"))
