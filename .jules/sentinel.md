@@ -38,3 +38,7 @@
 **Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.
 **Learning:** The global `setLanguage` function assumed inputs would only come from predefined button clicks, skipping runtime validation.
 **Prevention:** Always sanitize and validate function arguments at the application boundary, even if the primary caller is trusted, to enforce defense in depth.
+## 2026-07-23 - Strict base-uri in Content Security Policy
+**Vulnerability:** The Content Security Policy in `index.html` used `base-uri 'self'`, which is less restrictive than necessary since the application does not rely on base tags.
+**Learning:** Even a `'self'` restriction on `base-uri` can be risky if there are other vulnerabilities (like an open redirect or path traversal) on the same origin. Since the static site uses absolute paths relative to the root or relative paths without needing a base tag change, `base-uri 'none'` is the safest default.
+**Prevention:** Always default to `base-uri 'none'` in the Content Security Policy for applications that do not explicitly require the `<base>` HTML element.
