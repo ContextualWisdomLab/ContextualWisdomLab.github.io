@@ -12,3 +12,7 @@
 ## 2026-07-10 - Remove unnecessary DOMPurify for performance
 **Learning:** 애플리케이션이 `textContent`와 같은 안전한 DOM API만 사용하고 `innerHTML` 등의 위험한 싱크를 사용하지 않는다면 DOMPurify와 같은 라이브러리를 통해 Trusted Types 정책을 생성할 필요가 없음.
 **Action:** 불필요한 번들 다운로드 및 스크립트 실행을 방지하기 위해 사용하지 않는 라이브러리를 식별하고 제거할 것.
+
+## 2026-07-23 - Above-the-fold 이미지 디코딩 최적화
+**Learning:** LCP에 해당하는 Above-the-fold 이미지에 `decoding="async"`를 설정하면 디코딩 작업이 지연되어 오히려 LCP 렌더링 시간이 늘어날 수 있다.
+**Action:** 향후 lazy load 되는 이미지가 아닌 첫 화면의 중요한 SVG/LCP 이미지에는 `decoding="async"`를 적용하지 않도록 한다.
