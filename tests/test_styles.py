@@ -44,9 +44,13 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
 
 def test_images_decode_without_blocking_rendering():
-    """All site images opt into asynchronous decoding."""
+    """Lazy loaded images opt into asynchronous decoding."""
     parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    assert all(image.get("decoding") == "async" for image in parser.images)
+    for image in parser.images:
+        if image.get("loading") == "lazy":
+            assert image.get("decoding") == "async"
+        else:
+            assert image.get("decoding") != "async"
