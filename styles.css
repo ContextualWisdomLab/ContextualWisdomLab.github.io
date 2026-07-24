@@ -505,6 +505,16 @@ h1 {
   line-height: 1.16;
 }
 
+.project-grid article {
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.project-grid article:hover,
+.project-grid article:focus-within {
+  background-color: var(--paper);
+}
+
 .project-grid h3 a {
   color: inherit;
   text-decoration-thickness: 1px;
@@ -513,6 +523,13 @@ h1 {
 
 .project-grid h3 a:hover {
   color: var(--ink);
+}
+
+.project-grid h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .references {
