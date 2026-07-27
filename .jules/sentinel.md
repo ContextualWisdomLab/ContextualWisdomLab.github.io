@@ -38,3 +38,7 @@
 **Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.
 **Learning:** The global `setLanguage` function assumed inputs would only come from predefined button clicks, skipping runtime validation.
 **Prevention:** Always sanitize and validate function arguments at the application boundary, even if the primary caller is trusted, to enforce defense in depth.
+## 2026-07-27 - Base 태그 삽입 공격 방지
+**Vulnerability:** 정적 사이트에 CSP base-uri가 'self'로 설정되어 Base 태그 인젝션 가능성 존재
+**Learning:** <base> 태그가 필요 없는 정적 사이트에서는 base-uri를 'none'으로 설정해야 베이스 태그 주입을 통한 경로 우회를 방지할 수 있음
+**Prevention:** CSP 설정 시 <base> 태그가 명시적으로 필요하지 않은 경우 반드시 `base-uri 'none'`을 사용하도록 템플릿 검토
