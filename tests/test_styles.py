@@ -44,9 +44,18 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
 
 def test_images_decode_without_blocking_rendering():
-    """All site images opt into asynchronous decoding."""
+    """Site images opt into asynchronous decoding, except for LCP above-the-fold images."""
     parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    assert all(image.get("decoding") == "async" for image in parser.images)
+    lazy_images = [img for img in parser.images if img.get("loading") == "lazy"]
+    critical_images = [img for img in parser.images if img.get("loading") != "lazy"]
+
+    # Critical above-the-fold images should NOT have async decoding for LCP optimization
+    for img in critical_images:
+        assert img.get("decoding") != "async", f"Critical image {img.get('src')} has decoding='async'"
+
+    # Lazy-loaded images must have async decoding
+    for img in lazy_images:
+        assert img.get("decoding") == "async", f"Lazy image {img.get('src')} missing decoding='async'"
