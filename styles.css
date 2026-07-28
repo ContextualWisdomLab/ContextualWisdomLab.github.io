@@ -108,11 +108,15 @@ a {
   font-size: 13px;
   font-weight: 850;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s ease;
 }
 
 .language-switch button:not([aria-pressed="true"]):hover {
   opacity: 0.8;
+}
+
+.language-switch button:active {
+  transform: scale(0.95);
 }
 
 .language-switch button[aria-pressed="true"] {
@@ -218,11 +222,15 @@ h1 {
   text-decoration: none;
   font-size: 15px;
   font-weight: 800;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s ease;
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.97);
 }
 
 .button.primary {

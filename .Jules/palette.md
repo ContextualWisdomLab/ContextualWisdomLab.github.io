@@ -17,3 +17,7 @@
 ## 2024-07-10 - prefers-reduced-motion 지원 추가
 **Learning:** 시스템 레벨에서 애니메이션 줄이기(prefers-reduced-motion)를 설정한 사용자를 위해 과도한 애니메이션과 부드러운 스크롤을 비활성화하는 것이 필요합니다. 이때 `0s` 대신 `0.01ms`를 사용하여 `transitionend`와 같은 브라우저 이벤트가 정상적으로 발생하도록 해야 자바스크립트 콜백이 멈추는(hanging) 문제를 방지할 수 있습니다.
 **Action:** 항상 `styles.css` 하단에 `prefers-reduced-motion: reduce` 미디어 쿼리를 추가하여 모든 요소의 `animation-duration`과 `transition-duration`을 `0.01ms`로 설정하고 `scroll-behavior: auto`를 적용합니다.
+
+## 2026-07-28 - 버튼 active 시각적 피드백
+**Learning:** 버튼을 클릭할 때 즉각적인 피드백이 없으면 터치나 클릭이 제대로 인가되었는지 인지하기 어렵습니다. `:active` 가상 클래스와 약간의 `scale` 변환(예: `transform: scale(0.97)`)을 결합하면 간단하면서도 효과적인 마이크로 UX 개선이 가능합니다.
+**Action:** 인터랙티브한 버튼 요소에는 가벼운 `:active` 스케일 애니메이션을 넣어 사용자가 누르는 감각(tactile feedback)을 느낄 수 있도록 합니다.
