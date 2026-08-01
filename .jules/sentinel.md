@@ -38,3 +38,7 @@
 **Vulnerability:** Missing input validation on `setLanguage()` could allow invalid strings (like Prototype Pollution payloads or arbitrary text) to be applied to the DOM (`lang` attribute) and stored in `localStorage`.
 **Learning:** The global `setLanguage` function assumed inputs would only come from predefined button clicks, skipping runtime validation.
 **Prevention:** Always sanitize and validate function arguments at the application boundary, even if the primary caller is trusted, to enforce defense in depth.
+## 2026-08-01 - Prevent Base Tag Injection via CSP
+**Vulnerability:** Static sites with `base-uri 'self'` in Content-Security-Policy are still vulnerable to base tag injection if an attacker can somehow inject HTML.
+**Learning:** For static sites that do not explicitly require a `<base>` tag, `base-uri 'none'` is the most secure configuration to prevent base tag injection attacks.
+**Prevention:** Always use `base-uri 'none'` instead of `base-uri 'self'` in CSP for static sites unless a `<base>` tag is strictly required by the application architecture.
