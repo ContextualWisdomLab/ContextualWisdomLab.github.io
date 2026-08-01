@@ -17,3 +17,6 @@
 ## 2024-07-10 - prefers-reduced-motion 지원 추가
 **Learning:** 시스템 레벨에서 애니메이션 줄이기(prefers-reduced-motion)를 설정한 사용자를 위해 과도한 애니메이션과 부드러운 스크롤을 비활성화하는 것이 필요합니다. 이때 `0s` 대신 `0.01ms`를 사용하여 `transitionend`와 같은 브라우저 이벤트가 정상적으로 발생하도록 해야 자바스크립트 콜백이 멈추는(hanging) 문제를 방지할 수 있습니다.
 **Action:** 항상 `styles.css` 하단에 `prefers-reduced-motion: reduce` 미디어 쿼리를 추가하여 모든 요소의 `animation-duration`과 `transition-duration`을 `0.01ms`로 설정하고 `scroll-behavior: auto`를 적용합니다.
+## 2026-08-01 - [프로젝트 카드 전체 영역 클릭 가능하도록 개선]
+**Learning:** `project-grid article`처럼 제목 링크만 있는 카드 UI에서 링크 텍스트만 클릭 가능한 경우 터치 및 클릭 영역이 작아 불편함을 초래합니다.
+**Action:** 부모 카드 요소에 `position: relative`를 적용하고 링크(`a`)의 가상 요소(`::after`)에 `inset: 0; position: absolute;`를 주어 중복된 `<a>` 태그 래핑이나 시맨틱 구조 파괴 없이 카드 전체를 클릭 가능하게 만들었습니다.
