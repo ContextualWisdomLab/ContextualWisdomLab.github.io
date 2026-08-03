@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-08-03 - Add active state for buttons
+**Learning:** 단일 버튼과 링크(.button, .language-switch button) 요소들에 hover 상태는 존재하지만, 클릭하는 순간의 시각적 피드백(:active)이 누락되어 있어 물리적인 인터랙션 경험이 다소 밋밋합니다.
+**Action:** 인터랙티브 요소에는 상태 변화(focus, hover, active)마다 적절한 시각적 단서를 제공하여 사용자가 의도한 조작이 시스템에 잘 전달되었음을 알 수 있도록 transform: scale()을 활용해 마이크로 인터랙션을 구현합니다.
