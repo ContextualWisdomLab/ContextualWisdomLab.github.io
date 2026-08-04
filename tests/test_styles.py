@@ -59,3 +59,12 @@ def test_project_cards_are_fully_clickable_via_pseudo_element():
     after_rule = _rule(".project-grid h3 a::after")
     assert "position: absolute;" in after_rule
     assert "inset: 0;" in after_rule
+
+def test_buttons_have_active_state_for_visual_feedback():
+    """Buttons should scale down when pressed to provide tactile visual feedback."""
+    rule = _rule(".button")
+    assert "transition:" in rule
+    assert "transform" in rule
+
+    active_rule = _rule(".button:active")
+    assert "transform: scale(0.98);" in active_rule
