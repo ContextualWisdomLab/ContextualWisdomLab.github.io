@@ -44,12 +44,19 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
 
 def test_images_decode_without_blocking_rendering():
-    """All site images opt into asynchronous decoding."""
+    """Lazy loaded images opt into asynchronous decoding, critical SVGs load synchronously."""
     parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    assert all(image.get("decoding") == "async" for image in parser.images)
+
+    # lazy load images should have decoding="async"
+    lazy_images = [img for img in parser.images if img.get("loading") == "lazy"]
+    assert all(image.get("decoding") == "async" for image in lazy_images)
+
+    # above-the-fold images should not have decoding="async"
+    critical_images = [img for img in parser.images if img.get("loading") != "lazy"]
+    assert all("decoding" not in image for image in critical_images)
 
 def test_project_cards_are_fully_clickable_via_pseudo_element():
     """Project cards expand clickable area to entire card without wrapping the whole block in an anchor."""
