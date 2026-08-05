@@ -1,0 +1,89 @@
+name: reconcile-current-main
+
+on:
+  push:
+    branches:
+      - feature/bolt-lcp-optimization-2587083072321749037
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reconcile-current-main-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Merge current main and verify exact result
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_BRANCH: ${{ github.ref_name }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPOSITORY}.git"
+          git fetch --no-tags origin "${HEAD_BRANCH}" main
+          git checkout -B "${HEAD_BRANCH}" "origin/${HEAD_BRANCH}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git merge --no-commit --no-ff origin/main; then
+            mapfile -t conflicted_files < <(git diff --name-only --diff-filter=U)
+            printf 'Conflicted files:\n'
+            printf '  %s\n' "${conflicted_files[@]}"
+
+            for conflicted_file in "${conflicted_files[@]}"; do
+              case "$conflicted_file" in
+                CHANGELOG.md|index.html|tests/test_styles.py)
+                  ;;
+                *)
+                  echo "::error::Unexpected merge conflict: ${conflicted_file}"
+                  exit 1
+                  ;;
+              esac
+            done
+
+            if printf '%s\n' "${conflicted_files[@]}" | grep -Fxq CHANGELOG.md; then
+              git checkout --ours CHANGELOG.md
+            fi
+            if printf '%s\n' "${conflicted_files[@]}" | grep -Fxq tests/test_styles.py; then
+              git checkout --ours tests/test_styles.py
+            fi
+            if printf '%s\n' "${conflicted_files[@]}" | grep -Fxq index.html; then
+              git checkout --theirs index.html
+            fi
+          fi
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          index_path = Path("index.html")
+          html = index_path.read_text(encoding="utf-8")
+          replacements = {
+              '<img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44" decoding="async">':
+                  '<img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44">',
+              '<img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high" decoding="async">':
+                  '<img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high">',
+          }
+          for old, new in replacements.items():
+              count = html.count(old)
+              if count != 1:
+                  raise SystemExit(
+                      f"expected exactly one current-main image tag, found {count}: {old}"
+                  )
+              html = html.replace(old, new)
+          index_path.write_text(html, encoding="utf-8")
+          PY
+
+          rm .github/workflows/reconcile-current-main.yml
+          git add -A
+          git diff --cached --check
+          python3 -m pytest tests/
+
+          git commit -m "chore: reconcile image hints with current main"
+          git push origin "HEAD:${HEAD_BRANCH}"
