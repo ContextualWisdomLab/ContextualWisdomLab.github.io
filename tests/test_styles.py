@@ -59,3 +59,19 @@ def test_project_cards_are_fully_clickable_via_pseudo_element():
     after_rule = _rule(".project-grid h3 a::after")
     assert "position: absolute;" in after_rule
     assert "inset: 0;" in after_rule
+
+def test_buttons_have_active_transform_feedback():
+    """Buttons should have an :active state with transform scaling for tactile feedback."""
+    button_rule = _rule(".button")
+    assert "transition:" in button_rule
+    assert "transform" in button_rule
+
+    active_rule = _rule(".button:active")
+    assert "transform: scale(" in active_rule
+
+    lang_button_rule = _rule(".language-switch button")
+    assert "transition:" in lang_button_rule
+    assert "transform" in lang_button_rule
+
+    lang_active_rule = _rule(".language-switch button:active")
+    assert "transform: scale(" in lang_active_rule
