@@ -13,6 +13,10 @@
 **Learning:** 애플리케이션이 `textContent`와 같은 안전한 DOM API만 사용하고 `innerHTML` 등의 위험한 싱크를 사용하지 않는다면 DOMPurify와 같은 라이브러리를 통해 Trusted Types 정책을 생성할 필요가 없음.
 **Action:** 불필요한 번들 다운로드 및 스크립트 실행을 방지하기 위해 사용하지 않는 라이브러리를 식별하고 제거할 것.
 
-## 2026-07-23 - Above-the-fold 이미지 디코딩 최적화
-**Learning:** LCP에 해당하는 Above-the-fold 이미지에 `decoding="async"`를 설정하면 디코딩 작업이 지연되어 오히려 LCP 렌더링 시간이 늘어날 수 있다.
-**Action:** 향후 lazy load 되는 이미지가 아닌 첫 화면의 중요한 SVG/LCP 이미지에는 `decoding="async"`를 적용하지 않도록 한다.
+## 2026-07-23 - 중요 이미지의 fetch·decode 힌트 분리
+**Learning:** HTML Living Standard에서 `decoding`은 이미지 표시 방식에 관한 선호 힌트이며, 속성을 생략하면 `auto`가 기본값입니다. `fetchpriority="high"`는 별도로 이미지 fetch 우선순위를 높입니다. 따라서 SVG에는 디코딩이 없다고 가정하거나 `decoding` 제거만으로 LCP가 반드시 개선된다고 단정해서는 안 됩니다.
+**Action:** 첫 화면의 eager 이미지와 유일한 LCP 후보는 강제 `async` 대신 사용자 에이전트의 `auto` 판단에 맡기고, 명시적으로 지연 로드하는 이미지에만 `decoding="async"`를 유지합니다. 회귀 테스트는 eager·lazy·LCP 집합이 실제로 존재하는지 먼저 확인해 vacuous pass를 막고, LCP 변화는 배포 후 실측으로 검증합니다.
+
+### References (APA 7th)
+- WHATWG. (2026, July 20). *HTML standard: The img element*. https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element
+- Osmani, A., Sohoni, L., Meenan, P., & Pollard, B. (2023, November 14). *Optimize resource loading with the Fetch Priority API*. web.dev. https://web.dev/articles/fetch-priority
