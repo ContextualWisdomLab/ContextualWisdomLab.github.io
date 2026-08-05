@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
-- **성능 개선**: 첫 화면 렌더링 성능(LCP) 향상을 위해 주요 SVG 이미지에서 `decoding="async"` 속성 제거
+- **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. LCP 개선 효과는 환경별 실측 대상으로 취급합니다.
 - **보안 개선**: 컴포넌트 갤러리의 인라인 스크립트와 스타일을 외부 파일로 분리하고, 엄격한 Content-Security-Policy를 적용해 XSS 방어를 강화했습니다.
 - **성능 회귀 복원**: 오프스크린 `.section` 렌더링을 `content-visibility: auto`로 지연하고, 일반 섹션은 600px·콘텐츠가 큰 DIKW/projects 섹션은 1000px의 `contain-intrinsic-size` placeholder를 유지해 초기 렌더링 비용과 스크롤바 이동을 함께 줄였습니다.
 - **보안 개선**: Trusted Types 기반 CSP 강화: 잠재적인 DOM 기반 XSS 공격을 방지하기 위해 `require-trusted-types-for 'script'` 지시어 추가
