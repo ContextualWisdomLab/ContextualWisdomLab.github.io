@@ -44,13 +44,9 @@ def test_tall_sections_reserve_larger_intrinsic_block_size():
 
 
 def test_images_decode_without_blocking_rendering():
-    """Lazy-loaded site images opt into asynchronous decoding, while critical SVGs do not."""
+    """All site images opt into asynchronous decoding."""
     parser = _ImageParser()
     parser.feed(INDEX.read_text(encoding="utf-8"))
 
     assert parser.images
-    for image in parser.images:
-        if image.get("loading") == "lazy":
-            assert image.get("decoding") == "async", f"Lazy image missing async decoding: {image}"
-        else:
-            assert image.get("decoding") != "async", f"Critical image should not have async decoding: {image}"
+    assert all(image.get("decoding") == "async" for image in parser.images)
