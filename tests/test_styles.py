@@ -51,6 +51,7 @@ def test_images_decode_without_blocking_rendering():
     assert parser.images
     assert all(image.get("decoding") == "async" for image in parser.images)
 
+
 def test_project_cards_are_fully_clickable_via_pseudo_element():
     """Project cards expand clickable area to entire card without wrapping the whole block in an anchor."""
     article_rule = _rule(".project-grid article")
@@ -60,18 +61,23 @@ def test_project_cards_are_fully_clickable_via_pseudo_element():
     assert "position: absolute;" in after_rule
     assert "inset: 0;" in after_rule
 
+
 def test_buttons_have_active_transform_feedback():
-    """Buttons should have an :active state with transform scaling for tactile feedback."""
+    """Buttons retain the reviewed transition and exact active-state scaling."""
     button_rule = _rule(".button")
-    assert "transition:" in button_rule
-    assert "transform" in button_rule
+    assert re.search(
+        r"transition:\s*opacity 0\.2s,\s*transform 0\.1s;",
+        button_rule,
+    )
 
     active_rule = _rule(".button:active")
-    assert "transform: scale(" in active_rule
+    assert "transform: scale(0.98);" in active_rule
 
     lang_button_rule = _rule(".language-switch button")
-    assert "transition:" in lang_button_rule
-    assert "transform" in lang_button_rule
+    assert re.search(
+        r"transition:\s*opacity 0\.2s,\s*transform 0\.1s;",
+        lang_button_rule,
+    )
 
     lang_active_rule = _rule(".language-switch button:active")
-    assert "transform: scale(" in lang_active_rule
+    assert "transform: scale(0.92);" in lang_active_rule
