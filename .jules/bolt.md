@@ -16,3 +16,7 @@
 ## 2026-08-05 - Separate image fetch and decode hints
 **Learning:** The HTML Standard defines `decoding` as a preference hint whose missing-value default is `auto`; it does not guarantee a particular main-thread or background-thread execution path. `fetchpriority` independently influences fetch priority. Removing `decoding="async"` must therefore not be described as a guaranteed LCP improvement.
 **Action:** Let eager first-viewport images use the user agent's `auto` decode strategy, retain `decoding="async"` for explicitly lazy images, and require non-vacuous tests for eager, lazy, and single high-priority LCP-candidate sets. Record the evidence and measurement limits in `docs/doctoring/image-rendering-hints.md`.
+
+## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
+**Learning:** `top`과 같은 레이아웃 속성을 애니메이션하면 매 프레임마다 레이아웃 재계산(reflow)이 발생하여 메인 스레드를 블로킹하고 레이아웃 스래싱(layout thrashing)을 유발합니다.
+**Action:** 항상 `transform`(예: `translateY`)과 같은 컴포지터 전용 속성을 애니메이션에 사용하여 메인 스레드 비용을 0ms로 만들고 부드러운 GPU 가속 렌더링을 보장해야 합니다.
