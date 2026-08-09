@@ -102,3 +102,13 @@ def test_project_cards_are_fully_clickable_via_pseudo_element() -> None:
     after_rule = _rule(".project-grid h3 a::after")
     assert "position: absolute;" in after_rule
     assert "inset: 0;" in after_rule
+
+
+def test_skip_link_uses_transform_for_animation_performance() -> None:
+    """The skip link delegates animation to the compositor using transform."""
+    rule = _rule(".skip-link")
+    assert "transform: translateY(-100%);" in rule
+    assert "transition: transform 0.2s ease-in-out;" in rule
+
+    focus_rule = _rule(".skip-link:focus-visible")
+    assert "transform: translateY(0);" in focus_rule
