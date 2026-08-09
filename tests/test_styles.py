@@ -109,5 +109,10 @@ def test_skip_link_animates_transform_not_top() -> None:
     rule = _rule(".skip-link")
 
     assert "transform: translateY(-100%);" in rule
-    assert "transition: transform" in rule
-    assert "transition: top" not in rule
+    transition = re.search(r"(?m)^\s*transition\s*:\s*([^;]+);", rule)
+    assert transition is not None
+    assert "transform" in transition.group(1)
+    assert "top" not in transition.group(1)
+
+    focus_rule = _rule(".skip-link:focus-visible")
+    assert "transform: translateY(0);" in focus_rule
