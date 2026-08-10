@@ -20,3 +20,11 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2026-08-10 - Replace DOM dataset with getAttribute for performance
+**Learning:** Using `element.dataset.key` internally uses a DOMStringMap and proxy objects in many browser engines, making it measurably slower than direct `element.getAttribute("data-key")` calls. In a localization script that iterates over many elements to update attributes, `dataset` access can cause unnecessary performance overhead.
+**Action:** Replace `element.dataset.i18n` and `element.dataset.lang` with `element.getAttribute("data-i18n")` and `element.getAttribute("data-lang")` for faster DOM reads, and cache the keys alongside the nodes to prevent repeated reads during language switches.
+
+## 2026-08-10 - 성능을 위해 DOM dataset 대신 getAttribute 사용
+**Learning:** `element.dataset.key`를 사용하면 많은 브라우저 엔진에서 내부적으로 `DOMStringMap`과 프록시 객체를 사용하기 때문에 직접 `element.getAttribute("data-key")`를 호출하는 것보다 속도가 느립니다. DOM 요소를 순회하며 속성을 읽어 다국어를 처리하는 스크립트의 경우 `dataset` 접근은 불필요한 성능 저하를 일으킬 수 있습니다.
+**Action:** DOM 읽기 속도 향상을 위해 `element.dataset.i18n` 및 `element.dataset.lang`을 각각 `element.getAttribute("data-i18n")` 및 `element.getAttribute("data-lang")`으로 대체합니다. 추가로, 언어 변경 시마다 반복적으로 속성을 읽는 것을 방지하기 위해 노드와 키를 함께 캐싱합니다.
