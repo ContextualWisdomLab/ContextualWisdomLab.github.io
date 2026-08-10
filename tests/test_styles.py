@@ -102,3 +102,17 @@ def test_project_cards_are_fully_clickable_via_pseudo_element() -> None:
     after_rule = _rule(".project-grid h3 a::after")
     assert "position: absolute;" in after_rule
     assert "inset: 0;" in after_rule
+
+
+def test_skip_link_animates_transform_not_top() -> None:
+    """Skip link must animate the compositor-only transform, never top."""
+    rule = _rule(".skip-link")
+
+    assert "transform: translateY(-100%);" in rule
+    transition = re.search(r"(?m)^\s*transition\s*:\s*([^;]+);", rule)
+    assert transition is not None
+    assert "transform" in transition.group(1)
+    assert "top" not in transition.group(1)
+
+    focus_rule = _rule(".skip-link:focus-visible")
+    assert "transform: translateY(0);" in focus_rule
