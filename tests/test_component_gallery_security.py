@@ -74,6 +74,18 @@ def test_component_gallery_script_avoids_unsafe_dom_sinks() -> None:
     assert "eval(" not in script
     assert "new Function" not in script
 
+
+def test_component_gallery_script_fails_securely() -> None:
+    """The interaction script should use defensive programming (null checks) for DOM elements."""
+    script_path = ROOT / "components" / "krds-gallery.js"
+
+    assert script_path.is_file()
+    script = script_path.read_text(encoding="utf-8")
+    assert "if (panel) {" in script
+    assert "if (tag) {" in script
+    assert "console.warn" in script
+
+
 def test_component_gallery_inputs_have_length_limits() -> None:
     """Ensure all text-based inputs have maxlength defined to mitigate DoS risks."""
     html = _gallery_html()
