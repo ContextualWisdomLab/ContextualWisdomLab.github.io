@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-08-12 - 버튼 클릭 시 촉각적 피드백(Tactile Feedback) 추가
+**Learning:** 화면에서 버튼 클릭 시 시각적 상태 변화가 없으면 사용자는 입력이 정상적으로 접수되었는지 확신하기 어려워 여러 번 클릭하는 경향이 있습니다.
+**Action:** CSS `:active` 가상 클래스와 `transform: scale()`을 사용하여 버튼을 누를 때 찌그러지는 듯한 직관적이고 즉각적인 피드백을 제공하여 체감 반응성을 향상시킵니다.

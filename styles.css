@@ -115,6 +115,10 @@ a {
   opacity: 0.8;
 }
 
+.language-switch button:active {
+  transform: scale(0.92);
+}
+
 .language-switch button[aria-pressed="true"] {
   background: var(--ink);
   color: var(--white);
@@ -223,6 +227,10 @@ h1 {
 
 .button:hover {
   opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.98);
 }
 
 .button.primary {
