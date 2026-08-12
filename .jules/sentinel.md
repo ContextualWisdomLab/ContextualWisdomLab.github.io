@@ -43,3 +43,8 @@
 **Vulnerability:** The main `index.html` used a permissive `default-src 'self'` CSP and `base-uri 'self'`, which is weaker than a strict deny-by-default approach.
 **Learning:** Even static HTML sites should use a strict deny-by-default CSP (`default-src 'none'`) and explicitly allow only necessary asset types (`script-src`, `style-src`, etc.) to minimize attack surface in case of future changes or vulnerabilities. `base-uri 'none'` and `object-src 'none'` are also crucial.
 **Prevention:** Always default to a strict `default-src 'none'` CSP for all HTML entry points, explicitly declaring necessary sources.
+
+## 2026-08-12 - 클라이언트 측 로그 포징(Log Forging) 방지
+**Vulnerability:** `i18n.js` 내에서 검증되지 않은 사용자 입력(`lang` 변수)을 `console.warn`을 통해 그대로 출력함으로써 로그 포징 및 잠재적인 XSS 위험이 존재했습니다.
+**Learning:** 오류 메시지나 경고 로그를 남길 때에도 사용자 입력을 동적으로 보간(interpolation)하는 것은 안전하지 않으며, 정보 노출이나 로그 변조의 원인이 될 수 있음을 확인했습니다.
+**Prevention:** 로그 메시지를 작성할 때는 사용자 입력을 동적으로 포함시키는 대신, 안전한 정적 메시지(`"[Security] Invalid language requested. Falling back to default."`)를 사용하도록 변경했습니다.
