@@ -43,3 +43,8 @@
 **Vulnerability:** The main `index.html` used a permissive `default-src 'self'` CSP and `base-uri 'self'`, which is weaker than a strict deny-by-default approach.
 **Learning:** Even static HTML sites should use a strict deny-by-default CSP (`default-src 'none'`) and explicitly allow only necessary asset types (`script-src`, `style-src`, etc.) to minimize attack surface in case of future changes or vulnerabilities. `base-uri 'none'` and `object-src 'none'` are also crucial.
 **Prevention:** Always default to a strict `default-src 'none'` CSP for all HTML entry points, explicitly declaring necessary sources.
+
+## 2026-08-13 - [보안 개선] 클라이언트 사이드 로그 주입 방지
+**Vulnerability:** 사용자 입력을 검증 없이 `console.warn`에 동적으로 보간하여 출력하는 문제(Log Injection).
+**Learning:** `lang` 파라미터가 예상치 못한 값일 경우, 브라우저 콘솔을 통해 원치 않는 스크립트나 메시지가 표시될 수 있습니다.
+**Prevention:** 로그를 남길 때 사용자의 입력을 직접 포함하지 않고, 정적이고 안전한 메시지로 대체합니다.
