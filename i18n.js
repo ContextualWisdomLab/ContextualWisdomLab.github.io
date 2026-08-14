@@ -331,7 +331,7 @@ function setLanguage(lang) {
   const dict = messages[lang] || messages.ko;
 
   if (!langButtons) {
-    // ⚡ Bolt: Cache dataset values to avoid slow DOMStringMap (dataset) proxy access on each switch
+    // ⚡ Bolt: Cache language keys to avoid repeated DOM-backed attribute reads on each switch
     langButtons = Array.from(document.querySelectorAll("[data-lang]")).map((node) => ({
       node,
       langKey: node.getAttribute("data-lang")
@@ -369,7 +369,7 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      // ⚡ Bolt: Cache data-i18n keys to eliminate slow dataset property reads in the render loop
+      // ⚡ Bolt: Cache data-i18n keys to avoid repeated DOM-backed attribute reads in the render loop
       i18nNodes = Array.from(document.querySelectorAll("[data-i18n]")).map((node) => ({
         node,
         key: node.getAttribute("data-i18n")
@@ -400,7 +400,7 @@ function setLanguage(lang) {
   currentLang = lang;
 }
 
-// Event listeners can just use the initial querySelectorAll without dataset proxy
+// Event listeners reuse the language key read during listener registration
 document.querySelectorAll("[data-lang]").forEach((button) => {
   const langKey = button.getAttribute("data-lang");
   button.addEventListener("click", () => setLanguage(langKey));

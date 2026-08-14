@@ -22,5 +22,5 @@
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
 
 ## 2026-08-14 - i18n DOM dataset 속성 읽기 비용 절감
-**Learning:** `HTMLElement.dataset`을 통해 `data-*` 속성을 읽는 것은 내부적으로 DOMStringMap Proxy 객체를 거치기 때문에 단순한 `getAttribute()`나 메모리 내 객체 프로퍼티 접근보다 느리다. 언어 전환 시 100개가 넘는 노드의 번역 키를 `node.dataset.i18n`으로 매번 읽어오는 구조는 메인 스레드에 불필요한 부하를 준다.
-**Action:** 언어 전환 스위치처럼 다수의 노드를 반복 처리하는 로직에서는, 최초 DOM 탐색 시점에 `getAttribute("data-i18n")`으로 값을 읽어와 배열의 객체 캐시로 저장(`[{ node, key }]`)하여 이후의 재탐색과 Proxy 객체 접근 비용을 완전히 제거해야 한다.
+**Learning:** `HTMLElement.dataset`과 `getAttribute()`는 모두 DOM에 연결된 속성 읽기다. 언어 전환 때 같은 번역 키를 반복해서 읽을 필요가 없으므로, 최초 탐색에서 키를 메모리에 보존하면 후속 전환의 DOM 속성 읽기를 제거할 수 있다.
+**Action:** 언어 전환 스위치처럼 다수의 노드를 반복 처리하는 로직에서는, 최초 DOM 탐색 시점에 `getAttribute("data-i18n")`으로 값을 읽어 배열의 객체 캐시로 저장(`[{ node, key }]`)하고, 후속 전환에서는 저장된 키를 재사용한다. 성능 효과는 브라우저 프로파일링으로 측정하고 DOMStringMap의 내부 구현을 단정하지 않는다.
