@@ -117,6 +117,7 @@ def test_skip_link_animates_transform_not_top() -> None:
     focus_rule = _rule(".skip-link:focus-visible")
     assert "transform: translateY(0);" in focus_rule
 
+
 def test_buttons_have_active_transform_feedback() -> None:
     """Buttons retain the reviewed transition and exact active-state scaling."""
     button_rule = _rule(".button")
