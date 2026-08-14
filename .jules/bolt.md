@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2026-08-14 - i18n DOM dataset 속성 읽기 비용 절감
+**Learning:** `HTMLElement.dataset`을 통해 `data-*` 속성을 읽는 것은 내부적으로 DOMStringMap Proxy 객체를 거치기 때문에 단순한 `getAttribute()`나 메모리 내 객체 프로퍼티 접근보다 느리다. 언어 전환 시 100개가 넘는 노드의 번역 키를 `node.dataset.i18n`으로 매번 읽어오는 구조는 메인 스레드에 불필요한 부하를 준다.
+**Action:** 언어 전환 스위치처럼 다수의 노드를 반복 처리하는 로직에서는, 최초 DOM 탐색 시점에 `getAttribute("data-i18n")`으로 값을 읽어와 배열의 객체 캐시로 저장(`[{ node, key }]`)하여 이후의 재탐색과 Proxy 객체 접근 비용을 완전히 제거해야 한다.
