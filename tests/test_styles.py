@@ -116,3 +116,12 @@ def test_skip_link_animates_transform_not_top() -> None:
 
     focus_rule = _rule(".skip-link:focus-visible")
     assert "transform: translateY(0);" in focus_rule
+
+
+def test_buttons_provide_tactile_feedback_on_click() -> None:
+    """Interactive buttons must have an active state to confirm clicks."""
+    btn_active_rule = _rule(".button:active")
+    assert "transform: scale(" in btn_active_rule
+
+    lang_btn_active_rule = _rule(".language-switch button:active")
+    assert "transform: scale(" in lang_btn_active_rule
