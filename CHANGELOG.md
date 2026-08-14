@@ -1,7 +1,9 @@
 # CHANGELOG
 
 ## [Unreleased]
-- **UX 개선**: 버튼(`.button`, `.language-switch button`) 클릭 시 스케일이 줄어드는 `:active` 상태를 추가하여 즉각적인 시각적 촉각 피드백을 제공하도록 개선했습니다.
+- **UX 개선**: 버튼(`.button`, `.language-switch button`) 클릭 시 스케일이 줄어드는 `:active` 상태를 추가하여 즉각적인 시각적 피드백을 제공하도록 개선했습니다.
+- **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
+- **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 단일 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. 정적 테스트가 eager, lazy, LCP 후보 집합의 존재와 조합을 검증하며, 실제 LCP 효과는 배포 후 실측 대상으로 유지합니다.
 - **UX/접근성 개선**: 프로젝트 카드의 클릭 영역을 카드 전체로 확장하여 사용자 편의성을 높였습니다. <a> 태그를 확장하는 대신 가상 요소(pseudo-element) 겹침 방식을 사용하여 스크린 리더 접근성을 유지했습니다.
 - **보안 개선**: 컴포넌트 갤러리의 인라인 스크립트와 스타일을 외부 파일로 분리하고, 엄격한 Content-Security-Policy를 적용해 XSS 방어를 강화했습니다.
 - **성능 회귀 복원**: 오프스크린 `.section` 렌더링을 `content-visibility: auto`로 지연하고, 일반 섹션은 600px·콘텐츠가 큰 DIKW/projects 섹션은 1000px의 `contain-intrinsic-size` placeholder를 유지해 초기 렌더링 비용과 스크롤바 이동을 함께 줄였습니다.

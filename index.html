@@ -29,7 +29,8 @@
     <a href="#top" class="skip-link" data-i18n="nav.skipToContent">본문으로 건너뛰기</a>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Contextual Wisdom Lab home">
-        <img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44" decoding="async">
+        <!-- ⚡ Bolt: Removed decoding="async" for SVG/LCP optimization -->
+        <img src="assets/context-wisdom-lab-avatar.svg" alt="" width="44" height="44">
         <span>Contextual Wisdom Lab</span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
@@ -64,7 +65,8 @@
         </div>
 
         <div class="hero-visual">
-          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high" decoding="async">
+          <!-- ⚡ Bolt: Removed decoding="async" for SVG/LCP optimization -->
+          <img class="context-art" src="assets/context-thread-map.svg" alt="" aria-hidden="true" width="760" height="560" fetchpriority="high">
           <div class="ladder" role="list" aria-label="Data to wisdom ladder">
             <div class="ladder-row" role="listitem">
               <span>Data</span>
