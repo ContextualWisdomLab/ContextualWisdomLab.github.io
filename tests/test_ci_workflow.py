@@ -9,6 +9,10 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 CI_WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "ci.yml"
 STATIC_TEST_RUNNER = REPOSITORY_ROOT / "scripts" / "run_static_tests.py"
 CHECKOUT_V7_0_1_SHA = "3d3c42e5aac5ba805825da76410c181273ba90b1"
+EXACT_EVENT_REPOSITORY = (
+    "repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}"
+)
+EXACT_EVENT_SHA = "${{ github.event.pull_request.head.sha || github.sha }}"
 
 
 def test_static_test_runner_is_repository_owned_and_fail_closed() -> None:
@@ -39,3 +43,13 @@ def test_ci_executes_static_tests_without_ambient_write_authority() -> None:
     assert f"actions/checkout@{CHECKOUT_V7_0_1_SHA}" in workflow
     assert "persist-credentials: false" in workflow
     assert "python3 scripts/run_static_tests.py" in workflow
+
+
+def test_ci_checks_out_and_proves_the_literal_event_source() -> None:
+    """PR validation runs the contributor head, not GitHub's synthetic merge ref."""
+    workflow = CI_WORKFLOW.read_text(encoding="utf-8")
+
+    assert EXACT_EVENT_REPOSITORY in workflow
+    assert f"ref: {EXACT_EVENT_SHA}" in workflow
+    assert f"EXPECTED_SHA: {EXACT_EVENT_SHA}" in workflow
+    assert 'test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"' in workflow
