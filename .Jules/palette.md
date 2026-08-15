@@ -21,7 +21,3 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
-
-## 2026-08-11 - Add active state for buttons
-**Learning:** Users lack tactile visual feedback when clicking buttons, as there is no immediate visual indication that the click was registered.
-**Action:** Add an `:active` state with a slight scale-down effect (e.g., `transform: scale(0.98)`) to interactive elements like buttons to provide immediate, satisfying visual feedback during the mousedown event.
