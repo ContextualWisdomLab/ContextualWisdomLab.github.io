@@ -1,7 +1,6 @@
 """Security regression tests for the standalone component gallery."""
 
 import re
-import subprocess
 from pathlib import Path
 
 
@@ -74,55 +73,6 @@ def test_component_gallery_script_avoids_unsafe_dom_sinks() -> None:
     assert "outerHTML" not in script
     assert "eval(" not in script
     assert "new Function" not in script
-
-
-def test_component_gallery_script_fails_securely() -> None:
-    """Missing tab panels and tag containers warn without throwing."""
-    script_path = ROOT / "components" / "krds-gallery.js"
-    harness = r"""
-const fs = require("node:fs");
-const script = fs.readFileSync(0, "utf8");
-const listeners = new Map();
-const tab = {
-  addEventListener: (type, callback) => listeners.set(`tab:${type}`, callback),
-  getAttribute: () => "missing-panel",
-  setAttribute: () => {},
-};
-const tabs = {querySelectorAll: () => [tab]};
-const removeButton = {
-  addEventListener: (type, callback) => listeners.set(`remove:${type}`, callback),
-  closest: () => null,
-};
-global.document = {
-  querySelectorAll: (selector) => {
-    if (selector === ".krds-tabs") return [tabs];
-    if (selector === ".krds-tag__remove") return [removeButton];
-    return [];
-  },
-  getElementById: () => null,
-};
-const warnings = [];
-console.warn = (message) => warnings.push(String(message));
-eval(script);
-listeners.get("tab:click")();
-listeners.get("remove:click")();
-if (warnings.length !== 2) {
-  throw new Error(`expected 2 warnings, received ${warnings.length}`);
-}
-if (!warnings[0].includes("missing-panel") || !warnings[1].includes("removal")) {
-  throw new Error(`unexpected warnings: ${JSON.stringify(warnings)}`);
-}
-"""
-    completed = subprocess.run(
-        ["node", "-e", harness],
-        input=script_path.read_text(encoding="utf-8"),
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-
-    assert completed.returncode == 0, completed.stderr
-
 
 def test_component_gallery_inputs_have_length_limits() -> None:
     """Ensure all text-based inputs have maxlength defined to mitigate DoS risks."""

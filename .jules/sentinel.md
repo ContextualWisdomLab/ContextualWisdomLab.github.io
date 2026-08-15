@@ -43,7 +43,3 @@
 **Vulnerability:** The main `index.html` used a permissive `default-src 'self'` CSP and `base-uri 'self'`, which is weaker than a strict deny-by-default approach.
 **Learning:** Even static HTML sites should use a strict deny-by-default CSP (`default-src 'none'`) and explicitly allow only necessary asset types (`script-src`, `style-src`, etc.) to minimize attack surface in case of future changes or vulnerabilities. `base-uri 'none'` and `object-src 'none'` are also crucial.
 **Prevention:** Always default to a strict `default-src 'none'` CSP for all HTML entry points, explicitly declaring necessary sources.
-## 2026-08-10 - DOM 요소 접근 시 예외 처리 적용
-**Vulnerability:** DOM 요소를 가져와 바로 조작할 때 해당 요소가 존재하지 않으면 TypeError가 발생하여 스크립트 실행이 중단될 수 있음 (DoS 공격 형태).
-**Learning:** DOM이 악의적으로 변경되었거나 예기치 않게 로드되지 않았을 경우를 대비해, 방어적 프로그래밍을 통해 존재 여부를 확인해야 안전하게 실패(Fail Securely)할 수 있음.
-**Prevention:** `.getElementById`나 `.closest` 등 요소를 찾는 API를 사용할 때는 결과를 조작하기 전에 반드시 null 체크를 하고, 필요하다면 보안 경고(`console.warn`)를 남겨야 함.

@@ -6,24 +6,12 @@
           tabList.forEach((t) => {
             const sel = t === tab;
             t.setAttribute("aria-selected", sel);
-            const panel = document.getElementById(t.getAttribute("aria-controls"));
-            if (panel) {
-              panel.hidden = !sel;
-            } else {
-              console.warn(`[Security] Tab panel ID ${t.getAttribute("aria-controls")} not found.`);
-            }
+            document.getElementById(t.getAttribute("aria-controls")).hidden = !sel;
           });
         });
       });
     });
     // Tag remove
     document.querySelectorAll(".krds-tag__remove").forEach((btn) =>
-      btn.addEventListener("click", () => {
-        const tag = btn.closest(".krds-tag");
-        if (tag) {
-          tag.remove();
-        } else {
-          console.warn("[Security] Target element for removal not found.");
-        }
-      })
+      btn.addEventListener("click", () => btn.closest(".krds-tag").remove())
     );
