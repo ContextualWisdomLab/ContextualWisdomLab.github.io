@@ -3,6 +3,14 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
   const tabList = [...tabs.querySelectorAll('[role="tab"]')];
 
   const activateTab = (nextTab, moveFocus = false) => {
+    const nextPanelId = nextTab.getAttribute("aria-controls");
+    const nextPanel =
+      nextPanelId === null ? null : document.getElementById(nextPanelId);
+    if (nextPanel === null) {
+      console.warn("[Security] Requested tab panel is unavailable.");
+      return;
+    }
+
     tabList.forEach((tab) => {
       const isSelected = tab === nextTab;
       const panelId = tab.getAttribute("aria-controls");
@@ -52,5 +60,12 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
 // Tag remove
 // Native buttons preserve keyboard activation and accessible names.
 document.querySelectorAll(".krds-tag__remove").forEach((button) =>
-  button.addEventListener("click", () => button.closest(".krds-tag").remove())
+  button.addEventListener("click", () => {
+    const tag = button.closest(".krds-tag");
+    if (tag === null) {
+      console.warn("[Security] Tag container is unavailable.");
+      return;
+    }
+    tag.remove();
+  })
 );
