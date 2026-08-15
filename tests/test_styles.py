@@ -137,3 +137,27 @@ def test_buttons_have_active_transform_feedback() -> None:
 
     lang_active_rule = _rule(".language-switch button:active")
     assert "transform: scale(0.92);" in lang_active_rule
+
+
+def test_button_feedback_preserves_focus_and_reduced_motion() -> None:
+    """Active feedback remains supplemental to focus and motion preferences."""
+    css = STYLES.read_text(encoding="utf-8")
+
+    focus_group = re.search(
+        r"a:focus-visible,\s*button:focus-visible,\s*input:focus-visible,"
+        r"\s*textarea:focus-visible\s*\{(?P<body>[^}]+)\}",
+        css,
+        re.DOTALL,
+    )
+    assert focus_group is not None
+    assert "outline: 2px solid var(--teal);" in focus_group.group("body")
+    assert "outline-offset: 2px;" in focus_group.group("body")
+
+    reduced_motion = re.search(
+        r"@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{(?P<body>.*)\}\s*$",
+        css,
+        re.DOTALL,
+    )
+    assert reduced_motion is not None
+    assert "transition-duration: 0.01ms !important;" in reduced_motion.group("body")
+    assert "scroll-behavior: auto !important;" in reduced_motion.group("body")
