@@ -33,6 +33,10 @@ Preview locally with `python3 -m http.server 4173`.
   Security Scan **job result**, not the `code_scanning` rule — do **not** add
   tools to that rule.
 
+### Homepage catalog
+- Project and fork cards may link only to repositories this organization currently owns.
+- New-tab warnings belong in `.visually-hidden` HTML with `data-i18n="a11y.opensNewTab"`. Do not put `data-i18n` on the same `<a>` as that child.
+
 ### Code exploration
 - This repo has **no `.codegraph/` index**, so use normal search (grep/find,
   editor search) to locate and understand code. If a `.codegraph/` directory

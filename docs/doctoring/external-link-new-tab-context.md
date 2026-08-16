@@ -2,39 +2,39 @@
 
 ## Status
 
-Active PR design/accessibility evidence for homepage PR #172. This document does not claim whole-site WCAG conformance or screen-reader interoperability.
+Active homepage accessibility evidence. This document does not claim whole-site WCAG conformance or screen-reader interoperability.
 
 ## Decision
 
-Links that deliberately open a new tab keep a visible `↗` cue from the design layer. After `i18n.js` runs, the language layer adds a localized accessible-name suffix to every `a[target="_blank"]` link. The suffix is `새 탭에서 열림` in Korean and `opens in a new tab` in English.
+Links that deliberately open a new tab keep three coordinated cues:
 
-The accessible name is derived from the link's **current visible text after translation** and then extended with the new-tab context. This preserves the visible label as a contiguous part of the accessible name instead of replacing it with unrelated text.
+1. A visible `↗` from CSS. Ordinary links use `::after`. Project-card titles keep `::after` as the empty stretch overlay and place `↗` on `::before`.
+2. A document-tree warning in a `.visually-hidden` child: Korean source text `새 탭에서 열림`, translated by `data-i18n="a11y.opensNewTab"` to `opens in a new tab`.
+3. The visible label stays in a sibling node. `data-i18n` must not sit on the same `<a>` as the warning child, because `setLanguage()` writes `textContent` and would destroy the child.
 
-Project cards already use `h3 a::after` as an empty stretch overlay so the whole card is the hit target. The general `a[target="_blank"]::after` marker is more specific than that overlay, so project titles restore the empty overlay with `.project-grid h3 a[target="_blank"]::after` and place their `↗` on `::before`.
+The accessible name is the concatenation of visible text and the hidden warning. That keeps WCAG 2.2 Success Criterion 2.5.3 (Label in Name) without a synthesized `aria-label`.
 
-Every current target-blank link must also retain both `noopener` and `noreferrer`. The executable static-site test parses the real homepage HTML and fails if any target-blank link loses opener isolation or visible link text. A second contract binds both locale messages, the complete target-blank selector, and the visible-text-derived accessible-name construction. CSS tests fail if the new-tab glyph reuses the project-card overlay.
+Every current target-blank link must also retain both `noopener` and `noreferrer`. Static tests parse the real homepage and fail if a target-blank link loses opener isolation, visible text, or the HTML warning.
 
 ## Rationale
 
-Opening a new window or tab is a change of context. W3C Technique G201 is the design goal for warning users in advance. This homepage implements a **progressive enhancement**, not a claim that G201 or WCAG Failure F87 are fully satisfied:
+Opening a new window or tab is a change of context. W3C Technique G201 is the design goal for warning users in advance. This homepage now puts the warning in the HTML tree so first paint and no-JavaScript users receive it in the source language. CSS `↗` remains a sighted-user enhancement and is not treated as the only warning, which avoids claiming that Failure F87 is solved by generated content.
 
-- Sighted users with CSS get the `↗` glyph.
-- Assistive technology after `i18n.js` runs gets the localized `aria-label`.
-- The HTML source still has no visually hidden warning text, so users without JavaScript or with CSS disabled do not receive a document-tree warning. Parent links that use `data-i18n` replace `textContent` and would destroy a child warning span, so the language layer keeps the warning in `aria-label` instead of HTML.
-
-WCAG 2.2 Success Criterion 2.5.3 requires the visible label text to be included in the accessible name for labeled user-interface components. Building the accessible name from `link.textContent.trim()` after language translation preserves that relationship for both Korean and English and for raw reference URLs when JavaScript runs.
+Technique C7 hides a portion of the text with CSS clipping rather than `display: none` or `visibility: hidden`, so the warning stays in the accessibility tree (World Wide Web Consortium, n.d.-a).
 
 ## Failure and rollback
 
-If a future external link has no visible text, the language adapter deliberately skips synthesizing an accessible label rather than inventing one. The static test independently requires non-empty visible text for all current target-blank links, so such a regression must be fixed at the link content boundary.
+If a future external link has no visible text besides the warning, the static test fails. Add a visible label at the link-content boundary; do not invent an `aria-label`.
 
-Rollback removes the two locale strings, the target-blank node cache and accessible-name update, this doctoring note, and its focused test together. The visual arrow may remain independently useful, but it must not again be described as sufficient assistive-technology evidence.
+Rollback removes the `.visually-hidden` children, the `a11y.opensNewTab` locale strings, this note, and the focused tests together. Do not restore parent-level `data-i18n` on those anchors without also removing the warning child.
 
 ## References
 
 World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
 
 World Wide Web Consortium. (n.d.). *G201: Giving users advanced warning when opening a new window*. WAI techniques for WCAG 2.2. Retrieved August 16, 2026, from https://www.w3.org/WAI/WCAG22/Techniques/general/G201
+
+World Wide Web Consortium. (n.d.-a). *C7: Using CSS to hide a portion of the text*. WAI techniques for WCAG 2.2. Retrieved August 16, 2026, from https://www.w3.org/WAI/WCAG22/Techniques/css/C7
 
 World Wide Web Consortium. (n.d.). *Understanding Success Criterion 2.5.3: Label in Name*. Web Accessibility Initiative. Retrieved August 16, 2026, from https://www.w3.org/WAI/WCAG22/Understanding/label-in-name
 

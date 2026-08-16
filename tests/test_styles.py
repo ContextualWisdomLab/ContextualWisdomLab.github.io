@@ -104,6 +104,16 @@ def test_project_cards_are_fully_clickable_via_pseudo_element() -> None:
     assert "inset: 0;" in after_rule
 
 
+def test_visually_hidden_warning_stays_in_the_accessibility_tree() -> None:
+    """New-tab HTML warnings must be clipped, not removed from the document."""
+    rule = _rule(".visually-hidden")
+    assert "position: absolute;" in rule
+    assert "clip: rect(0, 0, 0, 0);" in rule
+    assert "clip-path: inset(50%);" in rule
+    assert "display: none;" not in rule
+    assert "visibility: hidden;" not in rule
+
+
 def test_external_link_marker_does_not_override_project_card_hit_area() -> None:
     """New-tab glyphs must not reuse the project-card stretch overlay."""
     general_marker = _rule('a[target="_blank"]:not(.button)::after')

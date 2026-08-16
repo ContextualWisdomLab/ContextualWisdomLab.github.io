@@ -2,17 +2,18 @@
 
 from html.parser import HTMLParser
 from pathlib import Path
-import re
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_HTML = (ROOT / "index.html").read_text(encoding="utf-8")
 I18N_SOURCE = (ROOT / "i18n.js").read_text(encoding="utf-8")
+WARNING_KEY = "a11y.opensNewTab"
+KOREAN_WARNING = "새 탭에서 열림"
 
 
 class _ExternalLinkParser(HTMLParser):
-    """Collect visible text and attributes for target-blank anchors."""
+    """Collect visible text, warning nodes, and attributes for target-blank anchors."""
 
     def __init__(self) -> None:
         super().__init__()
@@ -21,15 +22,21 @@ class _ExternalLinkParser(HTMLParser):
         self._anchor_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = {key: value or "" for key, value in attrs}
         if self._current is not None:
             self._anchor_depth += 1
+            if attributes.get("data-i18n") == WARNING_KEY:
+                self._current["has_new_tab_warning"] = True
             return
         if tag != "a":
             return
-        attributes = {key: value or "" for key, value in attrs}
         if attributes.get("target") != "_blank":
             return
-        self._current = {"attributes": attributes, "text": []}
+        self._current = {
+            "attributes": attributes,
+            "text": [],
+            "has_new_tab_warning": False,
+        }
         self._anchor_depth = 0
 
     def handle_data(self, data: str) -> None:
@@ -68,10 +75,21 @@ class TestExternalLinkAccessibility(unittest.TestCase):
             rel = set(str(attributes.get("rel", "")).split())
             self.assertIn("noopener", rel)
             self.assertIn("noreferrer", rel)
-            self.assertTrue(str(link["text"]).strip())
+            combined = str(link["text"])
+            self.assertTrue(combined.strip())
+            self.assertIn(KOREAN_WARNING, combined)
+            self.assertTrue(link["has_new_tab_warning"])
+            visible = (
+                combined.replace(KOREAN_WARNING, "")
+                .replace("(", "")
+                .replace(")", "")
+                .strip()
+            )
+            self.assertTrue(visible)
+            self.assertNotIn("data-i18n", attributes)
 
-    def test_i18n_contract_localizes_new_tab_accessible_name(self) -> None:
-        """The language switch must add a localized cue without losing visible text."""
+    def test_i18n_contract_localizes_document_tree_new_tab_warning(self) -> None:
+        """Language switching must translate the HTML warning, not invent aria-labels."""
         self.assertRegex(
             I18N_SOURCE,
             r'"a11y\.opensNewTab"\s*:\s*"새 탭에서 열림"',
@@ -80,20 +98,9 @@ class TestExternalLinkAccessibility(unittest.TestCase):
             I18N_SOURCE,
             r'"a11y\.opensNewTab"\s*:\s*"opens in a new tab"',
         )
-        self.assertIn(
-            'document.querySelectorAll(\'a[target="_blank"]\')',
-            I18N_SOURCE,
-        )
-        self.assertIn('dict["a11y.opensNewTab"]', I18N_SOURCE)
-        self.assertRegex(
-            I18N_SOURCE,
-            re.compile(
-                r"linkText\s*=\s*link\.textContent\.trim\(\).*?"
-                r"accessibleName\s*=\s*`\$\{linkText\} \(\$\{dict\[[\"']a11y\.opensNewTab[\"']\]\}\)`.+?"
-                r"link\.setAttribute\(\s*[\"']aria-label[\"']\s*,\s*accessibleName\s*\)",
-                re.DOTALL,
-            ),
-        )
+        self.assertIn('document.querySelectorAll("[data-i18n]")', I18N_SOURCE)
+        self.assertNotIn("externalLinkNodes", I18N_SOURCE)
+        self.assertNotIn("accessibleName", I18N_SOURCE)
 
     def test_homepage_product_destinations_use_current_owned_repos(self) -> None:
         """Project and fork cards must open the current owned repositories."""
@@ -108,6 +115,17 @@ class TestExternalLinkAccessibility(unittest.TestCase):
         self.assertIn("https://github.com/ContextualWisdomLab/wardnet", hrefs)
         self.assertIn("https://github.com/ContextualWisdomLab/argos", hrefs)
         self.assertIn("https://github.com/ContextualWisdomLab/vooster", hrefs)
+        self.assertIn("https://github.com/ContextualWisdomLab/naruon", hrefs)
+        self.assertIn("https://github.com/ContextualWisdomLab/Orgmetra", hrefs)
+        self.assertIn("https://github.com/ContextualWisdomLab/TEPP", hrefs)
+        self.assertIn(
+            "https://github.com/ContextualWisdomLab/psychometrics-commons",
+            hrefs,
+        )
+        self.assertIn(
+            "https://github.com/ContextualWisdomLab/contextual-orchestrator",
+            hrefs,
+        )
         self.assertNotIn(
             "https://github.com/ContextualWisdomLab/waf-ids-ai-soc",
             hrefs,
@@ -117,6 +135,9 @@ class TestExternalLinkAccessibility(unittest.TestCase):
             hrefs,
         )
         self.assertIn('"projects.wardnetTitle"', I18N_SOURCE)
+        self.assertIn('"projects.orgmetraTitle"', I18N_SOURCE)
+        self.assertIn('"projects.teppTitle"', I18N_SOURCE)
+        self.assertIn('"naruon.cta"', I18N_SOURCE)
         self.assertNotIn("projects.wafIdsTitle", I18N_SOURCE)
         self.assertNotIn("waf-ids-ai-soc", INDEX_HTML)
 

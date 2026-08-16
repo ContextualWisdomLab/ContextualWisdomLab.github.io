@@ -106,6 +106,7 @@ const messages = {
     "naruon.twoBody": "보낸 사람, 프로젝트, 관계, 타임라인, 근거를 연결합니다.",
     "naruon.threeTitle": "판단과 실행",
     "naruon.threeBody": "대기 작업, 일정 충돌, 답장, 위임, 확인 요청으로 이어갑니다.",
+    "naruon.cta": "Naruon 저장소 열기",
     "projects.title": "공개 프로젝트",
     "projects.lead": "Fork가 아니면서 공개된 제품과 도구 저장소입니다. 홈페이지, 조직 프로필처럼 운영과 소개를 위한 내부 관리용 저장소는 제외했습니다.",
     "projects.naruonTitle": "Naruon",
@@ -126,6 +127,14 @@ const messages = {
     "projects.fastMlsirmBody": "MLSIRM/MLS2PLM 모형의 시뮬레이션, 적합, 복원 진단을 빠르게 수행하는 Python/Rust 패키지입니다.",
     "projects.wardnetTitle": "wardnet",
     "projects.wardnetBody": "DNSBL 게시 기능을 갖춘 Rust 우선 WAF/IDS/AI SOC 게이트웨이입니다.",
+    "projects.orgmetraTitle": "Orgmetra",
+    "projects.orgmetraBody": "고용 관계의 기준 기록을 이 제품이 소유하고, 다른 CWL 서비스는 신원, 증거, 측정, 해석, 문서, 인프라를 기여합니다.",
+    "projects.teppTitle": "TEPP",
+    "projects.teppBody": "다층·다중소속과 시간 흐름을 다루는 다국어 시간 사건 심리측정 플랫폼입니다. 통계와 심리측정 연산은 Rust로 구현합니다.",
+    "projects.psychometricsCommonsTitle": "psychometrics-commons",
+    "projects.psychometricsCommonsBody": "공개 심리측정 평가, 성찰적 자기이해, 종단 관찰, 동의 기반 연구 데이터 기여를 위한 헤드리스 제품입니다.",
+    "projects.orchestratorTitle": "contextual-orchestrator",
+    "projects.orchestratorBody": "단일 모델 라우팅과 심층 다중 에이전트 오케스트레이션 사이에서 계산량을 배분하는 논문 근거 LLM 오케스트레이션 실험실입니다.",
     "forks.title": "Fork 프로젝트는 따로 봅니다",
     "forks.lead": "맥락지혜 연구실이 직접 만든 프로젝트와 구분해, 외부 upstream에서 출발해 조직 안에서 검토하거나 확장하는 저장소입니다.",
     "forks.argosTitle": "argos",
@@ -254,6 +263,7 @@ const messages = {
     "naruon.twoBody": "Connect sender, project, relationship, timeline, and evidence.",
     "naruon.threeTitle": "Move to action",
     "naruon.threeBody": "Surface pending work, schedule conflicts, replies, delegation, and verification requests.",
+    "naruon.cta": "Open the Naruon repository",
     "projects.title": "Public projects",
     "projects.lead": "These are public product and tool repositories that are not forks. Internal management repositories for the homepage and organization profile are excluded.",
     "projects.naruonTitle": "Naruon",
@@ -274,6 +284,14 @@ const messages = {
     "projects.fastMlsirmBody": "A Python/Rust package for fast MLSIRM/MLS2PLM simulation, fitting, and recovery diagnostics.",
     "projects.wardnetTitle": "wardnet",
     "projects.wardnetBody": "A Rust-first WAF/IDS/AI SOC gateway with DNSBL publishing surfaces.",
+    "projects.orgmetraTitle": "Orgmetra",
+    "projects.orgmetraBody": "Orgmetra owns the employment record of truth. Other CWL services contribute identity, evidence, measurement, interpretation, documents, and infrastructure.",
+    "projects.teppTitle": "TEPP",
+    "projects.teppBody": "A multilingual temporal-event psychometrics platform that models nested membership and time. Statistical and psychometric arithmetic runs in Rust.",
+    "projects.psychometricsCommonsTitle": "psychometrics-commons",
+    "projects.psychometricsCommonsBody": "A headless product for public psychometric assessment, reflective self-understanding, longitudinal observation, and consent-governed research contribution.",
+    "projects.orchestratorTitle": "contextual-orchestrator",
+    "projects.orchestratorBody": "A paper-grounded LLM orchestration lab that allocates compute between single-model routing and deep multi-agent workflows.",
     "forks.title": "Forked projects are shown separately",
     "forks.lead": "These repositories started from external upstream projects and are reviewed or extended inside the organization, separate from projects originated by the lab.",
     "forks.argosTitle": "argos",
@@ -318,7 +336,6 @@ let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
-let externalLinkNodes = null;
 let currentLang = null;
 
 function setLanguage(lang) {
@@ -338,7 +355,6 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     footerLogo = document.querySelector("#footer-logo");
-    externalLinkNodes = document.querySelectorAll('a[target="_blank"]');
   }
 
   if (document.documentElement.lang !== lang) {
@@ -380,15 +396,6 @@ function setLanguage(lang) {
       }
     });
   }
-
-  externalLinkNodes.forEach((link) => {
-    const linkText = link.textContent.trim();
-    if (!linkText) return;
-    const accessibleName = `${linkText} (${dict["a11y.opensNewTab"]})`;
-    if (link.getAttribute("aria-label") !== accessibleName) {
-      link.setAttribute("aria-label", accessibleName);
-    }
-  });
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
