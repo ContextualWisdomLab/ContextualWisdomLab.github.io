@@ -337,53 +337,51 @@ function setLanguage(lang) {
     footerLogo = document.querySelector("#footer-logo");
   }
 
-  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 탐색 생략
-  const isInitialDefault = lang === "ko" && !i18nNodes;
-
-  if (!isInitialDefault && !i18nNodes) {
-    i18nNodes = document.querySelectorAll("[data-i18n]");
+  if (document.documentElement.lang !== lang) {
+    document.documentElement.lang = lang;
+  }
+  if (document.title !== dict.metaTitle) {
+    document.title = dict.metaTitle;
   }
 
-  // ⚡ Bolt: requestAnimationFrame을 활용해 DOM 업데이트 일괄 처리 (Layout Thrashing 방지)
-  requestAnimationFrame(() => {
-    if (document.documentElement.lang !== lang) {
-      document.documentElement.lang = lang;
+  if (metaDesc && metaDesc.getAttribute("content") !== dict.metaDescription) {
+    metaDesc.setAttribute("content", dict.metaDescription);
+  }
+  if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
+    ogDesc.setAttribute("content", dict.metaDescription);
+  }
+
+  if (footerLogo) {
+    if (footerLogo.getAttribute("src") !== dict.logoSrc) {
+      footerLogo.setAttribute("src", dict.logoSrc);
     }
-    if (document.title !== dict.metaTitle) {
-      document.title = dict.metaTitle;
+    if (footerLogo.getAttribute("alt") !== dict.logoAlt) {
+      footerLogo.setAttribute("alt", dict.logoAlt);
+    }
+  }
+
+  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
+  const isInitialDefault = lang === "ko" && !i18nNodes;
+
+  if (!isInitialDefault) {
+    if (!i18nNodes) {
+      i18nNodes = document.querySelectorAll("[data-i18n]");
     }
 
-    if (metaDesc && metaDesc.getAttribute("content") !== dict.metaDescription) {
-      metaDesc.setAttribute("content", dict.metaDescription);
-    }
-    if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
-      ogDesc.setAttribute("content", dict.metaDescription);
-    }
-
-    if (footerLogo) {
-      if (footerLogo.getAttribute("src") !== dict.logoSrc) {
-        footerLogo.setAttribute("src", dict.logoSrc);
-      }
-      if (footerLogo.getAttribute("alt") !== dict.logoAlt) {
-        footerLogo.setAttribute("alt", dict.logoAlt);
-      }
-    }
-
-    if (!isInitialDefault && i18nNodes) {
-      i18nNodes.forEach((node) => {
-        const newText = dict[node.dataset.i18n];
-        if (newText && node.textContent !== newText) {
-          node.textContent = newText;
-        }
-      });
-    }
-
-    langButtons.forEach((button) => {
-      const pressed = String(button.dataset.lang === lang);
-      if (button.getAttribute("aria-pressed") !== pressed) {
-        button.setAttribute("aria-pressed", pressed);
+    // Only update textContent if it actually changed to avoid layout recalculations
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
+      if (newText && node.textContent !== newText) {
+        node.textContent = newText;
       }
     });
+  }
+
+  langButtons.forEach((button) => {
+    const pressed = String(button.dataset.lang === lang);
+    if (button.getAttribute("aria-pressed") !== pressed) {
+      button.setAttribute("aria-pressed", pressed);
+    }
   });
 
   try {
@@ -394,10 +392,9 @@ function setLanguage(lang) {
   currentLang = lang;
 }
 
-// ⚡ Bolt: Event Delegation을 사용하여 이벤트 리스너 최소화
-document.addEventListener("click", (e) => {
-  const button = e.target.closest("[data-lang]");
-  if (button) setLanguage(button.dataset.lang);
+// Event listeners can just use the initial querySelectorAll
+document.querySelectorAll("[data-lang]").forEach((button) => {
+  button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
 
 setLanguage(preferredLanguage());
