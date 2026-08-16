@@ -95,6 +95,31 @@ class TestExternalLinkAccessibility(unittest.TestCase):
             ),
         )
 
+    def test_homepage_product_destinations_use_current_owned_repos(self) -> None:
+        """Project and fork cards must open the current owned repositories."""
+        parser = _ExternalLinkParser()
+        parser.feed(INDEX_HTML)
+        hrefs = []
+        for link in parser.links:
+            attributes = link["attributes"]
+            assert isinstance(attributes, dict)
+            hrefs.append(str(attributes.get("href", "")))
+
+        self.assertIn("https://github.com/ContextualWisdomLab/wardnet", hrefs)
+        self.assertIn("https://github.com/ContextualWisdomLab/argos", hrefs)
+        self.assertIn("https://github.com/ContextualWisdomLab/vooster", hrefs)
+        self.assertNotIn(
+            "https://github.com/ContextualWisdomLab/waf-ids-ai-soc",
+            hrefs,
+        )
+        self.assertNotIn(
+            "https://github.com/ContextualWisdomLab/vooster-v2-mvp",
+            hrefs,
+        )
+        self.assertIn('"projects.wardnetTitle"', I18N_SOURCE)
+        self.assertNotIn("projects.wafIdsTitle", I18N_SOURCE)
+        self.assertNotIn("waf-ids-ai-soc", INDEX_HTML)
+
 
 if __name__ == "__main__":
     unittest.main()
