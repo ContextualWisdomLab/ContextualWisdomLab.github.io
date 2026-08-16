@@ -18,6 +18,7 @@ const messages = {
     "nav.references": "참고문헌",
     "nav.work": "작업",
     "nav.skipToContent": "본문으로 건너뛰기",
+    "a11y.opensNewTab": "새 탭에서 열림",
     "hero.title": "맥락지혜 연구실",
     "hero.labName": "Contextual Wisdom Lab",
     "hero.thesis": "구슬이 서 말이어도 꿰어야 보배이듯, 문서, 메일, 로그, 회의록을 맥락 안에서 엮어 사람이 무엇을 결정하고 무엇을 실행할지 보이게 하는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
@@ -165,6 +166,7 @@ const messages = {
     "nav.references": "References",
     "nav.work": "Work",
     "nav.skipToContent": "Skip to main content",
+    "a11y.opensNewTab": "opens in a new tab",
     "hero.title": "Contextual Wisdom Lab",
     "hero.labName": "Research Lab",
     "hero.thesis": "A research lab building AI decision support systems. Even a heap of beads becomes treasure only when threaded; we compose context across documents, mail, logs, and meeting notes so people can see what to decide and what to do next.",
@@ -316,6 +318,7 @@ let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
 let footerLogo = null;
+let externalLinkNodes = null;
 let currentLang = null;
 
 function setLanguage(lang) {
@@ -335,6 +338,7 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     footerLogo = document.querySelector("#footer-logo");
+    externalLinkNodes = document.querySelectorAll('a[target="_blank"]');
   }
 
   if (document.documentElement.lang !== lang) {
@@ -376,6 +380,12 @@ function setLanguage(lang) {
       }
     });
   }
+
+  externalLinkNodes.forEach((link) => {
+    const linkText = link.textContent.trim();
+    if (!linkText) return;
+    link.setAttribute("aria-label", `${linkText} (${dict["a11y.opensNewTab"]})`);
+  });
 
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
