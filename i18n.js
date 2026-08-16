@@ -322,7 +322,7 @@ function setLanguage(lang) {
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
-    console.warn(`[Security] Invalid language requested: ${lang}. Falling back to default.`);
+    console.warn("[Security] Invalid language requested. Falling back to default.");
     lang = "ko";
   }
 
