@@ -43,3 +43,7 @@
 **Vulnerability:** The main `index.html` used a permissive `default-src 'self'` CSP and `base-uri 'self'`, which is weaker than a strict deny-by-default approach.
 **Learning:** Even static HTML sites should use a strict deny-by-default CSP (`default-src 'none'`) and explicitly allow only necessary asset types (`script-src`, `style-src`, etc.) to minimize attack surface in case of future changes or vulnerabilities. `base-uri 'none'` and `object-src 'none'` are also crucial.
 **Prevention:** Always default to a strict `default-src 'none'` CSP for all HTML entry points, explicitly declaring necessary sources.
+## 2026-08-16 - 로그 인젝션/포징(Log Injection/Forging) 취약점 완화
+**Vulnerability:** 검증되지 않은 사용자 입력(`lang`)이 `console.warn`에 직접 보간되어 기록됨. 이는 공격자가 로그 메시지를 조작하거나 악성 스크립트 페이로드를 로그에 삽입할 수 있는 로그 인젝션 취약점을 유발할 수 있음.
+**Learning:** 클라이언트 측에서도 로깅 시 동적 문자열을 사용하면, 악의적인 입력으로 인해 혼란을 초래하거나 개발자 도구 환경에서 예상치 못한 동작이 발생할 수 있음.
+**Prevention:** 사용자 입력을 로그에 동적으로 포함시키는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체하여 출력해야 함.
