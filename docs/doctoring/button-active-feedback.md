@@ -4,9 +4,9 @@
 
 The homepage supplements the browser's temporary `:active` state with a small,
 bounded scale transform for ordinary call-to-action links styled as `.button`
-and for the language-switch buttons. The transition is short and uses only
-`transform`; existing hover, focus-visible, pressed-state, target-size, text,
-and click behavior remain separate contracts.
+and for the language-switch buttons. The short transition preserves the existing
+`opacity` transition and adds `transform`; existing hover, focus-visible,
+pressed-state, target-size, text, and click behavior remain separate contracts.
 
 ```text
 pointer or equivalent activation
@@ -39,7 +39,7 @@ vision, motor, or cognitive accessibility need is satisfied.
 
 Static regressions require:
 
-- the exact reviewed `transform` transition on both control families;
+- the exact reviewed `opacity` and `transform` transition on both control families;
 - bounded active scales of `0.98` and `0.92`;
 - the existing `:focus-visible` outline rule; and
 - the global reduced-motion transition-duration override.
@@ -59,8 +59,8 @@ message unless the corresponding action can truthfully observe completion.
 
 ## References
 
-World Wide Web Consortium. (2025, December 2). *Selectors Level 4*.
-https://www.w3.org/TR/selectors-4/
+World Wide Web Consortium. (2026, January 22). *Selectors Level 4* (Working
+Draft). https://www.w3.org/TR/selectors-4/
 
-World Wide Web Consortium. (2025, November 25). *Media Queries Level 5*.
-https://www.w3.org/TR/mediaqueries-5/
+World Wide Web Consortium. (2026, February 19). *Media Queries Level 5* (Working
+Draft). https://www.w3.org/TR/mediaqueries-5/
