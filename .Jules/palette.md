@@ -21,3 +21,6 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+## 2026-08-16 - 텍스트 선택 영역 및 외부 링크 시각적 개선
+**Learning:** 텍스트 드래그 시 기본 파란색 선택 영역은 브랜드 정체성을 저해하며, 새 창으로 열리는 링크에 대한 시각적 힌트 부재는 사용자의 탐색 맥락을 끊을 수 있습니다.
+**Action:** `::selection` 가상 요소를 통해 브랜드 컬러(Teal)를 적용하고, `target="_blank"` 속성을 가진 외부 링크에 화살표 아이콘(↗)을 추가하여 예측 가능성과 일관된 브랜드 경험을 제공합니다.

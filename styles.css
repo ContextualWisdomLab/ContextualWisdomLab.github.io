@@ -845,3 +845,23 @@ main:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+::selection {
+  background-color: var(--teal);
+  color: var(--white);
+}
+
+a[target="_blank"]:not(.button)::after {
+  content: " ↗";
+  display: inline-block;
+  white-space: pre;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.button[target="_blank"]::after {
+  content: " ↗";
+  display: inline-block;
+  white-space: pre;
+  margin-left: 4px;
+}
