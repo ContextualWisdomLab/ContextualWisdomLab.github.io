@@ -384,7 +384,10 @@ function setLanguage(lang) {
   externalLinkNodes.forEach((link) => {
     const linkText = link.textContent.trim();
     if (!linkText) return;
-    link.setAttribute("aria-label", `${linkText} (${dict["a11y.opensNewTab"]})`);
+    const accessibleName = `${linkText} (${dict["a11y.opensNewTab"]})`;
+    if (link.getAttribute("aria-label") !== accessibleName) {
+      link.setAttribute("aria-label", accessibleName);
+    }
   });
 
   langButtons.forEach((button) => {

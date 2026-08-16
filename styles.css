@@ -856,7 +856,6 @@ a[target="_blank"]:not(.button)::after {
   display: inline-block;
   white-space: pre;
   font-size: 0.85em;
-  opacity: 0.7;
 }
 
 .button[target="_blank"]::after {
@@ -864,4 +863,21 @@ a[target="_blank"]:not(.button)::after {
   display: inline-block;
   white-space: pre;
   margin-left: 4px;
+}
+
+/* Keep the card-wide hit area. The general target-blank ::after marker is
+   more specific than `.project-grid h3 a::after` and would otherwise replace
+   the empty stretch overlay with a positioned ↗ glyph. */
+.project-grid h3 a[target="_blank"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.project-grid h3 a[target="_blank"]::before {
+  content: " ↗";
+  display: inline-block;
+  white-space: pre;
+  font-size: 0.85em;
 }

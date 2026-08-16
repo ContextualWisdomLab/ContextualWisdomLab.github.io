@@ -89,8 +89,8 @@ class TestExternalLinkAccessibility(unittest.TestCase):
             I18N_SOURCE,
             re.compile(
                 r"linkText\s*=\s*link\.textContent\.trim\(\).*?"
-                r"link\.setAttribute\(\s*[\"']aria-label[\"']\s*,\s*"
-                r"[^;]*linkText[^;]*dict\[[\"']a11y\.opensNewTab[\"']\]",
+                r"accessibleName\s*=\s*`\$\{linkText\} \(\$\{dict\[[\"']a11y\.opensNewTab[\"']\]\}\)`.+?"
+                r"link\.setAttribute\(\s*[\"']aria-label[\"']\s*,\s*accessibleName\s*\)",
                 re.DOTALL,
             ),
         )

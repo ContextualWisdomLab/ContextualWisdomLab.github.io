@@ -104,6 +104,22 @@ def test_project_cards_are_fully_clickable_via_pseudo_element() -> None:
     assert "inset: 0;" in after_rule
 
 
+def test_external_link_marker_does_not_override_project_card_hit_area() -> None:
+    """New-tab glyphs must not reuse the project-card stretch overlay."""
+    general_marker = _rule('a[target="_blank"]:not(.button)::after')
+    assert 'content: " ↗";' in general_marker
+    assert "position: absolute;" not in general_marker
+
+    overlay = _rule('.project-grid h3 a[target="_blank"]::after')
+    assert 'content: "";' in overlay
+    assert "position: absolute;" in overlay
+    assert "inset: 0;" in overlay
+
+    title_marker = _rule('.project-grid h3 a[target="_blank"]::before')
+    assert 'content: " ↗";' in title_marker
+    assert "position: absolute;" not in title_marker
+
+
 def test_skip_link_animates_transform_not_top() -> None:
     """Skip link must animate the compositor-only transform, never top."""
     rule = _rule(".skip-link")

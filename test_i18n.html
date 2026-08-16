@@ -11,6 +11,7 @@
   <button type="button" data-lang="ko" aria-pressed="true">KO</button>
   <button type="button" data-lang="en" aria-pressed="false">EN</button>
   <img id="footer-logo" src="assets/context-wisdom-lab-logo.svg" alt="맥락지혜 연구실 · Contextual Wisdom Lab">
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab" data-i18n="hero.primaryCta">GitHub 보기</a>
   <script>
     // Mock for global storage and initial test state
     window.localStorageMock = {
@@ -39,6 +40,12 @@
       console.log("Running tests...");
 
       assertEqual(currentLang, "ko", "Initial language should be 'ko'");
+      const externalLink = document.querySelector('a[target="_blank"]');
+      assertEqual(
+        externalLink.getAttribute("aria-label"),
+        "GitHub 보기 (새 탭에서 열림)",
+        "Initial Korean target-blank links include the new-tab accessible name"
+      );
 
       // Test 2: Switch to EN updates nodes correctly
       setLanguage("en");
@@ -46,10 +53,21 @@
       const titleNode = document.querySelector('[data-i18n="hero.title"]');
       assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
 
+      assertEqual(
+        externalLink.getAttribute("aria-label"),
+        "Explore GitHub (opens in a new tab)",
+        "English target-blank links keep visible text in the accessible name"
+      );
+
       // Test 3: Switch back to KO updates nodes correctly
       setLanguage("ko");
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
+      assertEqual(
+        externalLink.getAttribute("aria-label"),
+        "GitHub 보기 (새 탭에서 열림)",
+        "Korean target-blank links keep visible text in the accessible name"
+      );
 
       // Test 4: Sentinel Security - Input Validation for untrusted inputs
       setLanguage("__proto__");

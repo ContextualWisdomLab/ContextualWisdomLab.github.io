@@ -22,5 +22,5 @@
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
 ## 2026-08-16 - 텍스트 선택 영역 및 외부 링크 시각적 개선
-**Learning:** 텍스트 드래그 시 기본 파란색 선택 영역은 브랜드 정체성을 저해하며, 새 창으로 열리는 링크에 대한 시각적 힌트 부재는 사용자의 탐색 맥락을 끊을 수 있습니다.
-**Action:** `::selection` 가상 요소를 통해 브랜드 컬러(Teal)를 적용하고, `target="_blank"` 속성을 가진 외부 링크에 화살표 아이콘(↗)을 추가하여 예측 가능성과 일관된 브랜드 경험을 제공합니다.
+**Learning:** 텍스트 드래그 시 기본 파란색 선택 영역은 브랜드 정체성을 저해하며, 새 창으로 열리는 링크에 대한 시각적 힌트 부재는 사용자의 탐색 맥락을 끊을 수 있습니다. `a[target="_blank"]::after`로 `↗`를 넣으면 프로젝트 카드가 이미 쓰는 빈 `::after` 히트 영역(`content: ""` + `inset: 0`)을 덮어 카드 전체가 아니라 글리프만 클릭 대상이 됩니다.
+**Action:** `::selection`에 Teal/white를 적용합니다. 일반 `target="_blank"` 링크는 `::after`로 `↗`를 붙이고, 프로젝트 카드는 같은 `::after`를 빈 스트레치 오버레이로 되돌린 뒤 `::before`에 `↗`를 둡니다. 새 탭 안내는 JS `aria-label`로 제공하고, CSS 생성 콘텐츠만으로 G201/F87을 충족했다고 기록하지 않습니다.
