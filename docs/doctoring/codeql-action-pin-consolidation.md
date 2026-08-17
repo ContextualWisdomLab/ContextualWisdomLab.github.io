@@ -4,16 +4,16 @@
 
 The repository's manual CodeQL marker workflow uses one reviewed immutable release identity for both `github/codeql-action/init` and the disabled documentation-only `github/codeql-action/analyze` step:
 
-- `github/codeql-action` v4.37.6: `5595ccaf912efad79be6eef63a5619ff05969be3`;
+- `github/codeql-action` v4.37.7: `ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd`;
 - `actions/checkout` v7.0.1: `3d3c42e5aac5ba805825da76410c181273ba90b1`.
 
 The checkout step explicitly sets `persist-credentials: false`. The workflow remains manually dispatched, read-only, and does not upload SARIF. GitHub CodeQL default setup or the organization-owned required checks continue to own analysis publication.
 
 ## Why this consolidation is necessary
 
-Three independent dependency pull requests proposed overlapping updates to checkout, CodeQL initialization, and the disabled analyze marker. Keeping those changes separate would leave temporary version skew and multiple competing merge paths. The consolidated change applies the newest reviewed CodeQL release to both CodeQL action references and includes the checkout credential hardening already validated in the predecessor branch.
+Independent dependency pull requests proposed overlapping updates to checkout and both CodeQL action references. Keeping those changes separate would leave temporary version skew and multiple competing merge paths. The consolidated change applies the newest reviewed CodeQL release to both CodeQL action references and includes the checkout credential hardening already validated in the predecessor branch.
 
-The CodeQL v4.37.6 tag resolves exactly to commit `5595ccaf912efad79be6eef63a5619ff05969be3`. The checkout v7.0.1 release commit is `3d3c42e5aac5ba805825da76410c181273ba90b1`. Full-length commit pins prevent a mutable tag or branch from changing the code executed by the workflow without a reviewed repository change.
+The annotated CodeQL v4.37.7 tag resolves to tag object `faaa5d804fc648d0fdb28822a8e36cf7d0a6132c`, which in turn resolves exactly to commit `ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd`. The checkout v7.0.1 release commit is `3d3c42e5aac5ba805825da76410c181273ba90b1`. Full-length commit pins prevent a mutable tag or branch from changing the code executed by the workflow without a reviewed repository change.
 
 ## Trust and behavior boundaries
 
@@ -29,7 +29,9 @@ The manual workflow still receives the ordinary runner environment. Disabling pe
 
 ## Test-first evidence
 
-Commit `496474275cb3fdb8f8a54dee02a4767acdb0b8f8` introduced the permanent regression contract before the production workflow changed. Against the protected-base workflow, that contract fails because checkout is still v7.0.0, credential persistence is not disabled, and CodeQL is still v4.37.0. The implementation commit then updates only the reviewed action references and credential setting required to satisfy the contract.
+Commit `496474275cb3fdb8f8a54dee02a4767acdb0b8f8` introduced the original permanent regression contract before the production workflow changed. Against its protected-base workflow, that contract failed because checkout was still v7.0.0, credential persistence was not disabled, and CodeQL was still v4.37.0.
+
+For the later v4.37.7 maintenance update, commit `77694dd520f0f9a4c79179305822f58116e7ff1a` updated the regression contract first to require the newly resolved immutable v4.37.7 commit while the workflow still referenced v4.37.6. Commit `c32151f0b94d7d597fbdbc0d0bb6367298d9a2cb` then updated only the two CodeQL action references. No permission, trigger, SARIF ownership, or credential boundary was weakened.
 
 ## Verification
 
@@ -45,12 +47,12 @@ Queued, pending, skipped-required, cancelled, absent, failed, or predecessor-hea
 
 ## Rollback
 
-Rollback requires a reviewed commit that replaces both CodeQL action references together and updates the regression contract. Do not move one CodeQL component independently or replace a full commit SHA with a tag. If v4.37.6 causes a verified regression, pin both CodeQL references to the last known-good immutable commit, retain `persist-credentials: false`, rerun the exact-head checks, and document the incident in this record and the changelog.
+Rollback requires a reviewed commit that replaces both CodeQL action references together and updates the regression contract. Do not move one CodeQL component independently or replace a full commit SHA with a tag. If v4.37.7 causes a verified regression, pin both CodeQL references to the last known-good immutable commit, retain `persist-credentials: false`, rerun the exact-head checks, and document the incident in this record and the changelog.
 
 ## References
 
 Actions. (2026, July 17). *Checkout v7.0.1* [Software release]. GitHub. https://github.com/actions/checkout/releases/tag/v7.0.1
 
-GitHub. (2026, August 4). *CodeQL Action v4.37.6* [Software release]. GitHub. https://github.com/github/codeql-action/releases/tag/v4.37.6
+GitHub. (2026, August 13). *CodeQL Action v4.37.7* [Software release]. GitHub. https://github.com/github/codeql-action/releases/tag/v4.37.7
 
-GitHub. (n.d.). *Secure use reference*. GitHub Docs. Retrieved August 7, 2026, from https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions
+GitHub. (n.d.). *Secure use reference*. GitHub Docs. Retrieved August 17, 2026, from https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions
