@@ -9,7 +9,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CODEQL_WORKFLOW = ROOT / ".github" / "workflows" / "codeql.yml"
 CHECKOUT_V7_0_1_SHA = "3d3c42e5aac5ba805825da76410c181273ba90b1"
-CODEQL_V4_37_6_SHA = "5595ccaf912efad79be6eef63a5619ff05969be3"
+CODEQL_V4_37_7_SHA = "ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd"
 
 
 def _parse_scalar(raw_value: str) -> str | bool:
@@ -138,10 +138,10 @@ def test_codeql_workflow_uses_current_immutable_action_pins() -> None:
     assert checkout.get("with", {}).get("persist-credentials") is False
 
     init = _single_action_step(workflow, "github/codeql-action/init")
-    assert init["uses"] == f"github/codeql-action/init@{CODEQL_V4_37_6_SHA}"
+    assert init["uses"] == f"github/codeql-action/init@{CODEQL_V4_37_7_SHA}"
 
     analyze = _single_action_step(workflow, "github/codeql-action/analyze")
-    assert analyze["uses"] == f"github/codeql-action/analyze@{CODEQL_V4_37_6_SHA}"
+    assert analyze["uses"] == f"github/codeql-action/analyze@{CODEQL_V4_37_7_SHA}"
     assert analyze.get("if") == "${{ false }}"
 
 
