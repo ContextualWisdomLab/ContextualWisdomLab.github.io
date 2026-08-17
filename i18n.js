@@ -39,7 +39,7 @@ const messages = {
     "principles.stakeholderTitle": "이해관계",
     "principles.stakeholderBody": "고객, 담당자, 승인자, 운영자 중 누가 영향을 받는지 연결합니다.",
     "principles.twoTitle": "종합은 요약이 아닙니다",
-    "principles.twoBody": "길이를 줄이는 데서 멈추지 않습니다. 증거, 맥락, 리스크, 선택지를 엮어 사람이 판단할 수 있는 구조를 만듭니다.",
+    "principles.twoBody": "길이를 줄이는 데서 멈추지 않습니다. 증거, 맥락, 리스크, 선택지를 엮어 사람이 판단할 수 있는 구조로 만듭니다.",
     "principles.evidenceTitle": "증거",
     "principles.evidenceBody": "원문 메일, 회의록 문장, 로그, 첨부파일, VOC처럼 판단을 뒷받침하는 출처입니다.",
     "principles.contextTitle": "맥락",
@@ -342,7 +342,7 @@ function setLanguage(lang) {
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
-    console.warn(`[Security] Invalid language requested: ${lang}. Falling back to default.`);
+    console.warn("[Security] Invalid language requested. Falling back to default.");
     lang = "ko";
   }
 

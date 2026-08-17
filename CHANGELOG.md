@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **제품 정합**: 구매자가 바로 열 수 있도록 소유가 확인된 `Orgmetra`, `TEPP`, `psychometrics-commons`, `contextual-orchestrator` 카드를 공개 프로젝트에 추가하고, Naruon 소개에서 저장소를 바로 열 수 있게 했습니다.
 - **UX/접근성 개선**: 새 탭 안내를 JS `aria-label` 대신 HTML `.visually-hidden` 문구로 두어 스크립트 없이도 `새 탭에서 열림`을 읽게 하고, 언어 전환은 같은 노드의 `data-i18n`만 바꿉니다.
 - **제품 정합**: WAF/IDS 카드의 이름과 링크를 현재 소유 저장소 `wardnet`으로 맞추고, 조직이 소유한 `argos`와 `vooster` fork 카드를 프로젝트 카드와 같은 방식으로 열 수 있게 했습니다. 조직 공개 저장소가 없는 `vooster-v2-mvp`는 404 링크를 만들지 않고 소개만 유지합니다.
