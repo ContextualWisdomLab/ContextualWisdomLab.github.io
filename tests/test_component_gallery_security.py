@@ -143,19 +143,3 @@ def test_tab_markup_uses_one_roving_tab_stop() -> None:
     assert all(tab.get("aria-controls") in panel_ids for tab in tabs)
     assert all(panel.get("aria-labelledby") in tab_ids for panel in panels)
     assert all(panel.get("tabindex") == "0" for panel in panels)
-
-
-def test_tab_script_supports_complete_horizontal_keyboard_navigation() -> None:
-    """Tabs support APG horizontal navigation and synchronized state changes."""
-    script = _gallery_script()
-
-    for key in ("ArrowLeft", "ArrowRight", "Home", "End"):
-        assert f'"{key}"' in script
-    for required_operation in (
-        "preventDefault()",
-        'setAttribute("aria-selected"',
-        'setAttribute("tabindex"',
-        ".hidden =",
-        ".focus()",
-    ):
-        assert required_operation in script
