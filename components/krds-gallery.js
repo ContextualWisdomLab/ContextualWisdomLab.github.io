@@ -3,24 +3,22 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
   const tabList = [...tabs.querySelectorAll('[role="tab"]')];
 
   const activateTab = (nextTab, moveFocus = false) => {
-    const nextPanelId = nextTab.getAttribute("aria-controls");
-    const nextPanel =
-      nextPanelId === null ? null : document.getElementById(nextPanelId);
-    if (nextPanel === null) {
+    const tabPanels = tabList.map((tab) => {
+      const panelId = tab.getAttribute("aria-controls");
+      const panel = panelId === null ? null : document.getElementById(panelId);
+      return { tab, panel };
+    });
+
+    if (tabPanels.some(({ panel }) => panel === null)) {
       console.warn("[Security] Requested tab panel is unavailable.");
       return;
     }
 
-    tabList.forEach((tab) => {
+    tabPanels.forEach(({ tab, panel }) => {
       const isSelected = tab === nextTab;
-      const panelId = tab.getAttribute("aria-controls");
-      const panel = panelId === null ? null : document.getElementById(panelId);
-
       tab.setAttribute("aria-selected", String(isSelected));
       tab.setAttribute("tabindex", isSelected ? "0" : "-1");
-      if (panel !== null) {
-        panel.hidden = !isSelected;
-      }
+      panel.hidden = !isSelected;
     });
 
     if (moveFocus) {
