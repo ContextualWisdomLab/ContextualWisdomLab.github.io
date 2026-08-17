@@ -50,14 +50,25 @@ tag container, and a valid tag container. They prove no partial tab-state
 mutation, no focus movement, exact static warnings, no raw identifier transport,
 and preserved valid removal behavior.
 
+A separate executable keyboard harness invokes the actual registered `keydown`
+listeners rather than inspecting source strings. It proves `ArrowLeft` and
+`ArrowRight` wrap between the first and last tabs, `Home` and `End` select the
+respective boundary tab, every handled key calls `preventDefault()`, focus moves
+to the activated tab, `aria-selected` and roving `tabindex` remain synchronized,
+and only the activated panel is visible. An unhandled `Tab` event remains outside
+the scripted navigation contract and is not prevented.
+
 ## Limitations and validation
 
 The Python regression suite validates the markup relationships, the single
-roving tab stop, the accessible tab-list name, panel reachability, supported
-keyboard transitions, and the missing-target runtime contract. Browser and
-assistive-technology interoperability still requires manual validation on
-representative browser and screen-reader combinations before treating the
-gallery as a conformance demonstration.
+roving tab stop, the accessible tab-list name, panel reachability, and invokes
+the dependency-free Node interaction harnesses for keyboard transitions and
+missing-target behavior. These harnesses exercise the checked-in production
+JavaScript and DOM-facing contracts, but they are not a substitute for a real
+browser accessibility tree or assistive-technology interoperability test.
+Representative browser and screen-reader combinations still require manual or
+future browser-automation validation before treating the gallery as a complete
+conformance demonstration.
 
 Automatic activation is appropriate only while panel display remains
 instantaneous. If a future panel requires remote loading or expensive
