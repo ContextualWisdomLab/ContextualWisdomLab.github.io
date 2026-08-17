@@ -10,6 +10,17 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 GALLERY_SCRIPT = REPOSITORY_ROOT / "components" / "krds-gallery.js"
 
 
+def _run_gallery_harness(harness: str) -> subprocess.CompletedProcess[str]:
+    """Execute a dependency-free Node harness against the checked-in gallery script."""
+    return subprocess.run(
+        ["node", "-e", harness],
+        input=GALLERY_SCRIPT.read_text(encoding="utf-8"),
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+
+
 def test_missing_panel_and_tag_targets_fail_without_partial_state() -> None:
     """Missing controlled elements warn statically and preserve prior tab state."""
     harness = r'''
@@ -93,12 +104,70 @@ if (warnings.some((warning) => warning.includes("attacker-controlled"))) {
   throw new Error("untrusted panel identifiers reached warning output");
 }
 '''
-    completed = subprocess.run(
-        ["node", "-e", harness],
-        input=GALLERY_SCRIPT.read_text(encoding="utf-8"),
-        capture_output=True,
-        check=False,
-        text=True,
-    )
+    completed = _run_gallery_harness(harness)
+    assert completed.returncode == 0, completed.stderr
 
+
+def test_valid_target_does_not_mutate_when_sibling_panel_mapping_is_broken() -> None:
+    """A corrupt tab set must fail atomically before changing selection or focus."""
+    harness = r'''
+const fs = require("node:fs");
+const script = fs.readFileSync(0, "utf8");
+const warnings = [];
+const listeners = new Map();
+let focusCount = 0;
+
+function tab(name, panelId, selected, tabIndex) {
+  return {
+    name,
+    attributes: {
+      "aria-controls": panelId,
+      "aria-selected": selected,
+      "tabindex": tabIndex,
+    },
+    addEventListener(type, callback) { listeners.set(`${name}:${type}`, callback); },
+    getAttribute(attribute) { return this.attributes[attribute] ?? null; },
+    setAttribute(attribute, value) { this.attributes[attribute] = String(value); },
+    focus() { focusCount += 1; },
+  };
+}
+
+const activeTab = tab("active", "active-panel", "true", "0");
+const nextTab = tab("next", "next-panel", "false", "-1");
+const brokenSibling = tab("broken", "untrusted\nmissing-panel", "false", "-1");
+const activePanel = {hidden: false};
+const nextPanel = {hidden: true};
+const tabGroup = {querySelectorAll: () => [activeTab, nextTab, brokenSibling]};
+
+global.document = {
+  querySelectorAll(selector) {
+    if (selector === ".krds-tabs") return [tabGroup];
+    if (selector === ".krds-tag__remove") return [];
+    return [];
+  },
+  getElementById(identifier) {
+    if (identifier === "active-panel") return activePanel;
+    if (identifier === "next-panel") return nextPanel;
+    return null;
+  },
+};
+console.warn = (message) => warnings.push(String(message));
+
+eval(script);
+listeners.get("next:click")();
+
+if (activeTab.attributes["aria-selected"] !== "true" || activeTab.attributes.tabindex !== "0" ||
+    nextTab.attributes["aria-selected"] !== "false" || nextTab.attributes.tabindex !== "-1" ||
+    brokenSibling.attributes["aria-selected"] !== "false" || brokenSibling.attributes.tabindex !== "-1" ||
+    activePanel.hidden !== false || nextPanel.hidden !== true || focusCount !== 0) {
+  throw new Error("corrupt sibling mapping allowed a partial tab-set mutation");
+}
+if (warnings.length !== 1 || warnings[0] !== "[Security] Requested tab panel is unavailable.") {
+  throw new Error(`unexpected warnings: ${JSON.stringify(warnings)}`);
+}
+if (warnings[0].includes("untrusted")) {
+  throw new Error("untrusted panel identifiers reached warning output");
+}
+'''
+    completed = _run_gallery_harness(harness)
     assert completed.returncode == 0, completed.stderr
