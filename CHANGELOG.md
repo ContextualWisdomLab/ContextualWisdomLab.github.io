@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
-- **CI 공급망 보안**: 수동 CodeQL 진단 워크플로의 `actions/checkout`을 불변 v7.0.1 커밋으로 갱신하고 인증 정보 지속을 비활성화했으며, CodeQL `init`·`analyze` 참조를 하나의 검증된 v4.37.6 커밋으로 통합했습니다.
+- **CI 공급망 보안**: 수동 CodeQL 진단 워크플로의 `actions/checkout`을 불변 v7.0.1 커밋으로 갱신하고 인증 정보 지속을 비활성화했으며, CodeQL `init`·`analyze` 참조를 하나의 검증된 v4.37.7 커밋으로 통합했습니다.
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
 - **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 단일 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. 정적 테스트가 eager, lazy, LCP 후보 집합의 존재와 조합을 검증하며, 실제 LCP 효과는 배포 후 실측 대상으로 유지합니다.
