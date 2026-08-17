@@ -11,6 +11,7 @@
   <button type="button" data-lang="ko" aria-pressed="true">KO</button>
   <button type="button" data-lang="en" aria-pressed="false">EN</button>
   <img id="footer-logo" src="assets/context-wisdom-lab-logo.svg" alt="맥락지혜 연구실 · Contextual Wisdom Lab">
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab"><span data-i18n="hero.primaryCta">GitHub 보기</span><span class="visually-hidden"> (<span data-i18n="a11y.opensNewTab">새 탭에서 열림</span>)</span></a>
   <script>
     // Mock for global storage and initial test state
     window.localStorageMock = {
@@ -39,6 +40,18 @@
       console.log("Running tests...");
 
       assertEqual(currentLang, "ko", "Initial language should be 'ko'");
+      const externalLink = document.querySelector('a[target="_blank"]');
+      const newTabCue = externalLink.querySelector('[data-i18n="a11y.opensNewTab"]');
+      assertEqual(
+        externalLink.textContent.trim(),
+        "GitHub 보기 (새 탭에서 열림)",
+        "Initial Korean target-blank links include the new-tab accessible name"
+      );
+      assertEqual(
+        newTabCue.textContent,
+        "새 탭에서 열림",
+        "Korean new-tab warning lives in the document tree"
+      );
 
       // Test 2: Switch to EN updates nodes correctly
       setLanguage("en");
@@ -46,10 +59,31 @@
       const titleNode = document.querySelector('[data-i18n="hero.title"]');
       assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
 
+      assertEqual(
+        externalLink.textContent.trim(),
+        "Explore GitHub (opens in a new tab)",
+        "English target-blank links keep visible text in the accessible name"
+      );
+      assertEqual(
+        newTabCue.textContent,
+        "opens in a new tab",
+        "English new-tab warning stays in the same document-tree node"
+      );
+
       // Test 3: Switch back to KO updates nodes correctly
       setLanguage("ko");
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
+      assertEqual(
+        externalLink.textContent.trim(),
+        "GitHub 보기 (새 탭에서 열림)",
+        "Korean target-blank links keep visible text in the accessible name"
+      );
+      assertEqual(
+        newTabCue.textContent,
+        "새 탭에서 열림",
+        "Korean new-tab warning returns in the document tree"
+      );
 
       // Test 4: Sentinel Security - Input Validation for untrusted inputs
       setLanguage("__proto__");
