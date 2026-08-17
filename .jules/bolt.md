@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2026-08-17 - data-* 속성 읽기 시 dataset 대신 getAttribute 사용
+**Learning:** V8 등 주요 JS 엔진에서 DOM 요소의 `dataset` 속성을 통해 값을 읽는 것(예: `node.dataset.i18n`)은 Proxy 객체 생성 및 카멜 케이스 변환 오버헤드로 인해 `node.getAttribute('data-i18n')`를 직접 호출하는 것보다 일관되게 느립니다. 많은 요소를 순회하는 i18n 업데이트 루프에서 이 차이가 유의미합니다.
+**Action:** 루프 내에서 커스텀 데이터 속성 값을 읽을 때는 항상 `getAttribute()`를 사용하여 메인 스레드 블로킹 시간을 최소화합니다.
