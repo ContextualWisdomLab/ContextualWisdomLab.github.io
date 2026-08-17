@@ -331,7 +331,11 @@ function setLanguage(lang) {
   const dict = messages[lang] || messages.ko;
 
   if (!langButtons) {
-    langButtons = document.querySelectorAll("[data-lang]");
+    // ⚡ Bolt: Cache language keys to avoid repeated DOM-backed attribute reads on each switch
+    langButtons = Array.from(document.querySelectorAll("[data-lang]")).map((node) => ({
+      node,
+      langKey: node.getAttribute("data-lang")
+    }));
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     footerLogo = document.querySelector("#footer-logo");
@@ -365,22 +369,26 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      // ⚡ Bolt: Cache data-i18n keys to avoid repeated DOM-backed attribute reads in the render loop
+      i18nNodes = Array.from(document.querySelectorAll("[data-i18n]")).map((node) => ({
+        node,
+        key: node.getAttribute("data-i18n")
+      }));
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
+    i18nNodes.forEach(({ node, key }) => {
+      const newText = dict[key];
       if (newText && node.textContent !== newText) {
         node.textContent = newText;
       }
     });
   }
 
-  langButtons.forEach((button) => {
-    const pressed = String(button.dataset.lang === lang);
-    if (button.getAttribute("aria-pressed") !== pressed) {
-      button.setAttribute("aria-pressed", pressed);
+  langButtons.forEach(({ node, langKey }) => {
+    const pressed = String(langKey === lang);
+    if (node.getAttribute("aria-pressed") !== pressed) {
+      node.setAttribute("aria-pressed", pressed);
     }
   });
 
@@ -392,9 +400,10 @@ function setLanguage(lang) {
   currentLang = lang;
 }
 
-// Event listeners can just use the initial querySelectorAll
+// Event listeners reuse the language key read during listener registration
 document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  const langKey = button.getAttribute("data-lang");
+  button.addEventListener("click", () => setLanguage(langKey));
 });
 
 setLanguage(preferredLanguage());
