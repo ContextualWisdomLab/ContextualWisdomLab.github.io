@@ -1,4 +1,4 @@
-"""Runtime regressions for missing component-gallery DOM targets."""
+"""Runtime regressions for component-gallery interaction and DOM integrity."""
 
 from __future__ import annotations
 
@@ -168,6 +168,108 @@ if (warnings.length !== 1 || warnings[0] !== "[Security] Requested tab panel is 
 if (warnings[0].includes("untrusted")) {
   throw new Error("untrusted panel identifiers reached warning output");
 }
+'''
+    completed = _run_gallery_harness(harness)
+    assert completed.returncode == 0, completed.stderr
+
+
+def test_keyboard_navigation_executes_wrapped_state_transitions() -> None:
+    """Arrow, Home, and End keys execute APG-style wrapping and state changes."""
+    harness = r'''
+const fs = require("node:fs");
+const script = fs.readFileSync(0, "utf8");
+const listeners = new Map();
+let focusedName = null;
+
+function tab(name, panelId, selected, tabIndex) {
+  return {
+    name,
+    attributes: {
+      "aria-controls": panelId,
+      "aria-selected": selected,
+      "tabindex": tabIndex,
+    },
+    addEventListener(type, callback) { listeners.set(`${name}:${type}`, callback); },
+    getAttribute(attribute) { return this.attributes[attribute] ?? null; },
+    setAttribute(attribute, value) { this.attributes[attribute] = String(value); },
+    focus() { focusedName = name; },
+  };
+}
+
+const tabs = [
+  tab("first", "panel-first", "true", "0"),
+  tab("middle", "panel-middle", "false", "-1"),
+  tab("last", "panel-last", "false", "-1"),
+];
+const panels = {
+  "panel-first": {hidden: false},
+  "panel-middle": {hidden: true},
+  "panel-last": {hidden: true},
+};
+const tabGroup = {querySelectorAll: () => tabs};
+
+global.document = {
+  querySelectorAll(selector) {
+    if (selector === ".krds-tabs") return [tabGroup];
+    if (selector === ".krds-tag__remove") return [];
+    return [];
+  },
+  getElementById(identifier) { return panels[identifier] ?? null; },
+};
+console.warn = (message) => { throw new Error(`unexpected warning: ${message}`); };
+
+eval(script);
+
+function assertState(expectedIndex) {
+  tabs.forEach((candidate, index) => {
+    const selected = index === expectedIndex;
+    if (candidate.attributes["aria-selected"] !== String(selected)) {
+      throw new Error(`${candidate.name} aria-selected mismatch`);
+    }
+    if (candidate.attributes.tabindex !== (selected ? "0" : "-1")) {
+      throw new Error(`${candidate.name} tabindex mismatch`);
+    }
+    const panel = panels[candidate.attributes["aria-controls"]];
+    if (panel.hidden !== !selected) {
+      throw new Error(`${candidate.name} panel hidden state mismatch`);
+    }
+  });
+}
+
+function press(tabName, key) {
+  const event = {
+    key,
+    prevented: false,
+    preventDefault() { this.prevented = true; },
+  };
+  const handler = listeners.get(`${tabName}:keydown`);
+  if (!handler) throw new Error(`missing keydown listener for ${tabName}`);
+  handler(event);
+  return event;
+}
+
+assertState(0);
+
+let event = press("first", "ArrowLeft");
+if (!event.prevented || focusedName !== "last") throw new Error("ArrowLeft did not wrap to last");
+assertState(2);
+
+event = press("last", "ArrowRight");
+if (!event.prevented || focusedName !== "first") throw new Error("ArrowRight did not wrap to first");
+assertState(0);
+
+event = press("first", "End");
+if (!event.prevented || focusedName !== "last") throw new Error("End did not activate last");
+assertState(2);
+
+event = press("last", "Home");
+if (!event.prevented || focusedName !== "first") throw new Error("Home did not activate first");
+assertState(0);
+
+event = press("first", "Tab");
+if (event.prevented) throw new Error("unhandled Tab key was prevented");
+if (focusedName !== "first") throw new Error("unhandled Tab key moved scripted focus");
+assertState(0);
 '''
     completed = _run_gallery_harness(harness)
     assert completed.returncode == 0, completed.stderr
