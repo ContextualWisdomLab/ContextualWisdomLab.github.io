@@ -23,11 +23,20 @@ native `button` elements with ARIA `tab`, `tablist`, and `tabpanel` roles.
 
 ## Missing-target and diagnostic boundary
 
-A requested tab is validated against its controlled panel before selection,
-`tabindex`, visibility, or focus changes begin. If the target panel is absent,
-the prior selected state remains intact and a constant diagnostic category is
-emitted. The untrusted or malformed `aria-controls` value is not copied into
-console output.
+Every tab in a tab set is resolved to its `aria-controls` target before any
+selection, `tabindex`, panel-visibility, or focus mutation begins. This is a
+set-level integrity check rather than only a requested-target check: if the
+requested panel exists but a sibling tab points to a missing panel, activation
+still fails atomically and preserves the previous selected/visible state. This
+keeps the DOM relationships that assistive technology relies on from drifting
+into a partially updated tab set.
+
+If any controlled panel is absent, a constant diagnostic category is emitted.
+The untrusted or malformed `aria-controls` value is not copied into console
+output. The WAI-ARIA Tabs Pattern requires each tab to control its associated
+`tabpanel`; resolving the whole local set before mutation makes that relationship
+an executable precondition for this static gallery rather than a best-effort
+postcondition.
 
 Tag-removal controls likewise verify that `closest(".krds-tag")` returns a
 container before mutation. A missing container emits a constant diagnostic and
@@ -35,10 +44,11 @@ leaves the page unchanged; a valid container is removed once. These checks are
 reliability boundaries for a static demonstration page, not authorization or a
 claim that arbitrary hostile DOM mutation is a supported product mode.
 
-A Node harness executes the actual gallery script with a missing target panel,
-a missing tag container, and a valid tag container. It proves no partial tab
-state mutation, no focus movement, exact static warnings, no raw identifier
-transport, and preserved valid removal behavior.
+Dependency-free Node harnesses execute the actual gallery script with a missing
+requested panel, a valid requested panel plus a missing sibling panel, a missing
+tag container, and a valid tag container. They prove no partial tab-state
+mutation, no focus movement, exact static warnings, no raw identifier transport,
+and preserved valid removal behavior.
 
 ## Limitations and validation
 
@@ -60,11 +70,15 @@ World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
 
 World Wide Web Consortium. (n.d.). *Tabs pattern*. WAI-ARIA Authoring Practices
-Guide. Retrieved August 15, 2026, from
+Guide. Retrieved August 17, 2026, from
 https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
 
+World Wide Web Consortium. (n.d.). *Example of tabs with automatic activation*.
+WAI-ARIA Authoring Practices Guide. Retrieved August 17, 2026, from
+https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/
+
 World Wide Web Consortium. (n.d.). *Developing a keyboard interface*. WAI-ARIA
-Authoring Practices Guide. Retrieved August 15, 2026, from
+Authoring Practices Guide. Retrieved August 17, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
 
 WHATWG. (2026). *DOM Standard: Element attribute lookup and tree traversal*.
