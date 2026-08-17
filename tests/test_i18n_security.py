@@ -6,14 +6,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
 def test_i18n_input_validation() -> None:
     """Test that allowedLanguages validation logic is correctly implemented in i18n.js."""
     with open("i18n.js", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Check for whitelist validation
     assert "allowedLanguages = [\"ko\", \"en\"]" in content or "allowedLanguages = ['ko', 'en']" in content
     assert "allowedLanguages.includes" in content
+
 
 def test_i18n_html_security_tests_present() -> None:
     """Test that explicit __proto__ and XSS payload checks exist in the HTML test harness."""
@@ -22,6 +23,15 @@ def test_i18n_html_security_tests_present() -> None:
 
     assert "setLanguage(\"__proto__\")" in content
     assert "setLanguage(\"<script>alert(1)<\\/script>\")" in content
+
+
+def test_i18n_avoids_log_injection() -> None:
+    """Keep invalid-language diagnostics independent of the rejected input."""
+    with open("i18n.js", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    assert 'console.warn("[Security] Invalid language requested. Falling back to default.");' in content
+    assert "Invalid language requested: ${lang}" not in content
 
 
 def test_i18n_attribute_cache_is_reused_across_language_switches() -> None:
