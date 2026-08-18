@@ -845,3 +845,13 @@ main:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* 외부 링크 시각적 표시 (새 창 열림) */
+a[target="_blank"]:not(.button)::after {
+  content: " \2197"; /* 북동쪽 화살표 */
+  font-size: 0.85em;
+  opacity: 0.7;
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 2px;
+}

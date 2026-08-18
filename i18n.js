@@ -17,6 +17,7 @@ const messages = {
     "nav.forks": "Fork",
     "nav.references": "참고문헌",
     "nav.work": "작업",
+    "a11y.newWindow": "새 창에서 열기",
     "nav.skipToContent": "본문으로 건너뛰기",
     "hero.title": "맥락지혜 연구실",
     "hero.labName": "Contextual Wisdom Lab",

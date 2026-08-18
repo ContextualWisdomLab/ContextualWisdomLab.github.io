@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2024-08-18 - 외부 링크(새 창 열림) 접근성 및 인지성 향상
+**Learning:** 사용자가 외부 링크를 클릭했을 때 예기치 않게 새 창이 열리면 당황할 수 있으며, 특히 스크린 리더 사용자에게는 이 정보가 사전에 전달되지 않을 경우 맥락을 잃기 쉽습니다.
+**Action:** `target="_blank"`가 적용된 외부 링크 요소에 `title="새 창에서 열기"`를 추가하여 스크린 리더가 명확히 읽을 수 있도록 하고, 일반 텍스트 링크의 경우 CSS 가상 요소(`::after`)를 통해 화살표(`↗`)를 추가함으로써 모든 사용자가 링크를 클릭하기 전 새 창으로 열림을 시각적으로 인지할 수 있도록 합니다. 아이콘이 포함된 버튼형 링크 등 부작용이 우려되는 경우(`:not(.button)`)는 예외 처리합니다.
