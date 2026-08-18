@@ -1,17 +1,25 @@
-    // Tabs: minimal roving behavior. ponytail: native buttons + aria, no framework.
-    document.querySelectorAll(".krds-tabs").forEach((tabs) => {
-      const tabList = [...tabs.querySelectorAll('[role="tab"]')];
-      tabList.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          tabList.forEach((t) => {
-            const sel = t === tab;
-            t.setAttribute("aria-selected", sel);
-            document.getElementById(t.getAttribute("aria-controls")).hidden = !sel;
-          });
-        });
-      });
+    // ⚡ Bolt: Use event delegation for tabs to reduce event listeners and avoid O(n^2) updates
+    document.addEventListener("click", (e) => {
+      const tab = e.target.closest('[role="tab"]');
+      if (tab) {
+        const tabsContainer = tab.closest('.krds-tabs');
+        if (tabsContainer) {
+          const currentTab = tabsContainer.querySelector('[role="tab"][aria-selected="true"]');
+          if (currentTab && currentTab !== tab) {
+            currentTab.setAttribute("aria-selected", "false");
+            document.getElementById(currentTab.getAttribute("aria-controls")).hidden = true;
+          }
+          if (currentTab !== tab) {
+            tab.setAttribute("aria-selected", "true");
+            document.getElementById(tab.getAttribute("aria-controls")).hidden = false;
+          }
+        }
+        return;
+      }
+
+      // ⚡ Bolt: Use event delegation for tag removal
+      const removeBtn = e.target.closest('.krds-tag__remove');
+      if (removeBtn) {
+        removeBtn.closest('.krds-tag').remove();
+      }
     });
-    // Tag remove
-    document.querySelectorAll(".krds-tag__remove").forEach((btn) =>
-      btn.addEventListener("click", () => btn.closest(".krds-tag").remove())
-    );
