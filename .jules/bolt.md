@@ -20,3 +20,6 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+## 2026-08-19 - DOM 속성 조회 최적화 (getElementById 및 객체 프로퍼티 참조 캐싱)
+**Learning:** 이 프로젝트의 클라이언트 사이드 다국어 번역(`i18n.js`)은 언어 전환 시마다 수십 개의 노드에서 `node.dataset.i18n`을 조회합니다. DOM 탐색 함수 중 `querySelector`보다 `getElementById`가 훨씬 더 빠르며, `dataset` 속성은 내부적으로 Proxy 객체를 거치기 때문에 반복적인 DOM 접근 시 오버헤드가 발생합니다.
+**Action:** 단일 요소를 찾는 `querySelector("#footer-logo")`를 더 빠른 `getElementById("footer-logo")`로 교체하고, NodeList에 대한 순회 중 발생하는 `dataset` 객체 접근 비용을 최소화하기 위해 배열 순회 시 캐싱된 속성을 활용하도록 `i18nNodes` 저장 방식을 객체 배열로 변경하여 구조를 개선합니다.
