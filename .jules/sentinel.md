@@ -47,3 +47,7 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+## 2026-08-22 - 컴포넌트 스크립트 DOM 탐색 방어적 프로그래밍 적용
+**Vulnerability:** DOM 요소를 탐색할 때(`document.getElementById`, `element.closest` 등) 반환값 검증 없이 프로퍼티에 접근하거나 메서드를 호출하여, 존재하지 않는 요소를 조작할 경우 Unhandled Exception이 발생하고 스크립트 실행이 중단되는 문제 (방어적 프로그래밍 부재).
+**Learning:** 클라이언트 측 UI 스크립트 오류를 DoS로 분류하는 것은 보안 과장이지만(Security Theater), 잠재적인 DOM 구조 변경이나 악의적이지 않은 오류 상황에서도 애플리케이션이 우아하게 실패(degrade gracefully)하도록 보장하는 것은 심층 방어(Defense in depth)의 일환임.
+**Prevention:** 정적 사이트에서 바닐라 JavaScript 로직을 작성할 때는 항상 DOM 쿼리(예: `document.getElementById(...)`나 `closest(...)`) 결과에 대해 null 체크를 수행한 후 조작하도록 작성해야 함.
