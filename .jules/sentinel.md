@@ -47,3 +47,7 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+## 2026-08-22 - Enforce type="button" on component buttons
+**Vulnerability:** HTML5 표준에 따라 `<button>` 요소의 기본 type은 `submit`이므로, 이 템플릿 컴포넌트들을 폼 내부에 복사하여 사용할 경우 의도치 않은 폼 제출(Accidental Form Submission)이 발생하고 잠재적인 CSRF 취약점으로 연계될 위험이 있음.
+**Learning:** 폼 전송 목적이 아닌 순수 UI 동작용 버튼(예: 탭 전환, 닫기 버튼 등)을 디자인 템플릿으로 제공할 때는 반드시 `type="button"`을 명시하여 개발자의 실수를 원천적으로 방지해야 함.
+**Prevention:** 애플리케이션 내의 모든 비제출용(non-submit) 버튼 컴포넌트에는 `type="button"` 속성을 기본적으로 포함시켜 안전한 컴포넌트 생태계를 유지해야 함.
