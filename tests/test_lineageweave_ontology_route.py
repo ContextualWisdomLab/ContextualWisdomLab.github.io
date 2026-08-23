@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ONTOLOGY = ROOT / "lineageweave" / "ontology"
 CANONICAL = "https://contextualwisdomlab.github.io/lineageweave/ontology"
-SOURCE_COMMIT = "7ff310467d3ee76133fb75abbe2c5a59321eb09d"
+SOURCE_COMMIT = "7ff31046cc2c8e2476d16b64df3bc00d55bf3eff"
 
 
 def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None:
