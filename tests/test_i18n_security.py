@@ -23,3 +23,10 @@ def test_i18n_avoids_log_injection() -> None:
         content = f.read()
 
     assert 'console.warn("[Security] Invalid language requested. Falling back to default.");' in content
+
+def test_i18n_ssr_safe_localstorage() -> None:
+    """Test that localStorage access is guarded by typeof window !== 'undefined' check."""
+    with open("i18n.js", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    assert 'if (typeof window !== "undefined" && window.localStorage)' in content
