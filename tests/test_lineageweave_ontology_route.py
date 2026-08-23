@@ -15,12 +15,14 @@ SOURCE_COMMIT = "c8a4be8fc2417f05d53fb68d32d9e59c3d443e25"
 def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None:
     """The owned route retains its source identity, digest, and format links."""
     manifest = json.loads((ONTOLOGY / "manifest.json").read_text(encoding="utf-8"))
-    source = ONTOLOGY / "ontology.ttl"
+    published_source_copy = ONTOLOGY / "ontology.ttl"
     page = (ONTOLOGY / "index.html").read_text(encoding="utf-8")
 
     assert manifest["documentation_url"] == CANONICAL
     assert manifest["source_commit"] == SOURCE_COMMIT
-    assert manifest["source_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+    assert manifest["source_sha256"] == hashlib.sha256(
+        published_source_copy.read_bytes()
+    ).hexdigest()
     assert set(manifest["generated_artifacts"]) <= {path.name for path in ONTOLOGY.iterdir()}
     assert f'<link rel="canonical" href="{CANONICAL}">' in page
     assert 'id="Post"' in page and f"{CANONICAL}#Post" in page
