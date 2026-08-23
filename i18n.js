@@ -365,12 +365,15 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      i18nNodes = Array.from(document.querySelectorAll("[data-i18n]")).map((node) => ({
+        node,
+        key: node.getAttribute("data-i18n"),
+      }));
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
+    i18nNodes.forEach(({ node, key }) => {
+      const newText = dict[key];
       if (newText && node.textContent !== newText) {
         node.textContent = newText;
       }
@@ -378,7 +381,7 @@ function setLanguage(lang) {
   }
 
   langButtons.forEach((button) => {
-    const pressed = String(button.dataset.lang === lang);
+    const pressed = String(button.getAttribute("data-lang") === lang);
     if (button.getAttribute("aria-pressed") !== pressed) {
       button.setAttribute("aria-pressed", pressed);
     }
@@ -394,7 +397,7 @@ function setLanguage(lang) {
 
 // Event listeners can just use the initial querySelectorAll
 document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  button.addEventListener("click", () => setLanguage(button.getAttribute("data-lang")));
 });
 
 setLanguage(preferredLanguage());
