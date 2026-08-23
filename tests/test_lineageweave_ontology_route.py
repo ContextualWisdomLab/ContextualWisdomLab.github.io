@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ONTOLOGY = ROOT / "lineageweave" / "ontology"
 CANONICAL = "https://contextualwisdomlab.github.io/lineageweave/ontology"
-SOURCE_COMMIT = "6eff57051687a69ac503be026eec724d18e81b8c"
+SOURCE_COMMIT = "9b47ce42fa17fa9f95c8b165983bfb0bd23d9086"
 
 
 def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None:
@@ -36,6 +36,7 @@ def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None
     assert 'href="http://' not in page
     assert 'header a { color: #fff; }' in page
     assert '<a href="../../">LineageWeave</a>' in page
+    assert "OWL 2 Full" in page
 
 
 def test_project_mentions_reify_their_post_and_project() -> None:
@@ -86,4 +87,5 @@ def test_support_profile_uses_the_canonical_namespace() -> None:
     profile = (ONTOLOGY / "prov-o-support-profile.ttl").read_text(encoding="utf-8")
 
     assert f"@prefix : <{CANONICAL}#> ." in profile
-    assert "https://contextualwisdomlab.github.io/LineageWeave/ontology#" not in profile
+    assert "https://contextualwisdomlab.github.io/LineageWeave/" not in profile
+    assert f"<{CANONICAL}/prov-o-support-profile.ttl>" in profile

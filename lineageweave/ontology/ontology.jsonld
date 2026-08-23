@@ -54,7 +54,7 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
-        "@value": "Formal OWL 2 / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies."
+        "@value": "Formal OWL 2 Full / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies. RDF reification for semantic project evidence is interpreted with OWL 2 RDF-Based Semantics rather than OWL 2 DL."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#label": [

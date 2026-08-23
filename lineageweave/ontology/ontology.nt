@@ -153,7 +153,7 @@
 <https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
 <https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_team_affiliation" .
 <https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
-<https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/2000/01/rdf-schema#comment> "Formal OWL 2 / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/2000/01/rdf-schema#comment> "Formal OWL 2 Full / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies. RDF reification for semantic project evidence is interpreted with OWL 2 RDF-Based Semantics rather than OWL 2 DL." .
 <https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/2000/01/rdf-schema#label> "LineageWeave Knowledge Graph Ontology" .
 _:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 _:cb0 <http://www.w3.org/2002/07/owl#allValuesFrom> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
