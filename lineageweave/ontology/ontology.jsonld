@@ -1,0 +1,798 @@
+[
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "Formal OWL 2 / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "LineageWeave Knowledge Graph Ontology"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#broader": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#narrower": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Company"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "company"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A corporate_entity row. Also a skos:Concept so the self-referencing parent_entity_id hierarchy (e.g. Group -> Company -> Plant) is expressible with skos:broader/skos:narrower on instances."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Corporate entity"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "node_corporate_entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CounterpartyPerson",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Counterparty person"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "counterparty"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#narrower": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Group"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "group"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#OurSidePerson",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Our-side person"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "our_side"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A cataloged_person row: a Keyman mentioned in one or more posts."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Person"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "node_person"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#broader": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Plant"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "plant"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A source_post row: one VOC/VOM/VOP/VOCC/VOCO/VOS record."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Post"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "node_post"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Project",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A business project referred to by a source post."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Project"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An evidence-backed semantic assertion that a post refers to a project."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Project mention"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "An R&R actor that is an organization acting in its own name, per prov:Organization."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Role actor (organization)"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#Organization"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "prov_organization"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "An R&R actor that is a named individual, per prov:Person."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Role actor (person)"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/prov#Person"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "prov_person"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "An R&R actor that is a named sub-unit of a company (e.g. 설계팀), per org:OrganizationalUnit -- not the company itself."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Role actor (team)"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/org#OrganizationalUnit"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "prov_team"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Team",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A cataloged_team row: a named company sub-unit (ADR 0009) with a stable team_id, distinct from :RoleActorTeam (ADR 0007's per-row actor_type_code classification) the same way :Person is distinct from :RoleActorPerson."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Team"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.w3.org/ns/org#OrganizationalUnit"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "node_team"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A person's N:N organizational affiliation (person_affiliation)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "affiliated with"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_affiliation"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2002/07/owl#SymmetricProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "Two people named in the same post -- symmetric by construction."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "co-mentioned with"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_co_mention"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "The Acme Group -> Acme Electronics Korea -> Acme Electronics Gwangju Plant kind of level, ordered broadest first."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Corporate entity level scheme"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Customer relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_voc"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Customer's-Customer relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_vocc"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Competitor relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_voco"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Market relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_vom"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Partner relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_vop"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has Voice-of-Supplier relationship"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "rel_vos"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#AnnotationProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "The exact common_lookup_value.lookup_code string this ontology term corresponds to."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "lookup code"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A person is named by a post (post_person_mention); this is the canonical direction stored by knowledge_graph_edge."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "mentioned in"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_mention"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentions",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "mentions"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Person"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#inverseOf": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A resolved organization is named by a post (post_organization_mention)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "mentioned in post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_mention_organization"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Project"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A cataloged team is named by a post (post_team_mention)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Team"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "mentioned in post"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_mention_team"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#projectEvidence",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#semanticConfidence",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    ]
+  },
+  {
+    "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "The company a cataloged team belongs to (cataloged_team.affiliated_corporate_entity_id)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Team"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "team affiliated with"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity"
+      }
+    ],
+    "https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode": [
+      {
+        "@value": "edge_team_affiliation"
+      }
+    ]
+  }
+]

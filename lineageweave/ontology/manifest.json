@@ -1,0 +1,17 @@
+{
+  "documentation_url": "https://contextualwisdomlab.github.io/lineageweave/ontology",
+  "generated_artifacts": [
+    "index.html",
+    "manifest.json",
+    "namespace-compatibility.ttl",
+    "ontology.jsonld",
+    "ontology.nt",
+    "ontology.ttl",
+    "prov-o-support-profile.ttl"
+  ],
+  "ontology_triple_count": 152,
+  "ontology_unique_term_count": 32,
+  "source_commit": "c8a4be8fc2417f05d53fb68d32d9e59c3d443e25",
+  "source_path": "docs/ontology/lineageweave-kg.ttl",
+  "source_sha256": "2e12a6cc7d98f1d888f9af3b7cb7072d54d027389f070680b46be0c90c6a57da"
+}
