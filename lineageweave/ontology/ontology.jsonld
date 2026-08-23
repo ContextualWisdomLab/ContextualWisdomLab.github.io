@@ -1,5 +1,53 @@
 [
   {
+    "@id": "_:cb0",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#allValuesFrom": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Post"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"
+      }
+    ]
+  },
+  {
+    "@id": "_:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#allValuesFrom": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#Project"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
+      }
+    ]
+  },
+  {
+    "@id": "_:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#hasValue": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"
+      }
+    ]
+  },
+  {
     "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology",
     "@type": [
       "http://www.w3.org/2002/07/owl#Ontology"
@@ -237,13 +285,27 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "An evidence-backed semantic assertion that a post refers to a project."
+        "@value": "An evidence-backed, RDF-reified assertion that a post refers to a project; rdf:subject identifies the post, rdf:predicate is :mentionsProject, and rdf:object identifies the project."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
         "@value": "Project mention"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "_:cb0"
+      },
+      {
+        "@id": "_:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9"
+      },
+      {
+        "@id": "_:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5"
+      },
+      {
+        "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
       }
     ]
   },
@@ -757,6 +819,11 @@
     "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#semanticConfidence",
     "@type": [
       "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention"
+      }
     ],
     "http://www.w3.org/2000/01/rdf-schema#range": [
       {

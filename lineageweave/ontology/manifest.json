@@ -9,9 +9,9 @@
     "ontology.ttl",
     "prov-o-support-profile.ttl"
   ],
-  "ontology_triple_count": 152,
+  "ontology_triple_count": 166,
   "ontology_unique_term_count": 32,
-  "source_commit": "c8a4be8fc2417f05d53fb68d32d9e59c3d443e25",
+  "source_commit": "7ff310467d3ee76133fb75abbe2c5a59321eb09d",
   "source_path": "docs/ontology/lineageweave-kg.ttl",
-  "source_sha256": "2e12a6cc7d98f1d888f9af3b7cb7072d54d027389f070680b46be0c90c6a57da"
+  "source_sha256": "f83a472b4db0610602db30510a8a9d12461f0abbaefa897c766af089579ac5cd"
 }

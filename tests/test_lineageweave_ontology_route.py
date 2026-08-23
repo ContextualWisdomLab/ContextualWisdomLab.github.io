@@ -2,14 +2,14 @@
 
 import hashlib
 import json
-import mimetypes
+import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ONTOLOGY = ROOT / "lineageweave" / "ontology"
 CANONICAL = "https://contextualwisdomlab.github.io/lineageweave/ontology"
-SOURCE_COMMIT = "c8a4be8fc2417f05d53fb68d32d9e59c3d443e25"
+SOURCE_COMMIT = "7ff310467d3ee76133fb75abbe2c5a59321eb09d"
 
 
 def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None:
@@ -32,8 +32,43 @@ def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None
         ("ontology.nt", "application/n-triples"),
     ):
         assert f'href="{name}" type="{media_type}"' in page
-    assert mimetypes.guess_type("ontology.ttl")[0] == "text/turtle"
-    assert mimetypes.guess_type("ontology.nt")[0] == "application/n-triples"
+    assert "Lookup code</dt><dd><span>None" not in page
+    assert 'href="http://' not in page
+    assert 'header a { color: #fff; }' in page
+    assert '<a href="../../">LineageWeave</a>' in page
+
+
+def test_project_mentions_reify_their_post_and_project() -> None:
+    """Published N-Triples retain the source/predicate/object restrictions."""
+    triples = (ONTOLOGY / "ontology.nt").read_text(encoding="utf-8")
+    restrictions = {
+        "subject": (
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+            f"{CANONICAL}#Post",
+            "http://www.w3.org/2002/07/owl#allValuesFrom",
+        ),
+        "predicate": (
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
+            f"{CANONICAL}#mentionsProject",
+            "http://www.w3.org/2002/07/owl#hasValue",
+        ),
+        "object": (
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
+            f"{CANONICAL}#Project",
+            "http://www.w3.org/2002/07/owl#allValuesFrom",
+        ),
+    }
+    for property_iri, value_iri, value_predicate in restrictions.values():
+        node_match = re.search(
+            rf"^(?P<node>_:[^ ]+) <http://www.w3.org/2002/07/owl#onProperty> <{re.escape(property_iri)}> \.$",
+            triples,
+            re.MULTILINE,
+        )
+        assert node_match
+        assert (
+            f"{node_match.group('node')} <{value_predicate}> <{value_iri}> ."
+            in triples
+        )
 
 
 def test_compatibility_artifact_only_maps_validated_representative_classes() -> None:
