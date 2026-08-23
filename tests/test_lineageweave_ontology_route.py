@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ONTOLOGY = ROOT / "lineageweave" / "ontology"
 CANONICAL = "https://contextualwisdomlab.github.io/lineageweave/ontology"
-SOURCE_COMMIT = "7ff31046cc2c8e2476d16b64df3bc00d55bf3eff"
+SOURCE_COMMIT = "6eff57051687a69ac503be026eec724d18e81b8c"
 
 
 def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None:
@@ -79,3 +79,11 @@ def test_compatibility_artifact_only_maps_validated_representative_classes() -> 
     assert "canonical:Post owl:equivalentClass legacy:Post" in compatibility
     assert "owl:equivalentProperty" not in compatibility
     assert "owl:sameAs" not in compatibility
+
+
+def test_support_profile_uses_the_canonical_namespace() -> None:
+    """The public support profile does not mint deprecated product terms."""
+    profile = (ONTOLOGY / "prov-o-support-profile.ttl").read_text(encoding="utf-8")
+
+    assert f"@prefix : <{CANONICAL}#> ." in profile
+    assert "https://contextualwisdomlab.github.io/LineageWeave/ontology#" not in profile

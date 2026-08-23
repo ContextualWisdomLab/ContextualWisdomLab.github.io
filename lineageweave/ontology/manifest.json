@@ -11,7 +11,7 @@
   ],
   "ontology_triple_count": 166,
   "ontology_unique_term_count": 32,
-  "source_commit": "7ff31046cc2c8e2476d16b64df3bc00d55bf3eff",
+  "source_commit": "6eff57051687a69ac503be026eec724d18e81b8c",
   "source_path": "docs/ontology/lineageweave-kg.ttl",
   "source_sha256": "f83a472b4db0610602db30510a8a9d12461f0abbaefa897c766af089579ac5cd"
 }
