@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2026-08-24 - DOMStringMap (dataset) Proxy 성능 최적화
+**Learning:** NodeList를 반복하며 `node.dataset.i18n`에 접근할 때, DOMStringMap이 Proxy 객체로 구현되어 있어 일반 프로퍼티 접근보다 속도가 느립니다. 특히 수백 개의 노드를 언어 변경 시마다 반복하면 오버헤드가 발생합니다.
+**Action:** `document.querySelectorAll` 결과를 일반 객체의 배열(`{node, key}`)로 매핑하여 `dataset` 키를 미리 캐싱함으로써 반복(iteration) 성능을 향상시켰습니다.

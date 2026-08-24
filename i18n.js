@@ -365,12 +365,16 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      // ⚡ Bolt: Cache dataset keys as plain object properties to avoid DOMStringMap proxy overhead
+      i18nNodes = Array.from(document.querySelectorAll("[data-i18n]")).map((node) => ({
+        node,
+        key: node.getAttribute("data-i18n")
+      }));
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
+    i18nNodes.forEach(({ node, key }) => {
+      const newText = dict[key];
       if (newText && node.textContent !== newText) {
         node.textContent = newText;
       }
