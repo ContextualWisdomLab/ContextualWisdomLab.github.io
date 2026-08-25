@@ -144,7 +144,8 @@ const messages = {
     "work.fourTitle": "작업 흐름",
     "work.fourBody": "반복 탐색은 줄이고 근거 확인과 사람의 판단은 남기는 흐름.",
     "footer.founded": "Founded by",
-    "footer.line": "Context into judgment. Judgment into action."
+    "footer.line": "Context into judgment. Judgment into action.",
+    "a11y.newWindow": "(새 창에서 열림)"
   },
   en: {
     metaTitle: "Contextual Wisdom Lab",
@@ -291,7 +292,8 @@ const messages = {
     "work.fourTitle": "Agentic workflows",
     "work.fourBody": "Workflows that reduce repeated search while preserving evidence checks and human judgment.",
     "footer.founded": "Founded by",
-    "footer.line": "Context into judgment. Judgment into action."
+    "footer.line": "Context into judgment. Judgment into action.",
+    "a11y.newWindow": "(Opens in a new tab)"
   }
 };
 
@@ -365,14 +367,22 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
-      if (newText && node.textContent !== newText) {
-        node.textContent = newText;
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.dataset.i18n];
+        if (newText && node.textContent !== newText) {
+          node.textContent = newText;
+        }
+      }
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.dataset.i18nTitle];
+        if (newTitle && node.getAttribute("title") !== newTitle) {
+          node.setAttribute("title", newTitle);
+        }
       }
     });
   }
