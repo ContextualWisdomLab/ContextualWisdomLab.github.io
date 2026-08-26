@@ -47,3 +47,7 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+## 2026-08-26 - SSR 호환성 및 안전한 실패(Fail Securely) 보장을 위한 환경 검증 추가
+**Vulnerability:** 브라우저 API(`localStorage`) 접근 시 실행 환경(예: SSR)에 대한 검증 누락으로 인한 Unhandled Exception(가용성 저하) 위험.
+**Learning:** 공통 유틸리티 스크립트에서 `typeof window !== 'undefined' && window.localStorage`와 같은 환경 유효성 검사를 선행하면, SSR 환경이나 제한된 브라우저 설정에서도 스크립트가 중단되지 않고 안전하게 실패(Fail Securely)하며 견고성이 향상됨.
+**Prevention:** 브라우저 전용 API를 사용할 때는 항상 환경 검증 방어 로직을 추가하여 예측 불가능한 스크립트 크래시를 방지할 것.
