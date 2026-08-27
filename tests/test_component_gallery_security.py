@@ -82,3 +82,11 @@ def test_component_gallery_inputs_have_length_limits() -> None:
         if 'type="checkbox"' in inp or 'type="radio"' in inp:
             continue
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
+
+def test_component_gallery_script_has_null_checks() -> None:
+    """Ensure DOM operations practice defensive programming by checking for null."""
+    script_path = ROOT / "components" / "krds-gallery.js"
+    script = script_path.read_text(encoding="utf-8")
+    assert "if (panelId)" in script
+    assert "if (panel)" in script
+    assert "if (tag)" in script
