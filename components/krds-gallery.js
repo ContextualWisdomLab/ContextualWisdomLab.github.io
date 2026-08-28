@@ -6,12 +6,23 @@
           tabList.forEach((t) => {
             const sel = t === tab;
             t.setAttribute("aria-selected", sel);
-            document.getElementById(t.getAttribute("aria-controls")).hidden = !sel;
+            const targetId = t.getAttribute("aria-controls");
+            if (targetId) {
+              const target = document.getElementById(targetId);
+              if (target) {
+                target.hidden = !sel;
+              }
+            }
           });
         });
       });
     });
     // Tag remove
     document.querySelectorAll(".krds-tag__remove").forEach((btn) =>
-      btn.addEventListener("click", () => btn.closest(".krds-tag").remove())
+      btn.addEventListener("click", () => {
+        const tag = btn.closest(".krds-tag");
+        if (tag) {
+          tag.remove();
+        }
+      })
     );
