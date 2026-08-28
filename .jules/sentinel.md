@@ -47,3 +47,7 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+## 2026-08-28 - DOM API 예외 처리 누락 방어
+**Vulnerability:** DOM 요소를 탐색할 때 (예: `document.getElementById`, `element.closest`) 결과가 null인지 확인하지 않고 속성을 변경하거나 메서드를 호출하여 발생하는 unhandled script exception.
+**Learning:** 정적 웹사이트 프론트엔드 코드에서 DOM 요소를 조회할 때, 해당 요소가 존재하지 않으면 `TypeError`가 발생하여 스크립트 실행이 중단될 수 있습니다. 이를 DoS 취약점으로 취급하지는 않으나(보안 극장 방지), 방어적 프로그래밍 관점에서 우아한 기능 저하(graceful degradation)를 위해 null 체크가 필수적입니다.
+**Prevention:** Vanilla JavaScript에서 DOM API로 요소를 조회한 후 속성 변경이나 메서드 호출을 수행하기 전에 항상 반환값이 null이 아닌지 검증하는 방어적 프로그래밍 패턴을 적용해야 합니다.
