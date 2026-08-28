@@ -4,6 +4,7 @@ const messages = {
     metaDescription: "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
     logoSrc: "assets/context-wisdom-lab-logo.svg",
     logoAlt: "맥락지혜 연구실 · Contextual Wisdom Lab",
+    "common.newTab": "새 창에서 열기",
     "nav.intro": "소개",
     "nav.problem": "문제의식",
     "nav.model": "연구모형",
@@ -151,6 +152,7 @@ const messages = {
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
     logoSrc: "assets/context-wisdom-lab-logo-en.svg",
     logoAlt: "Contextual Wisdom Lab",
+    "common.newTab": "Opens in new tab",
     "nav.intro": "Intro",
     "nav.problem": "Problem",
     "nav.model": "Research Model",
@@ -365,14 +367,22 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
-      if (newText && node.textContent !== newText) {
-        node.textContent = newText;
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.dataset.i18n];
+        if (newText && node.textContent !== newText) {
+          node.textContent = newText;
+        }
+      }
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.dataset.i18nTitle];
+        if (newTitle && node.getAttribute("title") !== newTitle) {
+          node.setAttribute("title", newTitle);
+        }
       }
     });
   }

@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-08-28 - 외부 링크에 대한 다국어 툴팁 추가
+**Learning:** 외부 링크(target="_blank")는 시각적으로 화살표 등으로 표시되지 않거나 스크린 리더 사용자가 컨텍스트를 잃기 쉽습니다. HTML의 `title` 속성을 활용하여 외부 링크임을 명시적으로 안내하면 접근성과 사용성이 크게 향상됩니다. 또한, 다국어 사이트의 경우 `title` 속성 또한 동적으로 번역되어야 합니다.
+**Action:** 외부 창에서 열리는 링크에는 항상 명확한 안내 툴팁(`title`)을 제공하고, 다국어 지원 스크립트에서 속성 번역 기능을 확장하여 일관된 경험을 제공합니다.
