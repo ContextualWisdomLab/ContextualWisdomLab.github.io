@@ -47,3 +47,8 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+
+## 2026-08-29 - 브라우저 API 환경 검증을 통한 가용성 확보
+**Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
+**Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
+**Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
