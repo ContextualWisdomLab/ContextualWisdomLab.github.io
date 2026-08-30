@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-08-30 - Add title attribute to external links
+**Learning:** External links that open in a new tab (`target="_blank"`) must provide a clear indication to users (especially screen reader users) that clicking the link will take them away from the current page context. Since there is no visually hidden class available, the `title` attribute provides a native, semantic way to offer this context.
+**Action:** Always add `title="새 창에서 열림"` to `a` tags that use `target="_blank"` to improve accessibility and UX.
