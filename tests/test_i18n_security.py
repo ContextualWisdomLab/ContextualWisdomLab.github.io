@@ -23,3 +23,12 @@ def test_i18n_avoids_log_injection() -> None:
         content = f.read()
 
     assert 'console.warn("[Security] Invalid language requested. Falling back to default.");' in content
+
+def test_i18n_environment_validation() -> None:
+    """Test that window and document are validated for SSR compatibility and availability."""
+    with open("i18n.js", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    assert "typeof window !== 'undefined'" in content
+    assert "typeof document !== 'undefined'" in content
+    assert "typeof navigator !== 'undefined'" in content

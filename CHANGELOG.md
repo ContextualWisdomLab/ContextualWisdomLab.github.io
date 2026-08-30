@@ -1,3 +1,7 @@
+## [Unreleased]
+### Security
+- i18n 스크립트에 브라우저 API 환경 검증 추가로 SSR 호환성 및 안전한 실패(Fail securely) 기능 강화
+
 # CHANGELOG
 
 ## [Unreleased]

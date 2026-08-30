@@ -47,3 +47,7 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
+## 2026-08-30 - 브라우저 API 접근 전 환경 검증 로직 추가
+**Vulnerability:** 브라우저 API(`window`, `document`, `localStorage`)에 접근할 때 환경(SSR 등) 검증 없이 호출하여 발생할 수 있는 가용성 저하 및 에러 노출 위험.
+**Learning:** 공용 유틸리티 스크립트에서 환경 검증 없이 브라우저 전용 API를 호출하면 SSR(Server-Side Rendering) 환경이나 제한된 브라우저 환경에서 스크립트 크래시가 발생할 수 있습니다.
+**Prevention:** 브라우저 API에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증을 수행하여 견고성을 높이고 안전하게 실패(Fail securely)하도록 구성해야 합니다.
