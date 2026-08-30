@@ -22,6 +22,6 @@
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
 
-## 2026-08-30 - Add title attribute to external links
-**Learning:** External links that open in a new tab (`target="_blank"`) must provide a clear indication to users (especially screen reader users) that clicking the link will take them away from the current page context. Since there is no visually hidden class available, the `title` attribute provides a native, semantic way to offer this context.
-**Action:** Always add `title="새 창에서 열림"` to `a` tags that use `target="_blank"` to improve accessibility and UX.
+## 2026-08-30 - 외부 링크에 대한 title 속성 지원 개선
+**Learning:** 새 탭으로 열리는 외부 링크(`target="_blank"`)는 화면 판독기 사용자 및 일반 사용자에게 현재 페이지 문맥을 벗어난다는 점을 명확히 안내해야 합니다. 시각적으로 숨길 수 있는 유틸리티 클래스가 없으므로, 기본 제공 속성인 `title` 속성을 사용하여 접근성을 제공하는 것이 좋습니다. 또한 다국어 지원 환경에서는 하드코딩 대신 `data-i18n-title` 속성을 사용하여 언어 변경 시 툴팁도 동적으로 번역되도록 구현해야 합니다.
+**Action:** 항상 `target="_blank"`를 사용하는 `a` 태그에 `data-i18n-title="externalLink"`를 추가하여 접근성과 다국어 사용자 경험(UX)을 개선합니다.
