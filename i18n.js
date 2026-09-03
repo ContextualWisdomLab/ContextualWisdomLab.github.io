@@ -145,7 +145,8 @@ const messages = {
     "work.fourBody": "반복 탐색은 줄이고 근거 확인과 사람의 판단은 남기는 흐름.",
     "footer.founded": "Founded by",
     "footer.line": "Context into judgment. Judgment into action.",
-    "common.newWindow": "새 창에서 열림" },
+    "common.newWindow": "새 창에서 열림"
+  },
   en: {
     metaTitle: "Contextual Wisdom Lab",
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
@@ -292,7 +293,8 @@ const messages = {
     "work.fourBody": "Workflows that reduce repeated search while preserving evidence checks and human judgment.",
     "footer.founded": "Founded by",
     "footer.line": "Context into judgment. Judgment into action.",
-    "common.newWindow": "Opens in a new window"}
+    "common.newWindow": "Opens in a new window"
+  }
 };
 
 function preferredLanguage() {
