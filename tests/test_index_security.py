@@ -1,11 +1,27 @@
 """Security regression tests for the main page (index.html)."""
 
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
+
+
+class _BlankTargetAnchorParser(HTMLParser):
+    """Collect anchors that intentionally open a new browsing context."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.anchors: list[dict[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() != "a":
+            return
+        normalized = {name.lower(): value or "" for name, value in attrs}
+        if normalized.get("target", "").lower() == "_blank":
+            self.anchors.append(normalized)
 
 
 def _index_html() -> str:
@@ -45,6 +61,7 @@ def test_index_declares_strict_csp() -> None:
     assert "'unsafe-inline'" not in policy
     assert "'unsafe-eval'" not in policy
 
+
 def test_index_has_no_inline_active_content() -> None:
     """Strict CSP remains enforceable without inline script or style exceptions."""
     html = _index_html()
@@ -61,15 +78,18 @@ def test_index_has_no_inline_active_content() -> None:
         '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
     )
 
-def test_index_external_links_have_noopener_noreferrer() -> None:
-    """Ensure all external links (target="_blank") have rel="noopener noreferrer" to prevent reverse tabnabbing."""
-    html = _index_html()
 
-    # Very basic HTML parsing for the specific tag to avoid brittle regex and avoid missing imports
-    links = re.findall(r'<a[^>]+>', html, flags=re.IGNORECASE)
-    for link in links:
-        if 'target="_blank"' in link or "target='_blank'" in link:
-            # Check for noopener and noreferrer anywhere in the tag
-            has_noopener = 'noopener' in link
-            has_noreferrer = 'noreferrer' in link
-            assert has_noopener and has_noreferrer, f"External link missing noopener or noreferrer: {link}"
+def test_blank_target_links_keep_explicit_opener_and_referrer_policy() -> None:
+    """New-context links keep explicit opener isolation and referrer suppression."""
+    parser = _BlankTargetAnchorParser()
+    parser.feed(_index_html())
+
+    assert parser.anchors, "index.html must exercise the outbound-link policy"
+    for anchor in parser.anchors:
+        rel_tokens = {token.lower() for token in anchor.get("rel", "").split()}
+        assert "noopener" in rel_tokens, (
+            f"target=_blank link must keep explicit opener isolation: {anchor}"
+        )
+        assert "noreferrer" in rel_tokens, (
+            f"target=_blank link must keep the product referrer policy: {anchor}"
+        )
