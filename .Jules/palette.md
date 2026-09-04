@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-09-03 - Add Tooltips for External Links
+**Learning:** External links (`target="_blank"`) lack visual indicators on hover for mouse users. Hardcoding `title` attributes breaks dynamic language switching.
+**Action:** When adding `title` to elements in a localized app, extend the i18n system to support `data-i18n-title` and use it to provide localized tooltips explaining behavior like "Opens in a new tab".
