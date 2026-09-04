@@ -21,7 +21,3 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
-
-## 2026-09-04 - Add aria-label and title for external links
-**Learning:** Users with screen readers benefit greatly from knowing in advance if a link will open in a new tab. It's an accessibility issue pattern often missed in anchor tags with target="_blank".
-**Action:** Always add "Opens in a new tab" equivalent title or aria-label attributes to target="_blank" links dynamically translating them using the existing i18n system.
