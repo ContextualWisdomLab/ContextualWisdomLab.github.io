@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2026-09-03 - External link new-window warning
+**Learning:** Localizing a `title` tooltip is useful supplemental metadata, but it is not a dependable advance warning for keyboard, touch, or assistive-technology users. W3C's current guidance treats new-window warnings as advisory good practice and notes that `title` is poorly discoverable without pointer hover.
+**Action:** When this site keeps `target="_blank"`, provide the localized new-window notice through ordinary accessible link semantics (for example, referenced descriptive text) and treat `title` as supplemental only. Verify both KO/EN switching and browser keyboard/touch/accessibility behavior before claiming completion.

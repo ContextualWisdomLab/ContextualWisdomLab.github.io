@@ -144,7 +144,8 @@ const messages = {
     "work.fourTitle": "작업 흐름",
     "work.fourBody": "반복 탐색은 줄이고 근거 확인과 사람의 판단은 남기는 흐름.",
     "footer.founded": "Founded by",
-    "footer.line": "Context into judgment. Judgment into action."
+    "footer.line": "Context into judgment. Judgment into action.",
+    "common.newWindow": "새 창에서 열림"
   },
   en: {
     metaTitle: "Contextual Wisdom Lab",
@@ -291,7 +292,8 @@ const messages = {
     "work.fourTitle": "Agentic workflows",
     "work.fourBody": "Workflows that reduce repeated search while preserving evidence checks and human judgment.",
     "footer.founded": "Founded by",
-    "footer.line": "Context into judgment. Judgment into action."
+    "footer.line": "Context into judgment. Judgment into action.",
+    "common.newWindow": "Opens in a new window"
   }
 };
 
@@ -375,6 +377,8 @@ function setLanguage(lang) {
         node.textContent = newText;
       }
     });
+
+
   }
 
   langButtons.forEach((button) => {
