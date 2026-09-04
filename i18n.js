@@ -17,6 +17,7 @@ const messages = {
     "nav.forks": "Fork",
     "nav.references": "참고문헌",
     "nav.work": "작업",
+    "nav.opensInNewTab": "(새 창에서 열림)",
     "nav.skipToContent": "본문으로 건너뛰기",
     "hero.title": "맥락지혜 연구실",
     "hero.labName": "Contextual Wisdom Lab",
@@ -164,6 +165,7 @@ const messages = {
     "nav.forks": "Forks",
     "nav.references": "References",
     "nav.work": "Work",
+    "nav.opensInNewTab": "(Opens in a new tab)",
     "nav.skipToContent": "Skip to main content",
     "hero.title": "Contextual Wisdom Lab",
     "hero.labName": "Research Lab",
@@ -312,6 +314,7 @@ function preferredLanguage() {
 
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
 let i18nNodes = null;
+let i18nTitleNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
@@ -361,7 +364,7 @@ function setLanguage(lang) {
   }
 
   // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
-  const isInitialDefault = lang === "ko" && !i18nNodes;
+  const isInitialDefault = lang === "ko" && !i18nNodes && !i18nTitleNodes;
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
@@ -373,6 +376,16 @@ function setLanguage(lang) {
       const newText = dict[node.dataset.i18n];
       if (newText && node.textContent !== newText) {
         node.textContent = newText;
+      }
+    });
+
+    if (!i18nTitleNodes) {
+      i18nTitleNodes = document.querySelectorAll("[data-i18n-title]");
+    }
+    i18nTitleNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18nTitle];
+      if (newText && node.getAttribute("title") !== newText) {
+        node.setAttribute("title", newText);
       }
     });
   }
