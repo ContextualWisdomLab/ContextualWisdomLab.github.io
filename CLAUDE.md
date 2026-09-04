@@ -16,7 +16,7 @@ python3 -m http.server 4173
 # and check the console — success prints "ALL_TESTS_PASSED_SUCCESSFULLY"
 ```
 
-There is no lint/build/deploy command. Deployment is automatic: pushing to `main` updates the live site. CI is limited to GitHub's CodeQL default setup (`.github/workflows/codeql.yml` is only a marker workflow), Dependabot for GitHub Actions, and a ClusterFuzzLite marker Dockerfile.
+There is no lint/build/deploy command. Deployment is automatic: pushing to `main` updates the live site. CI is limited to the central required workflows, GitHub's CodeQL default setup, Dependabot for GitHub Actions, and a ClusterFuzzLite marker Dockerfile.
 
 ## Architecture
 
