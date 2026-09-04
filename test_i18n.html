@@ -37,7 +37,7 @@
       }
     }
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
       console.log("Running tests...");
 
       assertEqual(currentLang, "ko", "Initial language should be 'ko'");
@@ -48,17 +48,33 @@
       const titleNode = document.querySelector('[data-i18n="hero.title"]');
       assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
 
-
-      // Test title update
+      // Tooltip localization is supplemental; it is not the accessible warning contract.
       const linkNode = document.querySelector('[data-i18n-title="common.newWindow"]');
       assertEqual(linkNode.getAttribute("title"), "Opens in a new window", "Title attribute should change to English");
 
       // Test 3: Switch back to KO updates nodes correctly
       setLanguage("ko");
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
-
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
       assertEqual(linkNode.getAttribute("title"), "새 창에서 열림", "Title attribute back to Korean");
+
+      // External links need a localized non-title warning that keyboard/touch/AT users can reach.
+      const response = await fetch("index.html", { cache: "no-store" });
+      const pageText = await response.text();
+      const page = new DOMParser().parseFromString(pageText, "text/html");
+      const externalLinks = Array.from(page.querySelectorAll('a[target="_blank"]'));
+      const allLinksDescribeNewWindow = externalLinks.length > 0 && externalLinks.every((link) => {
+        const ids = (link.getAttribute("aria-describedby") || "").trim().split(/\s+/).filter(Boolean);
+        return ids.some((id) => {
+          const description = page.getElementById(id);
+          return description && description.getAttribute("data-i18n") === "common.newWindow";
+        });
+      });
+      assertEqual(
+        allLinksDescribeNewWindow,
+        true,
+        "Every target=_blank link should reference a localized non-title new-window description"
+      );
 
       // Test 4: Sentinel Security - Input Validation for untrusted inputs
       setLanguage("__proto__");
