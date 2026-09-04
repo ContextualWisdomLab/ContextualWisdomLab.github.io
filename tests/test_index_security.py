@@ -60,3 +60,16 @@ def test_index_has_no_inline_active_content() -> None:
     assert (
         '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
     )
+
+def test_index_external_links_have_noopener_noreferrer() -> None:
+    """Ensure all external links (target="_blank") have rel="noopener noreferrer" to prevent reverse tabnabbing."""
+    html = _index_html()
+
+    # Very basic HTML parsing for the specific tag to avoid brittle regex and avoid missing imports
+    links = re.findall(r'<a[^>]+>', html, flags=re.IGNORECASE)
+    for link in links:
+        if 'target="_blank"' in link or "target='_blank'" in link:
+            # Check for noopener and noreferrer anywhere in the tag
+            has_noopener = 'noopener' in link
+            has_noreferrer = 'noreferrer' in link
+            assert has_noopener and has_noreferrer, f"External link missing noopener or noreferrer: {link}"
