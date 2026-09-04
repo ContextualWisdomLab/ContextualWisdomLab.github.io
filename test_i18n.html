@@ -8,7 +8,8 @@
 </head>
 <body>
   <div data-i18n="hero.title">맥락지혜 연구실</div>
-  <a href="https://github.com" target="_blank" data-i18n-title="common.newWindow">GitHub</a>
+  <a href="https://github.com" target="_blank" aria-describedby="new-window-desc">GitHub</a>
+  <span id="new-window-desc" class="visually-hidden" data-i18n="common.newWindow">새 창에서 열림</span>
 
   <button type="button" data-lang="ko" aria-pressed="true">KO</button>
   <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -48,15 +49,14 @@
       const titleNode = document.querySelector('[data-i18n="hero.title"]');
       assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
 
-      // Tooltip localization is supplemental; it is not the accessible warning contract.
-      const linkNode = document.querySelector('[data-i18n-title="common.newWindow"]');
-      assertEqual(linkNode.getAttribute("title"), "Opens in a new window", "Title attribute should change to English");
+      const descNode = document.getElementById("new-window-desc");
+      assertEqual(descNode.textContent, "Opens in a new window", "Description text should change to English");
 
       // Test 3: Switch back to KO updates nodes correctly
       setLanguage("ko");
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
-      assertEqual(linkNode.getAttribute("title"), "새 창에서 열림", "Title attribute back to Korean");
+      assertEqual(descNode.textContent, "새 창에서 열림", "Description text back to Korean");
 
       // External links need a localized non-title warning that keyboard/touch/AT users can reach.
       const response = await fetch("index.html", { cache: "no-store" });

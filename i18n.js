@@ -314,7 +314,6 @@ function preferredLanguage() {
 
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
 let i18nNodes = null;
-let i18nTitleNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
@@ -379,16 +378,7 @@ function setLanguage(lang) {
       }
     });
 
-    if (!i18nTitleNodes) {
-      i18nTitleNodes = document.querySelectorAll("[data-i18n-title]");
-    }
 
-    i18nTitleNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18nTitle];
-      if (newText && node.getAttribute("title") !== newText) {
-        node.setAttribute("title", newText);
-      }
-    });
   }
 
   langButtons.forEach((button) => {
