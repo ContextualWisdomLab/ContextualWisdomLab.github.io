@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **외부 링크 회귀 방지**: 현재 `target="_blank"` 링크가 명시적 `rel="noopener noreferrer"` 정책을 유지하는지 DOM 파서 기반 테스트를 추가했습니다. `noopener`는 opener 격리, `noreferrer`는 referrer 비공개 의미를 각각 검증하며 둘을 하나의 Reverse Tabnabbing 요구사항으로 일반화하지 않습니다.
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
 - **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 단일 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. 정적 테스트가 eager, lazy, LCP 후보 집합의 존재와 조합을 검증하며, 실제 LCP 효과는 배포 후 실측 대상으로 유지합니다.
