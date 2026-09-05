@@ -74,6 +74,7 @@ def test_component_gallery_script_avoids_unsafe_dom_sinks() -> None:
     assert "eval(" not in script
     assert "new Function" not in script
 
+
 def test_component_gallery_inputs_have_length_limits() -> None:
     """Ensure all text-based inputs have maxlength defined to mitigate DoS risks."""
     html = _gallery_html()
@@ -84,9 +85,15 @@ def test_component_gallery_inputs_have_length_limits() -> None:
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
 
 
-def test_component_gallery_buttons_have_explicit_type() -> None:
-    """Ensure all buttons explicitly define a type to prevent accidental form submissions."""
+def test_component_gallery_buttons_are_non_submit_controls() -> None:
+    """Require every gallery button to remain an explicit non-submit control."""
     html = _gallery_html()
-    buttons = re.findall(r'<button[^>]*>', html)
-    for btn in buttons:
-        assert 'type=' in btn, f"Button missing explicit type: {btn}"
+    buttons = re.findall(r'<button\b[^>]*>', html, flags=re.IGNORECASE)
+    assert buttons, "component gallery must retain button specimens"
+
+    for button in buttons:
+        assert re.search(
+            r"\btype\s*=\s*(['\"])button\1",
+            button,
+            flags=re.IGNORECASE,
+        ), f"Button must declare type=button: {button}"
