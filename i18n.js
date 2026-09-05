@@ -297,17 +297,25 @@ const messages = {
 
 function preferredLanguage() {
   const allowed = ["ko", "en"];
-  const query = new URLSearchParams(window.location.search).get("lang");
-  if (allowed.includes(query)) return query;
+
+  if (typeof window !== 'undefined' && window.location) {
+    const query = new URLSearchParams(window.location.search).get("lang");
+    if (allowed.includes(query)) return query;
+  }
 
   try {
-    const saved = localStorage.getItem("cwl-language");
-    if (allowed.includes(saved)) return saved;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = window.localStorage.getItem("cwl-language");
+      if (allowed.includes(saved)) return saved;
+    }
   } catch (error) {
     // Fail securely: ignore localStorage errors in strict privacy modes
   }
 
-  return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
+  if (typeof navigator !== 'undefined' && navigator.language) {
+    return navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en";
+  }
+  return "en";
 }
 
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
@@ -327,6 +335,7 @@ function setLanguage(lang) {
   }
 
   if (currentLang === lang) return; // Skip if already in the requested language
+  if (typeof document === 'undefined') return;
 
   const dict = messages[lang] || messages.ko;
 
@@ -385,7 +394,9 @@ function setLanguage(lang) {
   });
 
   try {
-    localStorage.setItem("cwl-language", lang);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem("cwl-language", lang);
+    }
   } catch (error) {
     // Fail securely: ignore localStorage errors
   }
@@ -393,8 +404,10 @@ function setLanguage(lang) {
 }
 
 // Event listeners can just use the initial querySelectorAll
-document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.lang));
-});
+if (typeof document !== 'undefined') {
+  document.querySelectorAll("[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  });
+}
 
 setLanguage(preferredLanguage());
