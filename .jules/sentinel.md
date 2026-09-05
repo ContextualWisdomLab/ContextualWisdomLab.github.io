@@ -20,7 +20,7 @@
 **Prevention:** 적용 가능할 때는 항상 CSP에 Trusted Types를 적용하여 DOM XSS 회귀를 선제적으로 방지해야 함.
 ## 2026-07-03 - Native Trusted Types enforcement
 **Vulnerability:** Trusted Types 정책 부재로 인한 DOM 기반 XSS (Cross-Site Scripting) 취약점 위험.
-**Learning:** 이 정적 웹사이트는 `innerHTML` 같은 위험한 Sink를 사용하지 않고 `textContent`, `setAttribute` 등 안전한 DOM API만 사용하고 있으므로, 별도의 Trusted Types 정책이나 외부 Sanitizer(예: DOMPurify) 없이도 CSP에서 `require-trusted-types-for 'script'`를 안전하게 기본 강제할 수 있음을 확인했습니다.
+**Learning:** 이 정적 웹사이트는 `innerHTML` 같은 위험한 Sink를 사용하지 않고 `textContent`, `setAttribute` 등 안전한 DOM API만을 사용하고 있으므로, 별도의 Trusted Types 정책이나 외부 Sanitizer(예: DOMPurify) 없이도 CSP에서 `require-trusted-types-for 'script'`를 안전하게 기본 강제할 수 있음을 확인했습니다.
 **Prevention:** CSP에 `require-trusted-types-for 'script'`를 적용하여 XSS를 방어하고, 앞으로도 안전한 DOM API만 사용하도록 합니다. 부득이하게 `innerHTML`을 도입해야 할 경우에는 반드시 적절한 Sanitizer를 함께 구성해야 합니다.
 ## 2026-07-01 - Add Trusted Types Policy via DOMPurify
 **Vulnerability:** Application lacked Trusted Types enforcement, which left it potentially vulnerable to DOM-based XSS if DOM sinks (like `innerHTML`) were manipulated.
