@@ -82,3 +82,10 @@ def test_component_gallery_inputs_have_length_limits() -> None:
         if 'type="checkbox"' in inp or 'type="radio"' in inp:
             continue
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
+
+def test_component_gallery_buttons_have_explicit_type() -> None:
+    """Ensure all button elements have an explicit type attribute to prevent unintended form submissions."""
+    html = _gallery_html()
+    buttons = re.findall(r'<button[^>]*>', html)
+    for btn in buttons:
+        assert 'type=' in btn, f"Button missing type attribute: {btn}"
