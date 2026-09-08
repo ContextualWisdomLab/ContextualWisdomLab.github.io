@@ -330,40 +330,43 @@ function setLanguage(lang) {
 
   const dict = messages[lang] || messages.ko;
 
+  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 탐색 및 속성 읽기 완전 생략 (성능 개선)
+  const isInitialDefault = lang === "ko" && currentLang === null;
+
   if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
-    metaDesc = document.querySelector('meta[name="description"]');
-    ogDesc = document.querySelector('meta[property="og:description"]');
-    footerLogo = document.querySelector("#footer-logo");
   }
-
-  if (document.documentElement.lang !== lang) {
-    document.documentElement.lang = lang;
-  }
-  if (document.title !== dict.metaTitle) {
-    document.title = dict.metaTitle;
-  }
-
-  if (metaDesc && metaDesc.getAttribute("content") !== dict.metaDescription) {
-    metaDesc.setAttribute("content", dict.metaDescription);
-  }
-  if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
-    ogDesc.setAttribute("content", dict.metaDescription);
-  }
-
-  if (footerLogo) {
-    if (footerLogo.getAttribute("src") !== dict.logoSrc) {
-      footerLogo.setAttribute("src", dict.logoSrc);
-    }
-    if (footerLogo.getAttribute("alt") !== dict.logoAlt) {
-      footerLogo.setAttribute("alt", dict.logoAlt);
-    }
-  }
-
-  // ⚡ Bolt: 기본 언어로 초기 로드 시 불필요한 DOM 텍스트 읽기 및 탐색 생략 (성능 개선)
-  const isInitialDefault = lang === "ko" && !i18nNodes;
 
   if (!isInitialDefault) {
+    if (!metaDesc) {
+      metaDesc = document.querySelector('meta[name="description"]');
+      ogDesc = document.querySelector('meta[property="og:description"]');
+      footerLogo = document.querySelector("#footer-logo");
+    }
+
+    if (document.documentElement.lang !== lang) {
+      document.documentElement.lang = lang;
+    }
+    if (document.title !== dict.metaTitle) {
+      document.title = dict.metaTitle;
+    }
+
+    if (metaDesc && metaDesc.getAttribute("content") !== dict.metaDescription) {
+      metaDesc.setAttribute("content", dict.metaDescription);
+    }
+    if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
+      ogDesc.setAttribute("content", dict.metaDescription);
+    }
+
+    if (footerLogo) {
+      if (footerLogo.getAttribute("src") !== dict.logoSrc) {
+        footerLogo.setAttribute("src", dict.logoSrc);
+      }
+      if (footerLogo.getAttribute("alt") !== dict.logoAlt) {
+        footerLogo.setAttribute("alt", dict.logoAlt);
+      }
+    }
+
     if (!i18nNodes) {
       i18nNodes = document.querySelectorAll("[data-i18n]");
     }
@@ -392,9 +395,9 @@ function setLanguage(lang) {
   currentLang = lang;
 }
 
-// Event listeners can just use the initial querySelectorAll
-document.querySelectorAll("[data-lang]").forEach((button) => {
+setLanguage(preferredLanguage());
+
+// ⚡ Bolt: 재사용 가능한 langButtons 캐시를 활용하여 중복 DOM 탐색 제거
+langButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
-
-setLanguage(preferredLanguage());
