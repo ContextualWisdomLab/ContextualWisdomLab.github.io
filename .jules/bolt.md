@@ -21,6 +21,6 @@
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
 
-## 2026-09-08 - 캐시된 DOM 요소 재사용 및 초기 로드시 불필요한 속성 읽기 생략
-**Learning:** `i18n.js`의 초기 언어 로드(한국어) 시, 언어가 변경되지 않았음에도 `meta` 태그와 `footerLogo`의 속성을 읽어 비교하는 과정에서 불필요한 DOM 탐색 및 접근이 발생했습니다. 또한, 이벤트 리스너를 등록할 때 이미 캐시된 `langButtons`를 활용하지 않고 중복으로 DOM을 탐색하는 비효율이 있었습니다.
-**Action:** `isInitialDefault` 조건을 상단으로 이동하여 초기 기본 언어 로드 시 불필요한 속성 읽기 및 메타 태그/로고 캐싱을 완전히 생략하도록 개선했습니다. 이벤트 리스너 등록 시 `document.querySelectorAll` 대신 기존에 캐시된 `langButtons`를 재사용하여 중복 탐색을 제거했습니다.
+## 2026-09-08 - URLSearchParams 파싱 최적화
+**Learning:** `preferredLanguage` 함수가 실행될 때 URL에 쿼리 스트링이 전혀 없음에도 불구하고 매번 `new URLSearchParams(window.location.search)`를 호출하여 불필요한 객체 생성 및 파싱 비용이 발생했습니다.
+**Action:** `window.location.search` 문자열이 비어있는지 먼저 확인하여 쿼리 스트링이 있을 때만 `URLSearchParams`를 생성하도록 조기 종료(early return) 최적화를 적용했습니다.

@@ -273,8 +273,9 @@
 
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
+          <!-- ⚡ Bolt: Provide image fetch hint for better prioritization during rendering -->
           <!-- ⚡ Bolt: Lazy load off-screen image -->
-          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async">
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async" fetchpriority="low">
         </div>
         <div>
           <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
