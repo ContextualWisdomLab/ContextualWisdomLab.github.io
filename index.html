@@ -22,6 +22,8 @@
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <!-- ⚡ Bolt: Preload hero image to optimize Largest Contentful Paint (LCP) -->
     <link rel="preload" href="assets/context-thread-map.svg" as="image" fetchpriority="high">
+    <!-- ⚡ Bolt: Preload classic script to reduce time to interactive without causing double fetch -->
+    <link rel="preload" href="i18n.js" as="script">
     <link rel="stylesheet" href="styles.css">
     <script src="i18n.js" defer></script>
   </head>
@@ -273,9 +275,8 @@
 
       <section id="logo" class="section logo-story">
         <div class="logo-mark">
-          <!-- ⚡ Bolt: Provide image fetch hint for better prioritization during rendering -->
           <!-- ⚡ Bolt: Lazy load off-screen image -->
-          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async" fetchpriority="low">
+          <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async">
         </div>
         <div>
           <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>

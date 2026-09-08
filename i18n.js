@@ -297,11 +297,8 @@ const messages = {
 
 function preferredLanguage() {
   const allowed = ["ko", "en"];
-  // ⚡ Bolt: Cache search parameters calculation and avoid parsing if query string is empty
-  if (window.location.search) {
-    const query = new URLSearchParams(window.location.search).get("lang");
-    if (allowed.includes(query)) return query;
-  }
+  const query = new URLSearchParams(window.location.search).get("lang");
+  if (allowed.includes(query)) return query;
 
   try {
     const saved = localStorage.getItem("cwl-language");

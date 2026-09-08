@@ -21,6 +21,6 @@
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
 
-## 2026-09-08 - URLSearchParams 파싱 최적화
-**Learning:** `preferredLanguage` 함수가 실행될 때 URL에 쿼리 스트링이 전혀 없음에도 불구하고 매번 `new URLSearchParams(window.location.search)`를 호출하여 불필요한 객체 생성 및 파싱 비용이 발생했습니다.
-**Action:** `window.location.search` 문자열이 비어있는지 먼저 확인하여 쿼리 스트링이 있을 때만 `URLSearchParams`를 생성하도록 조기 종료(early return) 최적화를 적용했습니다.
+## 2026-09-08 - 스크립트 프리로딩을 통한 초기 상호작용 시간 최적화
+**Learning:** `i18n.js`가 `<script defer>`로 불러와지지만 브라우저 파서가 해당 위치에 도달하기 전까지 다운로드가 지연될 수 있습니다. `modulepreload`를 클래식 스크립트에 사용하면 중복 다운로드가 발생하여 오히려 성능이 저하되는 것을 확인했습니다.
+**Action:** `<link rel="preload" as="script" href="i18n.js">`를 `<head>` 최상단에 추가하여, HTML 파싱이 완료되기 전에 브라우저가 스크립트 다운로드를 즉시 시작하도록 개선했습니다.
