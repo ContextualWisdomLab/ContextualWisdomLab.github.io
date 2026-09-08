@@ -60,3 +60,10 @@ def test_index_has_no_inline_active_content() -> None:
     assert (
         '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
     )
+
+def test_index_buttons_have_type() -> None:
+    """Ensure all buttons explicitly declare a type to prevent accidental form submission."""
+    html = _index_html()
+    buttons = re.findall(r'<button[^>]*>', html, flags=re.IGNORECASE)
+    for btn in buttons:
+        assert 'type=' in btn, f"Button missing explicit type: {btn}"
