@@ -21,3 +21,6 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+## 2026-09-08 - [외부 링크 툴팁 추가 및 다국어 지원 패턴]
+**Learning:** 아이콘이 없는 텍스트 링크라도 target="_blank"를 통해 새 탭에서 열리는 외부 링크의 경우, 스크린 리더 사용자와 일반 사용자 모두에게 해당 동작을 미리 알려주는 것이 인지적 예측 가능성을 높임. 이를 위해 title 속성을 추가하되, 정적 다국어 사이트에서는 하드코딩하지 않고 i18n 시스템(data-i18n-title)과 연동하여 동적으로 언어 전환이 이루어지게 처리해야 함. 또한, DOM 조작 시 dataset 프로퍼티 대신 getAttribute를 사용하여 기존 코드 패턴과의 일관성을 유지해야 함.
+**Action:** 외부 링크(target="_blank")를 구현할 때는 항상 title 및 data-i18n-title 속성을 부여하고, 다국어 처리 로직 확장 시에는 기존의 textContent 조작과 충돌하지 않도록 속성 업데이트 로직을 독립적으로 분리하여 구현할 것.

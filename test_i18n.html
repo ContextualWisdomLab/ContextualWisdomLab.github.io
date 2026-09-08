@@ -8,6 +8,7 @@
 </head>
 <body>
   <div data-i18n="hero.title">맥락지혜 연구실</div>
+  <a id="test-link" href="#" target="_blank" title="새 탭에서 열기" data-i18n-title="a11y.newWindow">Link</a>
   <button type="button" data-lang="ko" aria-pressed="true">KO</button>
   <button type="button" data-lang="en" aria-pressed="false">EN</button>
   <img id="footer-logo" src="assets/context-wisdom-lab-logo.svg" alt="맥락지혜 연구실 · Contextual Wisdom Lab">
@@ -44,12 +45,15 @@
       setLanguage("en");
       assertEqual(currentLang, "en", "Language should be 'en' after setting");
       const titleNode = document.querySelector('[data-i18n="hero.title"]');
+      const testLink = document.querySelector('#test-link');
       assertEqual(titleNode.textContent, "Contextual Wisdom Lab", "Title text should change to English");
+      assertEqual(testLink.getAttribute("title"), "Opens in a new tab", "Link title should change to English");
 
       // Test 3: Switch back to KO updates nodes correctly
       setLanguage("ko");
       assertEqual(currentLang, "ko", "Language should be 'ko' after setting back");
       assertEqual(titleNode.textContent, "맥락지혜 연구실", "Title text back to Korean");
+      assertEqual(testLink.getAttribute("title"), "새 탭에서 열기", "Link title back to Korean");
 
       // Test 4: Sentinel Security - Input Validation for untrusted inputs
       setLanguage("__proto__");
