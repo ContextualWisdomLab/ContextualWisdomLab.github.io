@@ -47,8 +47,3 @@
 **Vulnerability:** 사용자 입력값(`lang`)을 검증 없이 `console.warn`과 같은 로그 함수에 그대로 보간하여 출력할 경우, 로그 인젝션(Log Forging) 공격에 노출될 수 있음.
 **Learning:** 사용자 입력이 포함된 문자열을 직접 보간하면 악의적인 페이로드가 로그 파일에 주입되어 로그 분석 시스템을 방해하거나 다른 취약점을 연계할 수 있음.
 **Prevention:** 로그를 남길 때는 검증되지 않은 외부 입력값을 동적으로 문자열에 주입(Interpolation)하는 대신, 사전에 정의된 정적이고 안전한 메시지로 대체해야 함.
-
-## 2026-09-08 - 버튼(button) 요소에 명시적인 type 속성 적용
-**Vulnerability:** `<button>` 요소에 명시적인 `type` 속성이 지정되지 않을 경우, 브라우저는 기본적으로 `type="submit"`으로 처리합니다. 폼(form) 내부에 위치할 경우 의도치 않은 폼 제출(Form Submission)을 유발하여 상태 변경(State Change)이나 사이드 이펙트를 일으킬 위험이 있습니다.
-**Learning:** `components/index.html` 내의 버튼들에 명시적인 `type="button"` 속성이 누락된 것을 확인했습니다. 비록 현재 구조상 폼이 없더라도 방어적 프로그래밍(Defense in Depth) 차원에서 이를 수정해야 합니다.
-**Prevention:** 모든 `<button>` 요소는 용도에 맞게 명시적으로 `type="button"`, `type="submit"`, `type="reset"` 중 하나를 지정하여 의도치 않은 동작을 방지해야 합니다.

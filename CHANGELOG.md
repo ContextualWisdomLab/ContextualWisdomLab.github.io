@@ -17,7 +17,3 @@
 - **성능 개선**: `i18n.js`에서 초기 로드 시 기본 언어가 한국어(ko)인 경우 불필요한 DOM 순회 및 텍스트 업데이트를 생략하도록 개선했습니다.
 - **테스트 추가**: 다국어 처리 로직의 무결성을 검증하기 위해 `test_i18n.html` 테스트 파일을 추가했습니다.
 - **보안 개선**: 메인 페이지(`index.html`)의 Content-Security-Policy를 `default-src 'none'` 기반의 엄격한 화이트리스트 방식으로 강화하여 잠재적인 공격 표면을 최소화했습니다.
-
-## [Unreleased]
-### Security
-* `components/index.html` 내의 모든 `<button>` 요소에 명시적으로 `type="button"` 속성을 추가하여 의도치 않은 폼 제출을 방지하는 방어적 조치를 적용했습니다.
