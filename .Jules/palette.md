@@ -23,5 +23,5 @@
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
 
 ## 2026-09-09 - [외부 링크의 접근성 향상]
-**Learning:** target="_blank"를 사용하는 외부 링크에 스크린 리더 및 툴팁을 제공하기 위해 title 속성이 필요하며, 다국어 환경에서는 data-i18n-title 속성과 node.getAttribute() 방식을 활용해 기존 번역 시스템에 매끄럽게 통합해야 함을 확인함.
-**Action:** 외부 링크에 title과 data-i18n-title 속성을 일괄 추가하고, i18n.js에서 이를 동적으로 처리할 수 있도록 DOM 탐색 로직을 개선함.
+**Learning:** target="_blank"를 사용하는 외부 링크에 대해 title 속성만으로는 스크린 리더와 시각적 요구사항(WCAG G201, H83)을 충분히 만족시키기 어렵다는 점을 확인함.
+**Action:** 공용 visually-hidden localized description과 `aria-describedby`를 연결하고, 모든 상태에서 표시되는 `new-tab-indicator`를 링크 내부에 추가하여 일관된 새 탭 안내 컨텍스트를 제공하도록 개선함.
