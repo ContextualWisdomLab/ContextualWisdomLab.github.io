@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **보안 거버넌스**: `.well-known/security.txt`를 추가해 취약점 신고 경로를 RFC 9116 표준에 맞게 공개했습니다. `SECURITY.md`는 이미 GitHub Security Advisory를 통한 비공개 신고 절차와 처리 기한을 안내하고 있었지만, 표준 자동화 도구가 읽는 `security.txt`는 없었습니다. Contact·Expires·Canonical·Policy·Preferred-Languages를 명시하고, 회귀 테스트가 필수 필드·만료 시각·신고 경로 일치·canonical URL을 검증합니다.
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
 - **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 단일 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. 정적 테스트가 eager, lazy, LCP 후보 집합의 존재와 조합을 검증하며, 실제 LCP 효과는 배포 후 실측 대상으로 유지합니다.
