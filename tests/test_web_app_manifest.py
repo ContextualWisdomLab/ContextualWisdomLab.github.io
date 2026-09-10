@@ -31,6 +31,21 @@ def test_homepage_links_the_manifest_and_theme_color() -> None:
     )
 
 
+def test_homepage_declares_ios_touch_icon() -> None:
+    """iOS ignores the web manifest icons; apple-touch-icon drives the home screen."""
+    html = _index()
+    match = re.search(
+        r'<link\s+rel="apple-touch-icon"\s+href="([^"]+)"', html
+    )
+    assert match is not None, (
+        "index.html must declare apple-touch-icon or iOS home-screen installs "
+        "fall back to a screenshot of the page"
+    )
+    assert (ROOT / match.group(1)).is_file(), (
+        f"apple-touch-icon references missing asset {match.group(1)}"
+    )
+
+
 def test_csp_allows_the_linked_manifest() -> None:
     """default-src 'none' would block the manifest unless manifest-src permits it."""
     html = _index()
