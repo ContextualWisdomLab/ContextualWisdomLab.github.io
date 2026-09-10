@@ -297,7 +297,7 @@ const messages = {
 
 function preferredLanguage() {
   const allowed = ["ko", "en"];
-  const query = new URLSearchParams(window.location.search).get("lang");
+  const query = window.location.search ? new URLSearchParams(window.location.search).get("lang") : null;
   if (allowed.includes(query)) return query;
 
   try {
