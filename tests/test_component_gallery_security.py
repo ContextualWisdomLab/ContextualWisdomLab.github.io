@@ -20,9 +20,6 @@ class _ButtonCollector(HTMLParser):
         if tag == "button":
             self.buttons.append(dict(attrs))
 
-    def handle_startendtag(self, tag: str, attrs) -> None:
-        if tag == "button":
-            self.buttons.append(dict(attrs))
 
 
 def _parsed_buttons(html: str) -> list[dict[str, str | None]]:
