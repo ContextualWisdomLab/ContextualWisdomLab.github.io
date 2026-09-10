@@ -1,8 +1,20 @@
+"""Regression test for bounded query parsing in the language resolver."""
+
 import re
 from pathlib import Path
 
+I18N = Path(__file__).resolve().parents[1] / "i18n.js"
+
+
 def test_url_search_params_truthiness_check() -> None:
-    """URLSearchParams 객체 생성 시 불필요한 파싱 오버헤드를 줄이기 위한 조건문이 있는지 확인합니다."""
-    content = Path("i18n.js").read_text(encoding="utf-8")
-    assert "window.location.search ?" in content or "if (window.location.search)" in content
-    assert "new URLSearchParams" in content
+    """URLSearchParams is only constructed when a query string exists."""
+    content = I18N.read_text(encoding="utf-8")
+
+    guarded = re.search(
+        r"window\.location\.search\s*\?\s*new URLSearchParams\(window\.location\.search\)",
+        content,
+    )
+    assert guarded is not None, (
+        "preferredLanguage() must guard the URLSearchParams construction "
+        "behind a window.location.search truthiness check"
+    )
