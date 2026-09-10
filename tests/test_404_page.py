@@ -10,10 +10,12 @@ INDEX = ROOT / "index.html"
 
 
 def _page() -> str:
+    """Read the candidate 404 document as UTF-8 source."""
     return PAGE.read_text(encoding="utf-8")
 
 
 def _index() -> str:
+    """Read the homepage source used to validate 404 navigation targets."""
     return INDEX.read_text(encoding="utf-8")
 
 
@@ -46,6 +48,13 @@ def test_404_page_is_not_indexed_and_offers_a_way_back() -> None:
 
     assert re.search(r'<meta\s+name="robots"\s+content="noindex"', html) is not None
     assert 'href="/"' in html, "404 page must link back to the site root"
+
+
+def test_404_skip_link_targets_local_main() -> None:
+    """The skip link must move focus within the 404 page, not navigate home."""
+    html = _page()
+    assert '<a href="#top" class="skip-link">' in html
+    assert '<main id="top" tabindex="-1"' in html
 
 
 def test_404_internal_fragments_exist_on_the_homepage() -> None:
