@@ -1,11 +1,34 @@
 """Security regression tests for the standalone component gallery."""
 
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 GALLERY = ROOT / "components" / "index.html"
+
+
+class _ButtonCollector(HTMLParser):
+    """Collect parsed button start tags with their real attribute values."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.buttons: list[dict[str, str | None]] = []
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        if tag == "button":
+            self.buttons.append(dict(attrs))
+
+    def handle_startendtag(self, tag: str, attrs) -> None:
+        if tag == "button":
+            self.buttons.append(dict(attrs))
+
+
+def _parsed_buttons(html: str) -> list[dict[str, str | None]]:
+    parser = _ButtonCollector()
+    parser.feed(html)
+    return parser.buttons
 
 
 def _gallery_html() -> str:
@@ -84,8 +107,11 @@ def test_component_gallery_inputs_have_length_limits() -> None:
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
 
 def test_component_gallery_buttons_have_explicit_type() -> None:
-    """Ensure all buttons define type='button' to prevent accidental form submissions."""
-    html = _gallery_html()
-    buttons = re.findall(r'<button[^>]*>', html)
-    for btn in buttons:
-        assert 'type="button"' in btn, f"Button missing type='button': {btn}"
+    """Every button carries a parsed type attribute of exactly 'button'."""
+    buttons = _parsed_buttons(_gallery_html())
+
+    assert buttons, "component gallery must render at least one button"
+    for attrs in buttons:
+        assert attrs.get("type") == "button", (
+            f"Button missing type=\"button\": {attrs}"
+        )
