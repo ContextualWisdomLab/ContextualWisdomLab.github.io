@@ -85,6 +85,37 @@ def test_manifest_colors_match_brand_tokens() -> None:
     assert "--paper: #f7f5f0" in css.lower()
 
 
+def test_manifest_install_identity() -> None:
+    """id/scope/start_url must agree so the install is stable across deploys."""
+    data = _manifest()
+    assert data["id"] == "/"
+    assert data["scope"] == "/"
+    assert data["start_url"] == "/"
+    assert data["theme_color"] == data["theme_color"].lower()
+
+
+def test_manifest_shortcuts_stay_in_scope_and_resolve() -> None:
+    """Shortcuts must be in-scope and point at routes that exist in the repo."""
+    data = _manifest()
+    shortcuts = data.get("shortcuts", [])
+    assert shortcuts, "manifest should expose at least one shortcut"
+    for shortcut in shortcuts:
+        assert shortcut.get("name") and shortcut.get("url")
+        url = shortcut["url"]
+        assert url.startswith("/"), f"shortcut {url} must be root-relative"
+        route = url.split("#", 1)[0]
+        if route == "/":
+            assert (ROOT / "index.html").is_file()
+        else:
+            assert (ROOT / route.strip("/") / "index.html").is_file(), (
+                f"shortcut {url} targets a route with no index.html"
+            )
+        for icon in shortcut.get("icons", []):
+            assert (ROOT / icon["src"]).is_file(), (
+                f"shortcut icon missing: {icon['src']}"
+            )
+
+
 def test_manifest_icons_exist_and_declare_sizes() -> None:
     """Every icon must exist on disk and declare its size and purpose."""
     icons = _manifest()["icons"]
