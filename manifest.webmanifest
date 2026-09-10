@@ -1,0 +1,26 @@
+{
+  "name": "Contextual Wisdom Lab",
+  "short_name": "CWL",
+  "description": "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#16263d",
+  "background_color": "#f7f5f0",
+  "icons": [
+    {
+      "src": "assets/context-wisdom-lab-avatar.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/context-wisdom-lab-avatar.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
