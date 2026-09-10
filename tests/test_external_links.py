@@ -84,3 +84,17 @@ def test_visually_hidden_class_is_defined() -> None:
     assert ".visually-hidden {" in css
     index = INDEX.read_text(encoding="utf-8")
     assert f'id="{DESC_ID}" class="visually-hidden"' in index
+
+
+def test_external_links_keep_opener_and_referrer_policy() -> None:
+    """Every new-context link retains explicit opener isolation and referrer policy."""
+    parser = _parse_index()
+
+    for anchor in _external_links(parser):
+        rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
+        assert "noopener" in rel_tokens, (
+            f"External link {anchor.get('href')} must keep opener isolation"
+        )
+        assert "noreferrer" in rel_tokens, (
+            f"External link {anchor.get('href')} must keep the product referrer policy"
+        )

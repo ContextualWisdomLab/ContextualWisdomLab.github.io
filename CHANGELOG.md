@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **보안 회귀 방지**: 외부 `target="_blank"` 링크가 `rel="noopener noreferrer"` 정책을 유지하는지 DOM 파서 기반 테스트로 고정해, 새 창 열림 접근성 변경과 리버스 탭내빙 완화가 서로를 깨지 않도록 했습니다.
 - **UX/접근성 개선**: 외부 링크(`target="_blank"`)에 다국어로 전환되는 `title` 툴팁과 함께, 공용 visually hidden 안내를 `aria-describedby`로 연결해 키보드·터치·스크린 리더 사용자에게도 새 창 열림을 알립니다.
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
