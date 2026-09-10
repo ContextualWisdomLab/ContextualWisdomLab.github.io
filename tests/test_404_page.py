@@ -10,10 +10,12 @@ INDEX = ROOT / "index.html"
 
 
 def _page() -> str:
+    """Read the candidate 404 document as UTF-8 source."""
     return PAGE.read_text(encoding="utf-8")
 
 
 def _index() -> str:
+    """Read the homepage source used to validate 404 navigation targets."""
     return INDEX.read_text(encoding="utf-8")
 
 
