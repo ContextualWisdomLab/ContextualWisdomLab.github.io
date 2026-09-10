@@ -31,6 +31,21 @@ def test_homepage_links_the_manifest_and_theme_color() -> None:
     )
 
 
+def test_csp_allows_the_linked_manifest() -> None:
+    """default-src 'none' would block the manifest unless manifest-src permits it."""
+    html = _index()
+    csp = re.search(
+        r'<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"', html
+    )
+    assert csp is not None, "index.html must declare a CSP meta policy"
+    policy = csp.group(1)
+    assert "default-src 'none'" in policy
+    assert "manifest-src 'self'" in policy, (
+        "CSP must explicitly allow manifest-src 'self'; otherwise default-src "
+        "'none' blocks manifest.webmanifest and the install experience breaks"
+    )
+
+
 def test_manifest_has_required_fields() -> None:
     """The manifest must carry the fields browsers need to install the site."""
     data = _manifest()
