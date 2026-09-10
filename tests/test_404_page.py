@@ -50,6 +50,13 @@ def test_404_page_is_not_indexed_and_offers_a_way_back() -> None:
     assert 'href="/"' in html, "404 page must link back to the site root"
 
 
+def test_404_skip_link_targets_local_main() -> None:
+    """The skip link must move focus within the 404 page, not navigate home."""
+    html = _page()
+    assert '<a href="#top" class="skip-link">' in html
+    assert '<main id="top" tabindex="-1"' in html
+
+
 def test_404_internal_fragments_exist_on_the_homepage() -> None:
     """Every in-page fragment the 404 nav points to must exist on index.html."""
     index = _index()
