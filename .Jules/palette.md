@@ -21,3 +21,7 @@
 ## 2024-07-15 - Expand clickable area of project cards
 **Learning:** Using an anchor tag to wrap an entire card (block-level element) can result in verbose and confusing screen reader output. However, restricting the clickable area to just the title makes the UI harder to interact with (violating Fitts's Law).
 **Action:** Apply `position: relative` to the card container and use a `::after` pseudo-element with `position: absolute; inset: 0;` on the title's anchor tag. This expands the clickable area to the whole card while keeping semantic and accessible HTML structure.
+
+## 2024-09-10 - [언어 전환 버튼 툴팁 추가]
+**Learning:** 다국어 지원 사이트에서 버튼의 title(툴팁)과 같은 접근성 요소도 하드코딩하지 않고 번역 시스템(data-i18n-title)과 연동해야 동적 언어 전환 시 사용자 경험이 깨지지 않음을 확인했습니다.
+**Action:** 앞으로 사용자에게 노출되는 모든 UI 텍스트(aria-label, title 등)는 정적인 HTML에 고정하지 않고 다국어 스크립트가 관리하도록 구조를 확장하겠습니다.

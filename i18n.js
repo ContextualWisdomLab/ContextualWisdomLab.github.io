@@ -1,6 +1,8 @@
 const messages = {
   ko: {
     metaTitle: "맥락지혜 연구실 | Contextual Wisdom Lab",
+    "nav.langKoTitle": "한국어로 보기",
+    "nav.langEnTitle": "View in English",
     metaDescription: "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
     logoSrc: "assets/context-wisdom-lab-logo.svg",
     logoAlt: "맥락지혜 연구실 · Contextual Wisdom Lab",
@@ -148,6 +150,8 @@ const messages = {
   },
   en: {
     metaTitle: "Contextual Wisdom Lab",
+    "nav.langKoTitle": "View in Korean",
+    "nav.langEnTitle": "View in English",
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
     logoSrc: "assets/context-wisdom-lab-logo-en.svg",
     logoAlt: "Contextual Wisdom Lab",
@@ -365,14 +369,25 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
-      if (newText && node.textContent !== newText) {
-        node.textContent = newText;
+      const i18nKey = node.getAttribute("data-i18n");
+      if (i18nKey) {
+        const newText = dict[i18nKey];
+        if (newText && node.textContent !== newText) {
+          node.textContent = newText;
+        }
+      }
+
+      const titleKey = node.getAttribute("data-i18n-title");
+      if (titleKey) {
+        const newTitle = dict[titleKey];
+        if (newTitle && node.getAttribute("title") !== newTitle) {
+          node.setAttribute("title", newTitle);
+        }
       }
     });
   }
