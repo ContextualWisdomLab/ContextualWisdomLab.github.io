@@ -1,6 +1,5 @@
 """Regression tests for the RFC 9116 vulnerability disclosure file."""
 
-import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -10,9 +9,14 @@ SECURITY_TXT = ROOT / ".well-known" / "security.txt"
 SECURITY_MD = ROOT / "SECURITY.md"
 
 ORIGIN = "https://contextualwisdomlab.github.io"
+POLICY_URL = (
+    "https://github.com/ContextualWisdomLab/ContextualWisdomLab.github.io/"
+    "blob/main/SECURITY.md"
+)
 
 
 def _fields() -> dict[str, list[str]]:
+    """Parse non-comment security.txt fields into a case-normalized mapping."""
     parsed: dict[str, list[str]] = {}
     for raw in SECURITY_TXT.read_text(encoding="utf-8").splitlines():
         line = raw.strip()
@@ -24,6 +28,7 @@ def _fields() -> dict[str, list[str]]:
 
 
 def _one(fields: dict[str, list[str]], name: str) -> str:
+    """Return one required field value and fail clearly when it is absent."""
     values = fields.get(name)
     assert values, f"security.txt must declare a {name} field"
     return values[0]
@@ -64,14 +69,14 @@ def test_contact_matches_the_security_policy_intake() -> None:
 
 
 def test_canonical_and_policy_point_to_live_locations() -> None:
-    """Canonical must be the deployed URL and Policy must name a real file."""
+    """Canonical and Policy must identify the intended public resources."""
     fields = _fields()
     canonical = _one(fields, "canonical")
     assert canonical == f"{ORIGIN}/.well-known/security.txt", (
         "Canonical must be the absolute URL this file is served from"
     )
     policy = _one(fields, "policy")
-    assert policy.startswith("https://"), "Policy must be an absolute URL"
-    assert re.search(r"SECURITY\.md$", policy) and SECURITY_MD.is_file(), (
-        "Policy must point at the repository SECURITY.md"
+    assert policy == POLICY_URL, (
+        "Policy must point at this repository's canonical SECURITY.md"
     )
+    assert SECURITY_MD.is_file(), "The referenced SECURITY.md must exist"
