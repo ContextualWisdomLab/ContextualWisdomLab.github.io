@@ -50,6 +50,15 @@ def test_security_txt_has_required_fields() -> None:
     )
 
 
+def test_singleton_fields_do_not_repeat() -> None:
+    """RFC 9116 allows only one Expires and one Preferred-Languages field."""
+    fields = _fields()
+    assert len(fields.get("expires", [])) == 1, "Expires must appear exactly once"
+    assert len(fields.get("preferred-languages", [])) <= 1, (
+        "Preferred-Languages must not appear more than once"
+    )
+
+
 def test_expires_is_valid_and_in_the_future() -> None:
     """An expired security.txt is treated as absent by tooling."""
     expires = _one(_fields(), "expires").replace("Z", "+00:00")
