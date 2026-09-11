@@ -82,3 +82,11 @@ def test_component_gallery_inputs_have_length_limits() -> None:
         if 'type="checkbox"' in inp or 'type="radio"' in inp:
             continue
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
+
+def test_component_gallery_buttons_have_explicit_type() -> None:
+    """Ensure all button elements have an explicit type attribute to prevent unintended form submissions."""
+    html = _gallery_html()
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html, "html.parser")
+    for btn in soup.find_all("button"):
+        assert btn.get("type") == "button", f"Button missing explicit type='button' attribute: {btn}"
