@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **보안 거버넌스**: `.well-known/security.txt`를 추가해 취약점 신고 경로를 RFC 9116 표준에 맞게 공개했습니다. `SECURITY.md`는 이미 GitHub Security Advisory를 통한 비공개 신고 절차와 처리 기한을 안내하고 있었지만, 표준 자동화 도구가 읽는 `security.txt`는 없었습니다. Contact·Expires·Canonical·Policy·Preferred-Languages를 명시하고, 회귀 테스트가 필수 필드·만료 시각·신고 경로 일치·canonical URL을 검증합니다.
 - **보안·개인정보 보호**: `.gitignore`에 `.opencode/opencode-loop/`를 추가해 OpenCode Loop의 세션 로그·목표·작업 JSON이 버전 관리에 섞여 들어가지 않도록 했습니다. 이 파일들은 대화 내용을 포함할 수 있는데 그동안 무시 목록에 없어 `git add .` 한 번으로 스테이징될 수 있었습니다. 공유 가능한 프로젝트 설정을 위해 `.opencode/` 전체가 아니라 런타임 상태 경로만 제외합니다. 회귀 테스트가 무시 규칙과 git의 실제 판정을 함께 검증합니다.
 - **고객 경험 개선**: GitHub Pages 기본 404 페이지 대신 브랜드가 적용된 `404.html`을 추가했습니다. 잘못된 주소로 들어온 방문자는 그동안 안내 없는 기본 오류 화면을 봤지만, 이제 연구실 색·서체·내비게이션 안에서 "페이지를 찾을 수 없습니다" 안내와 홈·프로젝트로 돌아가는 링크를 봅니다. 페이지는 `noindex`로 검색 색인에서 제외하고, 자체 CSS만 사용하는 자족형 문서라 CSP를 약화하지 않습니다. 회귀 테스트가 자산 존재·CSP 안전성·noindex·내부 앵커 실재를 검증합니다.
 - **검색 노출 개선**: 검색엔진 크롤러용 `robots.txt`와 `sitemap.xml`을 추가했습니다. 그동안 두 경로 모두 404를 반환해 크롤 정책과 페이지 목록을 제공하지 못했고, 그 결과 신규 페이지가 검색 결과에 제때 반영되기 어려웠습니다. `robots.txt`는 전체 크롤을 허용하고 표준 사이트맵을 가리키며, `sitemap.xml`은 canonical origin의 실제 페이지 경로만 나열합니다. 회귀 테스트가 사이트맵 형식·URL canonical 여부·실제 라우트 존재를 검증합니다.
