@@ -1,0 +1,166 @@
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <http://www.w3.org/2004/02/skos/core#broader> <https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <http://www.w3.org/2004/02/skos/core#inScheme> <https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <http://www.w3.org/2004/02/skos/core#narrower> <https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <http://www.w3.org/2004/02/skos/core#prefLabel> "Company"@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "company" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> <http://www.w3.org/2000/01/rdf-schema#comment> "A corporate_entity row. Also a skos:Concept so the self-referencing parent_entity_id hierarchy (e.g. Group -> Company -> Plant) is expressible with skos:broader/skos:narrower on instances." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> <http://www.w3.org/2000/01/rdf-schema#label> "Corporate entity" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "node_corporate_entity" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CounterpartyPerson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CounterpartyPerson> <http://www.w3.org/2000/01/rdf-schema#label> "Counterparty person" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CounterpartyPerson> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#CounterpartyPerson> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "counterparty" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> <http://www.w3.org/2004/02/skos/core#inScheme> <https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> <http://www.w3.org/2004/02/skos/core#narrower> <https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> <http://www.w3.org/2004/02/skos/core#prefLabel> "Group"@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#GroupLevel> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "group" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#OurSidePerson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#OurSidePerson> <http://www.w3.org/2000/01/rdf-schema#label> "Our-side person" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#OurSidePerson> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#OurSidePerson> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "our_side" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Person> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Person> <http://www.w3.org/2000/01/rdf-schema#comment> "A cataloged_person row: a Keyman mentioned in one or more posts." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Person> <http://www.w3.org/2000/01/rdf-schema#label> "Person" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Person> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "node_person" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> <http://www.w3.org/2004/02/skos/core#broader> <https://contextualwisdomlab.github.io/lineageweave/ontology#CompanyLevel> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> <http://www.w3.org/2004/02/skos/core#inScheme> <https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> <http://www.w3.org/2004/02/skos/core#prefLabel> "Plant"@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#PlantLevel> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "plant" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Post> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Post> <http://www.w3.org/2000/01/rdf-schema#comment> "A source_post row: one VOC/VOM/VOP/VOCC/VOCO/VOS record." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Post> <http://www.w3.org/2000/01/rdf-schema#label> "Post" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Post> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "node_post" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Project> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Project> <http://www.w3.org/2000/01/rdf-schema#comment> "A business project referred to by a source post."@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Project> <http://www.w3.org/2000/01/rdf-schema#label> "Project"@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#comment> "An evidence-backed, RDF-reified assertion that a post refers to a project; rdf:subject identifies the post, rdf:predicate is :mentionsProject, and rdf:object identifies the project."@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#label> "Project mention"@en .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:cb0 .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9 .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5 .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization> <http://www.w3.org/2000/01/rdf-schema#comment> "An R&R actor that is an organization acting in its own name, per prov:Organization." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization> <http://www.w3.org/2000/01/rdf-schema#label> "Role actor (organization)" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Organization> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorOrganization> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "prov_organization" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson> <http://www.w3.org/2000/01/rdf-schema#comment> "An R&R actor that is a named individual, per prov:Person." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson> <http://www.w3.org/2000/01/rdf-schema#label> "Role actor (person)" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorPerson> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "prov_person" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam> <http://www.w3.org/2000/01/rdf-schema#comment> "An R&R actor that is a named sub-unit of a company (e.g. 설계팀), per org:OrganizationalUnit -- not the company itself." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam> <http://www.w3.org/2000/01/rdf-schema#label> "Role actor (team)" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/org#OrganizationalUnit> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#RoleActorTeam> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "prov_team" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Team> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Team> <http://www.w3.org/2000/01/rdf-schema#comment> "A cataloged_team row: a named company sub-unit (ADR 0009) with a stable team_id, distinct from :RoleActorTeam (ADR 0007's per-row actor_type_code classification) the same way :Person is distinct from :RoleActorPerson." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Team> <http://www.w3.org/2000/01/rdf-schema#label> "Team" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Team> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/org#OrganizationalUnit> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#Team> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "node_team" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <http://www.w3.org/2000/01/rdf-schema#comment> "A person's N:N organizational affiliation (person_affiliation)." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <http://www.w3.org/2000/01/rdf-schema#label> "affiliated with" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#affiliatedWith> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_affiliation" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#SymmetricProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/2000/01/rdf-schema#comment> "Two people named in the same post -- symmetric by construction." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/2000/01/rdf-schema#label> "co-mentioned with" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#coMentionedWith> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_co_mention" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> <http://www.w3.org/2000/01/rdf-schema#comment> "The Acme Group -> Acme Electronics Korea -> Acme Electronics Gwangju Plant kind of level, ordered broadest first." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#corporateEntityLevelScheme> <http://www.w3.org/2000/01/rdf-schema#label> "Corporate entity level scheme" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Customer relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_voc" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Customer's-Customer relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVoccRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_vocc" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Competitor relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVocoRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_voco" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Market relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVomRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_vom" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Partner relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVopRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_vop" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship> <http://www.w3.org/2000/01/rdf-schema#label> "has Voice-of-Supplier relationship" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#hasVosRelationship> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "rel_vos" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> <http://www.w3.org/2000/01/rdf-schema#comment> "The exact common_lookup_value.lookup_code string this ontology term corresponds to." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> <http://www.w3.org/2000/01/rdf-schema#label> "lookup code" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <http://www.w3.org/2000/01/rdf-schema#comment> "A person is named by a post (post_person_mention); this is the canonical direction stored by knowledge_graph_edge." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <http://www.w3.org/2000/01/rdf-schema#label> "mentioned in" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_mention" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentions> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentions> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentions> <http://www.w3.org/2000/01/rdf-schema#label> "mentions" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentions> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Person> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentions> <http://www.w3.org/2002/07/owl#inverseOf> <https://contextualwisdomlab.github.io/lineageweave/ontology#mentionedIn> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <http://www.w3.org/2000/01/rdf-schema#comment> "A resolved organization is named by a post (post_organization_mention)." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <http://www.w3.org/2000/01/rdf-schema#label> "mentioned in post" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsOrganization> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_mention_organization" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Project> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <http://www.w3.org/2000/01/rdf-schema#comment> "A cataloged team is named by a post (post_team_mention)." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Team> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <http://www.w3.org/2000/01/rdf-schema#label> "mentioned in post" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsTeam> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_mention_team" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#projectEvidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#projectEvidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#projectEvidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#semanticConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#semanticConfidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#ProjectMention> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#semanticConfidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/2000/01/rdf-schema#comment> "The company a cataloged team belongs to (cataloged_team.affiliated_corporate_entity_id)." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/2000/01/rdf-schema#domain> <https://contextualwisdomlab.github.io/lineageweave/ontology#Team> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/2000/01/rdf-schema#label> "team affiliated with" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <http://www.w3.org/2000/01/rdf-schema#range> <https://contextualwisdomlab.github.io/lineageweave/ontology#CorporateEntity> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology#teamAffiliatedWith> <https://contextualwisdomlab.github.io/lineageweave/ontology#lookupCode> "edge_team_affiliation" .
+<https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/2000/01/rdf-schema#comment> "Formal OWL 2 Full / RDFS / SKOS vocabulary for LineageWeave's knowledge_graph_edge node and edge types, entity_relationship_type, person_side, corporate_entity_level, and post_summary_role.actor_type_code controlled vocabularies. RDF reification for semantic project evidence is interpreted with OWL 2 RDF-Based Semantics rather than OWL 2 DL." .
+<https://contextualwisdomlab.github.io/lineageweave/ontology> <http://www.w3.org/2000/01/rdf-schema#label> "LineageWeave Knowledge Graph Ontology" .
+_:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:cb0 <http://www.w3.org/2002/07/owl#allValuesFrom> <https://contextualwisdomlab.github.io/lineageweave/ontology#Post> .
+_:cb0 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> .
+_:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9 <http://www.w3.org/2002/07/owl#allValuesFrom> <https://contextualwisdomlab.github.io/lineageweave/ontology#Project> .
+_:cbf959d2a493e2a4f64323e54a1786ce169262ab73c3f31d8b8443b3114d2352e9 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> .
+_:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5 <http://www.w3.org/2002/07/owl#hasValue> <https://contextualwisdomlab.github.io/lineageweave/ontology#mentionsProject> .
+_:cbfbae3d9379dac627fb06a173b01e0a78f98743d15bd4368650d45cf93b5d93b5 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> .
