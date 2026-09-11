@@ -323,10 +323,8 @@ function preferredLanguage() {
   const allowed = ["ko", "en"];
 
   if (typeof window !== 'undefined' && window.location) {
-    if (window.location.search) {
-      const query = new URLSearchParams(window.location.search).get("lang");
-      if (allowed.includes(query)) return query;
-    }
+    const query = new URLSearchParams(window.location.search).get("lang");
+    if (allowed.includes(query)) return query;
   }
 
   try {
