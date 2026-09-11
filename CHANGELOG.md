@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **UX/접근성 개선**: 언어 전환 버튼에 동적 번역이 지원되는 툴팁(title)을 추가하여 버튼의 기능을 명확히 안내했습니다.
 - **보안 회귀 방지**: 외부 `target="_blank"` 링크가 `rel="noopener noreferrer"` 정책을 유지하는지 DOM 파서 기반 테스트로 고정해, 새 창 열림 접근성 변경과 리버스 탭내빙 완화가 서로를 깨지 않도록 했습니다.
 - **UX/접근성 개선**: 외부 링크(`target="_blank"`)에 다국어로 전환되는 `title` 툴팁과 함께, 공용 visually hidden 안내를 `aria-describedby`로 연결해 키보드·터치·스크린 리더 사용자에게도 새 창 열림을 알립니다.
 - **UX 개선**: 버튼(`.button`, `.language-switch button`) 클릭 시 스케일이 줄어드는 `:active` 상태를 추가하여 즉각적인 시각적 피드백을 제공하도록 개선했습니다.
