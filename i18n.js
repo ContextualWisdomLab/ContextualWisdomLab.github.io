@@ -299,26 +299,17 @@ const messages = {
 
 function preferredLanguage() {
   const allowed = ["ko", "en"];
-
-  if (typeof window !== 'undefined' && window.location) {
-    const query = new URLSearchParams(window.location.search).get("lang");
-    if (allowed.includes(query)) return query;
-  }
+  const query = new URLSearchParams(window.location.search).get("lang");
+  if (allowed.includes(query)) return query;
 
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = window.localStorage.getItem("cwl-language");
-      if (allowed.includes(saved)) return saved;
-    }
+    const saved = localStorage.getItem("cwl-language");
+    if (allowed.includes(saved)) return saved;
   } catch (error) {
     // Fail securely: ignore localStorage errors in strict privacy modes
   }
 
-  if (typeof navigator !== 'undefined' && navigator.language) {
-    return navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en";
-  }
-
-  return "ko";
+  return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
 }
 
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
@@ -326,14 +317,10 @@ let i18nNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
-let twitterDesc = null;
 let footerLogo = null;
 let currentLang = null;
 
 function setLanguage(lang) {
-  // 🛡️ Sentinel: Fail securely when no DOM is available (e.g. SSR/build contexts)
-  if (typeof document === 'undefined') return;
-
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
@@ -349,7 +336,6 @@ function setLanguage(lang) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
-    twitterDesc = document.querySelector('meta[name="twitter:description"]');
     footerLogo = document.querySelector("#footer-logo");
   }
 
@@ -365,9 +351,6 @@ function setLanguage(lang) {
   }
   if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
     ogDesc.setAttribute("content", dict.metaDescription);
-  }
-  if (twitterDesc && twitterDesc.getAttribute("content") !== dict.metaDescription) {
-    twitterDesc.setAttribute("content", dict.metaDescription);
   }
 
   if (footerLogo) {
@@ -412,9 +395,7 @@ function setLanguage(lang) {
   });
 
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem("cwl-language", lang);
-    }
+    localStorage.setItem("cwl-language", lang);
   } catch (error) {
     // Fail securely: ignore localStorage errors
   }
@@ -422,9 +403,8 @@ function setLanguage(lang) {
 }
 
 // Event listeners can just use the initial querySelectorAll
-if (typeof document !== 'undefined') {
-  document.querySelectorAll("[data-lang]").forEach((button) => {
-    button.addEventListener("click", () => setLanguage(button.dataset.lang));
-  });
-  setLanguage(preferredLanguage());
-}
+document.querySelectorAll("[data-lang]").forEach((button) => {
+  button.addEventListener("click", () => setLanguage(button.dataset.lang));
+});
+
+setLanguage(preferredLanguage());
