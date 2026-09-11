@@ -161,3 +161,12 @@ def test_button_feedback_preserves_focus_and_reduced_motion() -> None:
     assert reduced_motion is not None
     assert "transition-duration: 0.01ms !important;" in reduced_motion.group("body")
     assert "scroll-behavior: auto !important;" in reduced_motion.group("body")
+
+def test_external_links_have_visual_indicator() -> None:
+    """External links (not buttons) have a visual indicator arrow appended."""
+    indicator_rule = _rule('a[target="_blank"]:not(.button)::after')
+    assert 'content: " \\2197";' in indicator_rule
+    assert "white-space: nowrap;" in indicator_rule
+
+    base_rule = _rule('a[target="_blank"]:not(.button)')
+    assert "white-space: nowrap;" in base_rule
