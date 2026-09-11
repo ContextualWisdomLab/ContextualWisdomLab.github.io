@@ -61,7 +61,6 @@ def test_sitemap_is_well_formed_and_canonical() -> None:
 def test_sitemap_entries_resolve_to_real_routes() -> None:
     """Every sitemap URL must map to a page shipped in the repository."""
     routes = {"/": ROOT / "index.html", "/components/": ROOT / "components" / "index.html"}
-    dirs = {"/": ROOT, "/components/": ROOT / "components"}
 
     for entry in _urls():
         path = urlparse(entry["loc"]).path
