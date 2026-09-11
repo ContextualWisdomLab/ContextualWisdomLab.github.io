@@ -90,4 +90,3 @@ if (setLanguage("ko") !== undefined) {
 '''
     completed = _run_i18n_harness(harness)
     assert completed.returncode == 0, completed.stderr
-
