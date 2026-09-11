@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; upgrade-insecure-requests; require-trusted-types-for 'script';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; upgrade-insecure-requests; require-trusted-types-for 'script';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>맥락지혜 연구실 | Contextual Wisdom Lab</title>
     <meta
@@ -16,26 +16,8 @@
       content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 연구 기반 프로젝트입니다."
     >
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Contextual Wisdom Lab">
-    <meta property="og:url" content="https://contextualwisdomlab.github.io/">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:locale:alternate" content="en_US">
-    <meta property="og:image" content="https://contextualwisdomlab.github.io/assets/context-wisdom-lab-avatar.png">
-    <meta property="og:image:alt" content="Contextual Wisdom Lab logo">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1024">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Contextual Wisdom Lab">
-    <meta
-      name="twitter:description"
-      content="맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 연구 기반 프로젝트입니다."
-    >
-    <meta name="twitter:image" content="https://contextualwisdomlab.github.io/assets/context-wisdom-lab-avatar.png">
-    <link rel="canonical" href="https://contextualwisdomlab.github.io/"> <!-- nosemgrep: html.security.audit.missing-integrity.missing-integrity - SRI does not apply: rel=canonical is a metadata relation, not a fetched subresource -->
+    <meta property="og:image" content="assets/context-wisdom-lab-avatar.png">
     <link rel="icon" href="assets/context-wisdom-lab-avatar.png">
-    <link rel="apple-touch-icon" href="assets/context-wisdom-lab-avatar.png">
-    <link rel="manifest" href="manifest.webmanifest">
-    <meta name="theme-color" content="#16263d">
     <!-- ⚡ Bolt: Preload custom font to reduce time to first paint -->
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <!-- ⚡ Bolt: Preload hero image to optimize Largest Contentful Paint (LCP) -->
@@ -44,7 +26,6 @@
     <script src="i18n.js" defer></script>
   </head>
   <body>
-    <span id="new-window-desc" class="visually-hidden" data-i18n="common.newTab">새 창에서 열림</span>
     <a href="#top" class="skip-link" data-i18n="nav.skipToContent">본문으로 건너뛰기</a>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Contextual Wisdom Lab home">
@@ -61,11 +42,11 @@
         <a href="#projects" data-i18n="nav.projects">프로젝트</a>
         <a href="#forks" data-i18n="nav.forks">Fork</a>
         <a href="#work" data-i18n="nav.work">작업</a>
-        <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab" title="새 창에서 열림" data-i18n-title="common.newTab">GitHub</a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab">GitHub</a>
       </nav>
       <div class="language-switch" role="group" aria-label="Language">
-        <button type="button" data-lang="ko" lang="ko" aria-pressed="true" aria-label="한국어" title="한국어로 보기" data-i18n-title="nav.langKoTitle">KO</button>
-        <button type="button" data-lang="en" lang="en" aria-pressed="false" aria-label="English" title="View in English" data-i18n-title="nav.langEnTitle">EN</button>
+        <button type="button" data-lang="ko" lang="ko" aria-pressed="true" aria-label="한국어">KO</button>
+        <button type="button" data-lang="en" lang="en" aria-pressed="false" aria-label="English">EN</button>
       </div>
     </header>
 
@@ -78,7 +59,7 @@
             구슬이 서 말이어도 꿰어야 보배이듯, 문서, 메일, 로그, 회의록을 맥락 안에서 엮어 사람이 무엇을 결정하고 무엇을 실행할지 보이게 하는 AI 의사결정 지원 시스템을 연구하고 만듭니다.
           </p>
           <div class="hero-actions" role="group" aria-label="Homepage actions">
-            <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" class="button primary" href="https://github.com/ContextualWisdomLab" data-i18n="hero.primaryCta" title="새 창에서 열림" data-i18n-title="common.newTab">GitHub 보기</a>
+            <a target="_blank" rel="noopener noreferrer" class="button primary" href="https://github.com/ContextualWisdomLab" data-i18n="hero.primaryCta">GitHub 보기</a>
             <a class="button secondary" href="#dikw" data-i18n="hero.secondaryCta">DIKW 보기</a>
           </div>
         </div>
@@ -119,9 +100,9 @@
         <a href="#forks" data-i18n="nav.forks">Fork</a>
       </nav>
 
-      <section id="principles" class="section principles">
+      <section id="principles" class="section principles" aria-labelledby="principles-title">
         <div class="section-heading">
-          <h2 data-i18n="principles.title">맥락지혜는 맥락 안에서 판단을 세우는 방향입니다</h2>
+          <h2 id="principles-title" data-i18n="principles.title">맥락지혜는 맥락 안에서 판단을 세우는 방향입니다</h2>
           <p data-i18n="principles.lead">Contextual Wisdom은 많이 아는 상태가 아니라, 구체적인 맥락 안에서 판단과 실행으로 건너가는 과정을 뜻합니다. 메일, 문서, 로그, 일정 사이의 흩어진 맥락을 묶어 오늘 결정할 것과 다음 행동을 보이게 합니다.</p>
         </div>
         <div class="principle-grid">
@@ -186,9 +167,9 @@
         </div>
       </section>
 
-      <section id="problem" class="section problem">
+      <section id="problem" class="section problem" aria-labelledby="problem-title">
         <div class="section-heading">
-          <h2 data-i18n="problem.title">시작점은 인지 부하입니다</h2>
+          <h2 id="problem-title" data-i18n="problem.title">시작점은 인지 부하입니다</h2>
           <p data-i18n="problem.lead">정보가 부족해서가 아니라, 판단해야 할 맥락이 흩어져 있어서 어렵습니다. 사람이 버거워지는 순간은 데이터가 많을 때가 아니라 맥락을 다시 조립해야 할 때입니다.</p>
         </div>
         <div class="problem-strip">
@@ -207,9 +188,9 @@
         </div>
       </section>
 
-      <section id="dikw" class="section dikw">
+      <section id="dikw" class="section dikw" aria-labelledby="dikw-title">
         <div class="section-heading">
-          <h2 data-i18n="dikw.title">DIKW는 판단 흐름을 점검하는 질문입니다</h2>
+          <h2 id="dikw-title" data-i18n="dikw.title">DIKW는 판단 흐름을 점검하는 질문입니다</h2>
           <p data-i18n="dikw.lead">
             PPTX의 흐름은 기업 자료, 맥락화, 판단 포인트, 실행 연결입니다. DIKW는 이 흐름을 자동 상승 위계로 보자는 말이 아니라, 자료가 판단 근거로 쓰일 준비가 되었는지 묻는 점검 질문입니다.
           </p>
@@ -240,9 +221,9 @@
         </div>
       </section>
 
-      <section id="evidence" class="section evidence">
+      <section id="evidence" class="section evidence" aria-labelledby="evidence-title">
         <div class="section-heading">
-          <h2 data-i18n="evidence.title">그래서 화면은 이렇게 물어야 합니다</h2>
+          <h2 id="evidence-title" data-i18n="evidence.title">그래서 화면은 이렇게 물어야 합니다</h2>
           <p data-i18n="evidence.lead">기록을 모았다고 판단이 끝나지는 않습니다. 화면은 원문, 맥락, 리스크, 선택지를 분리해서 보여주고, 마지막에는 사람이 고를 수 있는 행동으로 좁혀야 합니다.</p>
         </div>
         <div class="evidence-grid">
@@ -265,38 +246,38 @@
         </div>
       </section>
 
-      <section id="references" class="section references">
+      <section id="references" class="section references" aria-labelledby="references-title">
         <div class="section-heading">
-          <h2 data-i18n="references.title">참고문헌</h2>
+          <h2 id="references-title" data-i18n="references.title">참고문헌</h2>
           <p data-i18n="references.lead">DIKW를 그대로 믿지 않고 제품 원칙으로 옮기기 위해 참고한 자료입니다.</p>
         </div>
         <ol class="reference-list">
           <li>
             <span data-i18n="references.ackoff">Ackoff, R. L. (1989). From data to wisdom. Journal of Applied Systems Analysis, 16(1), 3-9.</span>
-            <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://faculty.ung.edu/kmelton/documents/datawisdom.pdf" title="새 창에서 열림" data-i18n-title="common.newTab">https://faculty.ung.edu/kmelton/documents/datawisdom.pdf</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://faculty.ung.edu/kmelton/documents/datawisdom.pdf">https://faculty.ung.edu/kmelton/documents/datawisdom.pdf</a>
           </li>
           <li>
             <span data-i18n="references.baskarada">Baskarada, S., &amp; Koronios, A. (2013). Data, information, knowledge, wisdom (DIKW): A semiotic theoretical and empirical exploration of the hierarchy and its quality dimension. Australasian Journal of Information Systems, 18(1).</span>
-            <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.3127/ajis.v18i1.748" title="새 창에서 열림" data-i18n-title="common.newTab">https://doi.org/10.3127/ajis.v18i1.748</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.3127/ajis.v18i1.748">https://doi.org/10.3127/ajis.v18i1.748</a>
           </li>
           <li>
             <span data-i18n="references.fricke">Frické, M. (2009). The knowledge pyramid: A critique of the DIKW hierarchy. Journal of Information Science, 35(2), 131-142.</span>
-            <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.1177/0165551508094050" title="새 창에서 열림" data-i18n-title="common.newTab">https://doi.org/10.1177/0165551508094050</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.1177/0165551508094050">https://doi.org/10.1177/0165551508094050</a>
           </li>
           <li>
             <span data-i18n="references.brienza">Brienza, J. P., Kung, F. Y. H., Santos, H. C., Bobocel, D. R., &amp; Grossmann, I. (2018). Wisdom, bias, and balance: Toward a process-sensitive measurement of wisdom-related cognition. Journal of Personality and Social Psychology, 115(6), 1093-1126.</span>
-            <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.1037/pspp0000171" title="새 창에서 열림" data-i18n-title="common.newTab">https://doi.org/10.1037/pspp0000171</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.1037/pspp0000171">https://doi.org/10.1037/pspp0000171</a>
           </li>
         </ol>
       </section>
 
-      <section id="logo" class="section logo-story">
+      <section id="logo" class="section logo-story" aria-labelledby="logo-title">
         <div class="logo-mark">
           <!-- ⚡ Bolt: Lazy load off-screen image -->
           <img src="assets/context-wisdom-lab-avatar.svg" alt="Contextual Wisdom Lab square mark" loading="lazy" width="500" height="500" decoding="async">
         </div>
         <div>
-          <h2 data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
+          <h2 id="logo-title" data-i18n="logo.title">로고는 흩어진 기록을 하나의 흐름으로 묶습니다</h2>
           <p data-i18n="logo.lead">
             사각형은 문서, 메일, 로그처럼 따로 남은 기록입니다. 선은 그 기록을 한 질문 아래 연결하는 흐름입니다.
             끝점은 정답이 아니라 다음으로 확인하거나 선택할 지점입니다.
@@ -318,9 +299,9 @@
         </div>
       </section>
 
-      <section id="naruon" class="section naruon">
+      <section id="naruon" class="section naruon" aria-labelledby="naruon-title">
         <div class="section-heading">
-          <h2 data-i18n="naruon.title">Naruon은 메일에서 시작하는 제품 실험입니다</h2>
+          <h2 id="naruon-title" data-i18n="naruon.title">Naruon은 메일에서 시작하는 제품 실험입니다</h2>
           <p data-i18n="naruon.lead">메일함은 메시지 목록이 아니라 요청, 첨부, 일정, 관계, 책임이 흐르는 곳입니다. Naruon은 그 흐름을 모아 오늘 판단할 일과 다음 행동을 보이게 하는 AI 워크스페이스입니다.</p>
         </div>
         <div class="naruon-grid">
@@ -339,54 +320,54 @@
         </div>
       </section>
 
-      <section id="projects" class="section projects">
+      <section id="projects" class="section projects" aria-labelledby="projects-title">
         <div class="section-heading">
-          <h2 data-i18n="projects.title">공개 프로젝트</h2>
+          <h2 id="projects-title" data-i18n="projects.title">공개 프로젝트</h2>
           <p data-i18n="projects.lead">Fork가 아니면서 공개된 제품과 도구 저장소입니다. 홈페이지, 조직 프로필처럼 운영과 소개를 위한 내부 관리용 저장소는 제외했습니다.</p>
         </div>
         <div class="naruon-grid project-grid">
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/naruon" data-i18n="projects.naruonTitle" title="새 창에서 열림" data-i18n-title="common.newTab">Naruon</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/naruon" data-i18n="projects.naruonTitle">Naruon</a></h3>
             <p data-i18n="projects.naruonBody">메일, 첨부, 일정, 작업을 맥락으로 묶어 판단과 실행으로 연결하는 AI 이메일 워크스페이스입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/pg-erd-cloud" data-i18n="projects.pgErdTitle" title="새 창에서 열림" data-i18n-title="common.newTab">pg-erd-cloud</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/pg-erd-cloud" data-i18n="projects.pgErdTitle">pg-erd-cloud</a></h3>
             <p data-i18n="projects.pgErdBody">PostgreSQL 스키마를 리버스 엔지니어링하고 ERD와 DDL 공유 흐름으로 관리하는 클라우드 MVP입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/bandscope" data-i18n="projects.bandscopeTitle" title="새 창에서 열림" data-i18n-title="common.newTab">BandScope</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/bandscope" data-i18n="projects.bandscopeTitle">BandScope</a></h3>
             <p data-i18n="projects.bandscopeBody">곡을 섹션, 역할, 템포, 연습 우선순위로 분석하는 로컬 우선 리허설 앱입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/codec-carver" data-i18n="projects.codecCarverTitle" title="새 창에서 열림" data-i18n-title="common.newTab">codec-carver</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/codec-carver" data-i18n="projects.codecCarverTitle">codec-carver</a></h3>
             <p data-i18n="projects.codecCarverBody">긴 녹음을 메타데이터를 보존한 FLAC/Opus 조각으로 변환하는 Python CLI입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/newsdom-api" data-i18n="projects.newsdomTitle" title="새 창에서 열림" data-i18n-title="common.newTab">newsdom-api</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/newsdom-api" data-i18n="projects.newsdomTitle">newsdom-api</a></h3>
             <p data-i18n="projects.newsdomBody">스캔된 일본어 신문 PDF를 기사, 제목, 본문, 이미지 구조의 DOM형 JSON으로 파싱하는 API입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/scopeweave" data-i18n="projects.scopeweaveTitle" title="새 창에서 열림" data-i18n-title="common.newTab">scopeweave</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/scopeweave" data-i18n="projects.scopeweaveTitle">scopeweave</a></h3>
             <p data-i18n="projects.scopeweaveBody">트리 편집, 진행률 계산, CSV/JSON, 주간 Gantt를 지원하는 정적 HTML/CSS/JS WBS 플래너입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/VibeSec" data-i18n="projects.vibesecTitle" title="새 창에서 열림" data-i18n-title="common.newTab">VibeSec</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/VibeSec" data-i18n="projects.vibesecTitle">VibeSec</a></h3>
             <p data-i18n="projects.vibesecBody">바이브코딩 앱을 위한 보안 가드레일입니다. AI 개발 도구 규칙, 정적 점검, 리뷰와 수정 프롬프트를 다룹니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/fast-mlsirm" data-i18n="projects.fastMlsirmTitle" title="새 창에서 열림" data-i18n-title="common.newTab">fast-mlsirm</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/fast-mlsirm" data-i18n="projects.fastMlsirmTitle">fast-mlsirm</a></h3>
             <p data-i18n="projects.fastMlsirmBody">MLSIRM/MLS2PLM 모형의 시뮬레이션, 적합, 복원 진단을 빠르게 수행하는 Python/Rust 패키지입니다.</p>
           </article>
           <article>
-            <h3><a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/waf-ids-ai-soc" data-i18n="projects.wafIdsTitle" title="새 창에서 열림" data-i18n-title="common.newTab">waf-ids-ai-soc</a></h3>
+            <h3><a target="_blank" rel="noopener noreferrer" href="https://github.com/ContextualWisdomLab/waf-ids-ai-soc" data-i18n="projects.wafIdsTitle">waf-ids-ai-soc</a></h3>
             <p data-i18n="projects.wafIdsBody">DNSBL 게시 기능을 갖춘 Rust 우선 WAF/IDS/AI SOC 게이트웨이입니다.</p>
           </article>
         </div>
       </section>
 
-      <section id="forks" class="section forks">
+      <section id="forks" class="section forks" aria-labelledby="forks-title">
         <div class="section-heading">
-          <h2 data-i18n="forks.title">Fork 프로젝트는 따로 봅니다</h2>
+          <h2 id="forks-title" data-i18n="forks.title">Fork 프로젝트는 따로 봅니다</h2>
           <p data-i18n="forks.lead">맥락지혜 연구실이 직접 만든 프로젝트와 구분해, 외부 upstream에서 출발해 조직 안에서 검토하거나 확장하는 저장소입니다.</p>
         </div>
         <div class="naruon-grid">
@@ -405,9 +386,9 @@
         </div>
       </section>
 
-      <section id="work" class="section work">
+      <section id="work" class="section work" aria-labelledby="work-title">
         <div>
-          <h2 data-i18n="work.title">연구에서 제품으로</h2>
+          <h2 id="work-title" data-i18n="work.title">연구에서 제품으로</h2>
           <p data-i18n="work.lead">
             맥락지혜 연구실은 한 문장으로 답하는 AI보다, 판단 전까지 사람이 손으로 하던 정리 일을 줄이는 시스템을 봅니다.
           </p>
@@ -450,7 +431,7 @@
       >
       <p>
         <span data-i18n="footer.founded">Founded by</span>
-        <a aria-describedby="new-window-desc" target="_blank" rel="noopener noreferrer" href="https://github.com/seonghobae" title="새 창에서 열림" data-i18n-title="common.newTab">Seongho Bae</a>.
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/seonghobae">Seongho Bae</a>.
         <span data-i18n="footer.line">Context into judgment. Judgment into action.</span>
       </p>
     </footer>
