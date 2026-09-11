@@ -1,6 +1,8 @@
 const messages = {
   ko: {
     metaTitle: "맥락지혜 연구실 | Contextual Wisdom Lab",
+    "nav.langKoTitle": "한국어로 보기",
+    "nav.langEnTitle": "View in English",
     metaDescription: "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
     logoSrc: "assets/context-wisdom-lab-logo.svg",
     logoAlt: "맥락지혜 연구실 · Contextual Wisdom Lab",
@@ -18,6 +20,7 @@ const messages = {
     "nav.references": "참고문헌",
     "nav.work": "작업",
     "nav.skipToContent": "본문으로 건너뛰기",
+    "common.newTab": "새 창에서 열림",
     "hero.title": "맥락지혜 연구실",
     "hero.labName": "Contextual Wisdom Lab",
     "hero.thesis": "구슬이 서 말이어도 꿰어야 보배이듯, 문서, 메일, 로그, 회의록을 맥락 안에서 엮어 사람이 무엇을 결정하고 무엇을 실행할지 보이게 하는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
@@ -148,6 +151,8 @@ const messages = {
   },
   en: {
     metaTitle: "Contextual Wisdom Lab",
+    "nav.langKoTitle": "View in Korean",
+    "nav.langEnTitle": "View in English",
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
     logoSrc: "assets/context-wisdom-lab-logo-en.svg",
     logoAlt: "Contextual Wisdom Lab",
@@ -165,6 +170,7 @@ const messages = {
     "nav.references": "References",
     "nav.work": "Work",
     "nav.skipToContent": "Skip to main content",
+    "common.newTab": "Opens in a new window",
     "hero.title": "Contextual Wisdom Lab",
     "hero.labName": "Research Lab",
     "hero.thesis": "A research lab building AI decision support systems. Even a heap of beads becomes treasure only when threaded; we compose context across documents, mail, logs, and meeting notes so people can see what to decide and what to do next.",
@@ -297,17 +303,26 @@ const messages = {
 
 function preferredLanguage() {
   const allowed = ["ko", "en"];
-  const query = new URLSearchParams(window.location.search).get("lang");
-  if (allowed.includes(query)) return query;
+
+  if (typeof window !== 'undefined' && window.location) {
+    const query = new URLSearchParams(window.location.search).get("lang");
+    if (allowed.includes(query)) return query;
+  }
 
   try {
-    const saved = localStorage.getItem("cwl-language");
-    if (allowed.includes(saved)) return saved;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = window.localStorage.getItem("cwl-language");
+      if (allowed.includes(saved)) return saved;
+    }
   } catch (error) {
     // Fail securely: ignore localStorage errors in strict privacy modes
   }
 
-  return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
+  if (typeof navigator !== 'undefined' && navigator.language) {
+    return navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en";
+  }
+
+  return "ko";
 }
 
 // ⚡ Bolt: Cache DOM queries and current state to prevent redundant lookups and layout thrashing
@@ -315,10 +330,14 @@ let i18nNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
+let twitterDesc = null;
 let footerLogo = null;
 let currentLang = null;
 
 function setLanguage(lang) {
+  // 🛡️ Sentinel: Fail securely when no DOM is available (e.g. SSR/build contexts)
+  if (typeof document === 'undefined') return;
+
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
@@ -334,6 +353,7 @@ function setLanguage(lang) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
+    twitterDesc = document.querySelector('meta[name="twitter:description"]');
     footerLogo = document.querySelector("#footer-logo");
   }
 
@@ -350,6 +370,9 @@ function setLanguage(lang) {
   if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
     ogDesc.setAttribute("content", dict.metaDescription);
   }
+  if (twitterDesc && twitterDesc.getAttribute("content") !== dict.metaDescription) {
+    twitterDesc.setAttribute("content", dict.metaDescription);
+  }
 
   if (footerLogo) {
     if (footerLogo.getAttribute("src") !== dict.logoSrc) {
@@ -365,14 +388,22 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
-      const newText = dict[node.dataset.i18n];
-      if (newText && node.textContent !== newText) {
-        node.textContent = newText;
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.getAttribute("data-i18n")];
+        if (newText && node.textContent !== newText) {
+          node.textContent = newText;
+        }
+      }
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.getAttribute("data-i18n-title")];
+        if (newTitle && node.getAttribute("title") !== newTitle) {
+          node.setAttribute("title", newTitle);
+        }
       }
     });
   }
@@ -385,7 +416,9 @@ function setLanguage(lang) {
   });
 
   try {
-    localStorage.setItem("cwl-language", lang);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem("cwl-language", lang);
+    }
   } catch (error) {
     // Fail securely: ignore localStorage errors
   }
@@ -393,8 +426,9 @@ function setLanguage(lang) {
 }
 
 // Event listeners can just use the initial querySelectorAll
-document.querySelectorAll("[data-lang]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.lang));
-});
-
-setLanguage(preferredLanguage());
+if (typeof document !== 'undefined') {
+  document.querySelectorAll("[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  });
+  setLanguage(preferredLanguage());
+}
