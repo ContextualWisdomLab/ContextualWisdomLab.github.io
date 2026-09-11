@@ -143,3 +143,26 @@ def test_tab_markup_uses_one_roving_tab_stop() -> None:
     assert all(tab.get("aria-controls") in panel_ids for tab in tabs)
     assert all(panel.get("aria-labelledby") in tab_ids for panel in panels)
     assert all(panel.get("tabindex") == "0" for panel in panels)
+
+
+BUTTON_TYPE_RE = re.compile(
+    r"""(?<![\w-])type\s*=\s*(?:"(?P<double>[^"]*)"|'(?P<single>[^']*)')"""
+)
+
+
+def test_component_gallery_buttons_have_explicit_type() -> None:
+    """Every gallery button must declare a non-submit, non-empty type value.
+
+    Checking only for the substring ``type=`` would pass a ``data-type="action"``
+    attribute, an empty ``type=""``, or a ``type="submit"`` that contradicts the
+    component's non-submit intent. Parse the standalone ``type`` attribute and
+    require the explicit ``button`` value instead.
+    """
+    html = _gallery_html()
+    buttons = re.findall(r"<button[^>]*>", html)
+    assert buttons, "component gallery must render at least one button example"
+    for btn in buttons:
+        match = BUTTON_TYPE_RE.search(btn)
+        assert match is not None, f"Button missing type attribute: {btn}"
+        value = match.group("double") or match.group("single")
+        assert value == "button", f'Button must declare type="button": {btn}'
