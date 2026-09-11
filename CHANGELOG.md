@@ -1,19 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
-- **UX/접근성 개선**: 홈페이지의 각 섹션 랜드마크에 `aria-labelledby`를 연결해 스크린 리더 사용자가 화면 탐색 중 각 영역의 목적을 제목으로 듣고 이동할 수 있게 했습니다. 아이디가 있는 모든 `<section>`은 실제로 존재하는 제목(`<h2>`)의 아이디를 참조하며, 회귀 테스트가 참조 대상의 실재 여부를 검증합니다.
-- **UX/접근성 개선**: 언어 전환 버튼에 동적 번역이 지원되는 툴팁(title)을 추가하여 버튼의 기능을 명확히 안내했습니다.
-- **보안 회귀 방지**: 외부 `target="_blank"` 링크가 `rel="noopener noreferrer"` 정책을 유지하는지 DOM 파서 기반 테스트로 고정해, 새 창 열림 접근성 변경과 리버스 탭내빙 완화가 서로를 깨지 않도록 했습니다.
-- **UX/접근성 개선**: 외부 링크(`target="_blank"`)에 다국어로 전환되는 `title` 툴팁과 함께, 공용 visually hidden 안내를 `aria-describedby`로 연결해 키보드·터치·스크린 리더 사용자에게도 새 창 열림을 알립니다.
-- **UX 개선**: 버튼(`.button`, `.language-switch button`) 클릭 시 스케일이 줄어드는 `:active` 상태를 추가하여 즉각적인 시각적 피드백을 제공하도록 개선했습니다.
-- **온톨로지 게시**: LineageWeave의 권위 있는 온톨로지와 생성된 RDF 직렬화 결과를 소문자 canonical namespace 경로에서 제공하고, 정확한 원본 commit과 SHA-256 provenance를 기록했습니다.
-- **UX/접근성 개선**: KRDS 탭 예제에 단일 roving `tabindex`, 좌우 방향키·Home·End 순환 탐색, 동기화된 선택/패널 상태, 키보드로 접근 가능한 탭 패널을 추가했습니다.
-- **설치형 웹 경험**: `manifest.webmanifest`와 홈페이지 `<link rel="manifest">`, `theme-color` 메타, iOS용 `apple-touch-icon`을 추가했습니다. 모바일 방문자는 이제 브라우저가 제공하는 "홈 화면에 추가" 경험에서 연구실 이름·아이콘·브랜드 색을 그대로 보고, 주소창 없는 독립 실행(standalone) 화면으로 사이트를 엽니다. 엄격한 CSP(`default-src 'none'`)가 매니페스트를 막지 않도록 `manifest-src 'self'`를 명시했습니다. 매니페스트는 `--ink`/`--paper` 토큰과 일치하는 색과 실제 존재하는 아이콘만 선언하며, 회귀 테스트가 홈페이지 연결·CSP 허용·iOS 아이콘·필수 필드·색 일치·아이콘 실재를 검증합니다.
-- **보안 거버넌스**: `.well-known/security.txt`를 추가해 취약점 신고 경로를 RFC 9116 표준에 맞게 공개했습니다. `SECURITY.md`는 이미 GitHub Security Advisory를 통한 비공개 신고 절차와 처리 기한을 안내하고 있었지만, 표준 자동화 도구가 읽는 `security.txt`는 없었습니다. Contact·Expires·Canonical·Policy·Preferred-Languages를 명시하고, 회귀 테스트가 필수 필드·만료 시각·신고 경로 일치·canonical URL을 검증합니다.
-- **보안·개인정보 보호**: `.gitignore`에 `.opencode/opencode-loop/`를 추가해 OpenCode Loop의 세션 로그·목표·작업 JSON이 버전 관리에 섞여 들어가지 않도록 했습니다. 이 파일들은 대화 내용을 포함할 수 있는데 그동안 무시 목록에 없어 `git add .` 한 번으로 스테이징될 수 있었습니다. 공유 가능한 프로젝트 설정을 위해 `.opencode/` 전체가 아니라 런타임 상태 경로만 제외합니다. 회귀 테스트가 무시 규칙과 git의 실제 판정을 함께 검증합니다.
-- **고객 경험 개선**: GitHub Pages 기본 404 페이지 대신 브랜드가 적용된 `404.html`을 추가했습니다. 잘못된 주소로 들어온 방문자는 그동안 안내 없는 기본 오류 화면을 봤지만, 이제 연구실 색·서체·내비게이션 안에서 "페이지를 찾을 수 없습니다" 안내와 홈·프로젝트로 돌아가는 링크를 봅니다. 페이지는 `noindex`로 검색 색인에서 제외하고, 자체 CSS만 사용하는 자족형 문서라 CSP를 약화하지 않습니다. 회귀 테스트가 자산 존재·CSP 안전성·noindex·내부 앵커 실재를 검증합니다.
-- **검색 노출 개선**: 검색엔진 크롤러용 `robots.txt`와 `sitemap.xml`을 추가했습니다. 그동안 두 경로 모두 404를 반환해 크롤 정책과 페이지 목록을 제공하지 못했고, 그 결과 신규 페이지가 검색 결과에 제때 반영되기 어려웠습니다. `robots.txt`는 전체 크롤을 허용하고 표준 사이트맵을 가리키며, `sitemap.xml`은 canonical origin의 실제 페이지 경로만 나열합니다. 회귀 테스트가 사이트맵 형식·URL canonical 여부·실제 라우트 존재를 검증합니다.
-- **링크 미리보기 개선**: 홈페이지의 `og:image`가 상대 경로여서 Open Graph 크롤러가 이미지를 찾지 못하고 공유 링크에 미리보기가 표시되지 않던 문제를 수정했습니다. 절대 URL 이미지와 `og:url`·`og:site_name`·`og:locale`·이미지 크기/대체 텍스트, Twitter `summary` 카드, `rel="canonical"`을 추가하고, 언어 전환 시 `twitter:description`도 함께 갱신합니다.
+- **접근성 개선**: `<section>` 랜드마크 요소에 `aria-labelledby` 속성을 추가하여 스크린 리더 환경의 탐색 접근성 향상 및 파서 회귀 테스트 추가
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
 - **렌더링 힌트 정합성**: 첫 화면의 eager 이미지와 단일 LCP 후보에서 강제 `decoding="async"`를 제거해 HTML 표준의 기본 `auto` 판단에 맡기고, 지연 로드 이미지에는 비동기 디코딩 힌트를 유지했습니다. 정적 테스트가 eager, lazy, LCP 후보 집합의 존재와 조합을 검증하며, 실제 LCP 효과는 배포 후 실측 대상으로 유지합니다.
