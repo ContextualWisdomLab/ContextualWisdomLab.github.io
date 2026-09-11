@@ -866,3 +866,8 @@ main:focus-visible {
   white-space: nowrap;
   border: 0;
 }
+
+a[target="_blank"]:not(.button)::after {
+  content: " \2197";
+  white-space: nowrap;
+}
