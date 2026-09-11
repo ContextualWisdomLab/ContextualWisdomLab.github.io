@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **보안 회귀 방지**: 외부 `target="_blank"` 링크가 `rel="noopener noreferrer"` 정책을 유지하는지 DOM 파서 기반 테스트로 고정해, 새 창 열림 접근성 변경과 리버스 탭내빙 완화가 서로를 깨지 않도록 했습니다.
+- **UX/접근성 개선**: 외부 링크(`target="_blank"`)에 다국어로 전환되는 `title` 툴팁과 함께, 공용 visually hidden 안내를 `aria-describedby`로 연결해 키보드·터치·스크린 리더 사용자에게도 새 창 열림을 알립니다.
 - **UX 개선**: 버튼(`.button`, `.language-switch button`) 클릭 시 스케일이 줄어드는 `:active` 상태를 추가하여 즉각적인 시각적 피드백을 제공하도록 개선했습니다.
 - **온톨로지 게시**: LineageWeave의 권위 있는 온톨로지와 생성된 RDF 직렬화 결과를 소문자 canonical namespace 경로에서 제공하고, 정확한 원본 commit과 SHA-256 provenance를 기록했습니다.
 - **UX/접근성 개선**: KRDS 탭 예제에 단일 roving `tabindex`, 좌우 방향키·Home·End 순환 탐색, 동기화된 선택/패널 상태, 키보드로 접근 가능한 탭 패널을 추가했습니다.
