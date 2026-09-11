@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **온톨로지 게시**: LineageWeave의 권위 있는 온톨로지와 생성된 RDF 직렬화 결과를 소문자 canonical namespace 경로에서 제공하고, 정확한 원본 commit과 SHA-256 provenance를 기록했습니다.
 - **UX/접근성 개선**: KRDS 탭 예제에 단일 roving `tabindex`, 좌우 방향키·Home·End 순환 탐색, 동기화된 선택/패널 상태, 키보드로 접근 가능한 탭 패널을 추가했습니다.
 - **설치형 웹 경험**: `manifest.webmanifest`와 홈페이지 `<link rel="manifest">`, `theme-color` 메타, iOS용 `apple-touch-icon`을 추가했습니다. 모바일 방문자는 이제 브라우저가 제공하는 "홈 화면에 추가" 경험에서 연구실 이름·아이콘·브랜드 색을 그대로 보고, 주소창 없는 독립 실행(standalone) 화면으로 사이트를 엽니다. 엄격한 CSP(`default-src 'none'`)가 매니페스트를 막지 않도록 `manifest-src 'self'`를 명시했습니다. 매니페스트는 `--ink`/`--paper` 토큰과 일치하는 색과 실제 존재하는 아이콘만 선언하며, 회귀 테스트가 홈페이지 연결·CSP 허용·iOS 아이콘·필수 필드·색 일치·아이콘 실재를 검증합니다.
 - **보안 거버넌스**: `.well-known/security.txt`를 추가해 취약점 신고 경로를 RFC 9116 표준에 맞게 공개했습니다. `SECURITY.md`는 이미 GitHub Security Advisory를 통한 비공개 신고 절차와 처리 기한을 안내하고 있었지만, 표준 자동화 도구가 읽는 `security.txt`는 없었습니다. Contact·Expires·Canonical·Policy·Preferred-Languages를 명시하고, 회귀 테스트가 필수 필드·만료 시각·신고 경로 일치·canonical URL을 검증합니다.
