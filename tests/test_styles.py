@@ -167,3 +167,6 @@ def test_external_links_have_visual_indicator() -> None:
     indicator_rule = _rule('a[target="_blank"]:not(.button)::after')
     assert 'content: " \\2197";' in indicator_rule
     assert "white-space: nowrap;" in indicator_rule
+
+    base_rule = _rule('a[target="_blank"]:not(.button)')
+    assert "white-space: nowrap;" in base_rule

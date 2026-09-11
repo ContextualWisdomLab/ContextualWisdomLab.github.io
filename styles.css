@@ -871,3 +871,7 @@ a[target="_blank"]:not(.button)::after {
   content: " \2197";
   white-space: nowrap;
 }
+
+a[target="_blank"]:not(.button) {
+  white-space: nowrap;
+}
