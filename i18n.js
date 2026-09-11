@@ -315,7 +315,6 @@ let i18nNodes = null;
 let langButtons = null;
 let metaDesc = null;
 let ogDesc = null;
-let twitterDesc = null;
 let footerLogo = null;
 let currentLang = null;
 
@@ -323,7 +322,7 @@ function setLanguage(lang) {
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
-    console.warn("[Security] Invalid language requested. Falling back to default.");
+    console.warn(`[Security] Invalid language requested: ${lang}. Falling back to default.`);
     lang = "ko";
   }
 
@@ -335,7 +334,6 @@ function setLanguage(lang) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
-    twitterDesc = document.querySelector('meta[name="twitter:description"]');
     footerLogo = document.querySelector("#footer-logo");
   }
 
@@ -351,9 +349,6 @@ function setLanguage(lang) {
   }
   if (ogDesc && ogDesc.getAttribute("content") !== dict.metaDescription) {
     ogDesc.setAttribute("content", dict.metaDescription);
-  }
-  if (twitterDesc && twitterDesc.getAttribute("content") !== dict.metaDescription) {
-    twitterDesc.setAttribute("content", dict.metaDescription);
   }
 
   if (footerLogo) {
