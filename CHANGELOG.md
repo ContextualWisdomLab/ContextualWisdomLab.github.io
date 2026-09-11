@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- **검색 노출 개선**: 검색엔진 크롤러용 `robots.txt`와 `sitemap.xml`을 추가했습니다. 그동안 두 경로 모두 404를 반환해 크롤 정책과 페이지 목록을 제공하지 못했고, 그 결과 신규 페이지가 검색 결과에 제때 반영되기 어려웠습니다. `robots.txt`는 전체 크롤을 허용하고 표준 사이트맵을 가리키며, `sitemap.xml`은 canonical origin의 실제 페이지 경로만 나열합니다. 회귀 테스트가 사이트맵 형식·URL canonical 여부·실제 라우트 존재를 검증합니다.
 - **링크 미리보기 개선**: 홈페이지의 `og:image`가 상대 경로여서 Open Graph 크롤러가 이미지를 찾지 못하고 공유 링크에 미리보기가 표시되지 않던 문제를 수정했습니다. 절대 URL 이미지와 `og:url`·`og:site_name`·`og:locale`·이미지 크기/대체 텍스트, Twitter `summary` 카드, `rel="canonical"`을 추가하고, 언어 전환 시 `twitter:description`도 함께 갱신합니다.
 - **보안 개선**: `i18n.js`에서 잘못된 언어 요청 시 `console.warn` 메시지에 사용자 입력값이 직접 포함되지 않도록 수정하여 로그 인젝션(Log Injection) 취약점을 제거했습니다.
 - **성능 개선**: `.skip-link` 애니메이션을 `top`에서 `transform: translateY()`로 변경하여 전환 중 레이아웃 재계산을 줄일 수 있도록 했습니다. 실제 효과는 브라우저별 측정 대상입니다.
