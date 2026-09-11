@@ -301,10 +301,8 @@ function preferredLanguage() {
   if (allowed.includes(query)) return query;
 
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = localStorage.getItem("cwl-language");
-      if (allowed.includes(saved)) return saved;
-    }
+    const saved = localStorage.getItem("cwl-language");
+    if (allowed.includes(saved)) return saved;
   } catch (error) {
     // Fail securely: ignore localStorage errors in strict privacy modes
   }
@@ -387,9 +385,7 @@ function setLanguage(lang) {
   });
 
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem("cwl-language", lang);
-    }
+    localStorage.setItem("cwl-language", lang);
   } catch (error) {
     // Fail securely: ignore localStorage errors
   }
