@@ -334,7 +334,7 @@ function setLanguage(lang) {
     langButtons = document.querySelectorAll("[data-lang]");
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
-    footerLogo = document.getElementById("footer-logo");
+    footerLogo = document.querySelector("#footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -365,16 +365,12 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      // ⚡ Bolt: Cache DOM nodes with their translation keys to avoid repeated dataset (Proxy) lookups
-      i18nNodes = Array.from(document.querySelectorAll("[data-i18n]")).map(node => ({
-        node,
-        key: node.getAttribute("data-i18n")
-      }));
+      i18nNodes = document.querySelectorAll("[data-i18n]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach(({ node, key }) => {
-      const newText = dict[key];
+    i18nNodes.forEach((node) => {
+      const newText = dict[node.dataset.i18n];
       if (newText && node.textContent !== newText) {
         node.textContent = newText;
       }
