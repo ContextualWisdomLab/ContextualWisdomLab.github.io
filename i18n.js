@@ -329,6 +329,9 @@ let footerLogo = null;
 let currentLang = null;
 
 function setLanguage(lang) {
+  // 🛡️ Sentinel: Fail securely when no DOM is available (e.g. SSR/build contexts)
+  if (typeof document === 'undefined') return;
+
   // 🛡️ Sentinel: Validate input to prevent prototype pollution or invalid state injection
   const allowedLanguages = ["ko", "en"];
   if (!allowedLanguages.includes(lang)) {
@@ -413,8 +416,5 @@ if (typeof document !== 'undefined') {
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.lang));
   });
-}
-
-if (typeof window !== 'undefined') {
   setLanguage(preferredLanguage());
 }
