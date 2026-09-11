@@ -3,3 +3,7 @@ venv/
 .codegraph/
 __pycache__/
 *.py[cod]
+
+# OpenCode Loop runtime state (session logs/goals) is machine-local and may
+# contain conversation content. Keep project config under .opencode/ shareable.
+.opencode/opencode-loop/
