@@ -83,9 +83,24 @@ def test_component_gallery_inputs_have_length_limits() -> None:
             continue
         assert 'maxlength=' in inp, f"Input missing maxlength: {inp}"
 
+BUTTON_TYPE_RE = re.compile(
+    r"""(?<![\w-])type\s*=\s*(?:"(?P<double>[^"]*)"|'(?P<single>[^']*)')"""
+)
+
+
 def test_component_gallery_buttons_have_explicit_type() -> None:
-    """Ensure all button elements have an explicit type attribute to prevent unintended form submissions."""
+    """Every gallery button must declare a non-submit, non-empty type value.
+
+    Checking only for the substring ``type=`` would pass a ``data-type="action"``
+    attribute, an empty ``type=""``, or a ``type="submit"`` that contradicts the
+    component's non-submit intent. Parse the standalone ``type`` attribute and
+    require the explicit ``button`` value instead.
+    """
     html = _gallery_html()
-    buttons = re.findall(r'<button[^>]*>', html)
+    buttons = re.findall(r"<button[^>]*>", html)
+    assert buttons, "component gallery must render at least one button example"
     for btn in buttons:
-        assert 'type=' in btn, f"Button missing type attribute: {btn}"
+        match = BUTTON_TYPE_RE.search(btn)
+        assert match is not None, f"Button missing type attribute: {btn}"
+        value = match.group("double") or match.group("single")
+        assert value == "button", f"Button must declare type=\"button\": {btn}"
