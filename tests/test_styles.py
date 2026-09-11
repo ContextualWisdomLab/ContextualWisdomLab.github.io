@@ -116,3 +116,48 @@ def test_skip_link_animates_transform_not_top() -> None:
 
     focus_rule = _rule(".skip-link:focus-visible")
     assert "transform: translateY(0);" in focus_rule
+
+
+def test_buttons_have_active_transform_feedback() -> None:
+    """Buttons retain the reviewed transition and exact active-state scaling."""
+    button_rule = _rule(".button")
+    assert re.search(
+        r"transition:\s*opacity 0\.2s,\s*transform 0\.1s;",
+        button_rule,
+    )
+
+    active_rule = _rule(".button:active")
+    assert "transform: scale(0.98);" in active_rule
+
+    lang_button_rule = _rule(".language-switch button")
+    assert re.search(
+        r"transition:\s*opacity 0\.2s,\s*transform 0\.1s;",
+        lang_button_rule,
+    )
+
+    lang_active_rule = _rule(".language-switch button:active")
+    assert "transform: scale(0.92);" in lang_active_rule
+
+
+def test_button_feedback_preserves_focus_and_reduced_motion() -> None:
+    """Active feedback remains supplemental to focus and motion preferences."""
+    css = STYLES.read_text(encoding="utf-8")
+
+    focus_group = re.search(
+        r"a:focus-visible,\s*button:focus-visible,\s*input:focus-visible,"
+        r"\s*textarea:focus-visible\s*\{(?P<body>[^}]+)\}",
+        css,
+        re.DOTALL,
+    )
+    assert focus_group is not None
+    assert "outline: 2px solid var(--teal);" in focus_group.group("body")
+    assert "outline-offset: 2px;" in focus_group.group("body")
+
+    reduced_motion = re.search(
+        r"@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{(?P<body>.*)\}\s*$",
+        css,
+        re.DOTALL,
+    )
+    assert reduced_motion is not None
+    assert "transition-duration: 0.01ms !important;" in reduced_motion.group("body")
+    assert "scroll-behavior: auto !important;" in reduced_motion.group("body")
