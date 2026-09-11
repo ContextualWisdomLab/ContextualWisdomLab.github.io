@@ -40,6 +40,9 @@ def test_404_page_stays_strict_csp_safe() -> None:
     ) is None
     assert re.search(r"\son[a-z]+\s*=", html, flags=re.IGNORECASE) is None
     assert "default-src 'none'" in html
+    assert "script-src 'none'" in html
+    assert "connect-src 'none'" in html
+    assert re.search(r"<script\b", html, flags=re.IGNORECASE) is None
 
 
 def test_404_page_is_not_indexed_and_offers_a_way_back() -> None:
