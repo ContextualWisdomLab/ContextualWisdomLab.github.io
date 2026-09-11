@@ -1,0 +1,56 @@
+{
+  "name": "Contextual Wisdom Lab",
+  "short_name": "CWL",
+  "description": "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
+  "id": "/",
+  "lang": "ko",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#16263d",
+  "background_color": "#f7f5f0",
+  "icons": [
+    {
+      "src": "assets/context-wisdom-lab-avatar.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/context-wisdom-lab-avatar.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "프로젝트",
+      "short_name": "프로젝트",
+      "description": "공개 프로젝트 목록 보기",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "assets/context-wisdom-lab-avatar.png",
+          "sizes": "1024x1024",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "KRDS 컴포넌트",
+      "short_name": "컴포넌트",
+      "description": "KRDS 컴포넌트 라이브러리 보기",
+      "url": "/components/",
+      "icons": [
+        {
+          "src": "assets/context-wisdom-lab-avatar.png",
+          "sizes": "1024x1024",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
