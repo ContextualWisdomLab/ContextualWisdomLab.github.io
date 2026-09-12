@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2026-09-12 - URLSearchParams 호출 축소
+**Learning:** `window.location.search`가 비어있을 때 `new URLSearchParams`를 불필요하게 호출하는 것을 방지하면 단일 객체 할당과 파서 호출을 줄일 수 있습니다. 하지만 이는 DOM 렌더링이나 브라우저 스케줄링에는 영향을 주지 않는 초미세 최적화(micro-optimization)에 불과합니다.
+**Action:** `URLSearchParams`를 인스턴스화하기 전에 항상 `window.location.search`의 truthiness 검사를 수행하여 불필요한 실행을 방지합니다.

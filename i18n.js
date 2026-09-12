@@ -322,7 +322,8 @@ const messages = {
 function preferredLanguage() {
   const allowed = ["ko", "en"];
 
-  if (typeof window !== 'undefined' && window.location) {
+  // ⚡ Bolt: 불필요한 URLSearchParams 인스턴스화를 방지하여 빈 쿼리 로드 시 파싱 오버헤드를 줄입니다.
+  if (typeof window !== 'undefined' && window.location && window.location.search) {
     const query = new URLSearchParams(window.location.search).get("lang");
     if (allowed.includes(query)) return query;
   }
