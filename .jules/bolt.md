@@ -21,6 +21,6 @@
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
 
-## 2026-09-12 - 불필요한 URLSearchParams 인스턴스화 방지
-**Learning:** `window.location.search`가 비어있을 때도 `new URLSearchParams(window.location.search)`를 호출하면 불필요한 파싱 오버헤드가 발생함을 확인했습니다. 쿼리 문자열이 없을 때는 이 과정을 생략하여 성능을 미세하게 향상시킬 수 있습니다.
-**Action:** `URLSearchParams`를 인스턴스화하기 전에 항상 `window.location.search`의 truthiness 검사를 수행하여 불필요한 실행을 방지합니다.
+## 2026-09-12 - 지연 로딩 이미지의 fetchpriority 최적화
+**Learning:** `loading="lazy"` 속성을 사용하여 이미지를 지연 로딩하더라도, 브라우저는 여전히 리소스 우선순위 결정에 어려움을 겪을 수 있습니다. 오프스크린 이미지에 `fetchpriority="low"` 힌트를 추가하면 브라우저가 Critical Rendering Path에 있는 중요한 리소스를 우선적으로 가져오는 데 도움이 됩니다.
+**Action:** 화면 밖에 있는 지연 로딩 이미지에는 항상 `fetchpriority="low"`를 명시적으로 추가하여 브라우저의 리소스 스케줄링을 최적화합니다.
