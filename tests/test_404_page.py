@@ -79,3 +79,46 @@ def test_404_assets_referenced_exist_on_disk() -> None:
     """Local image/icon assets referenced by the 404 page must be present."""
     for asset in re.findall(r'(?:href|src)="(assets/[^"#?]+)"', _page()):
         assert (ROOT / asset).is_file(), f"404.html references missing asset {asset}"
+
+
+def test_404_page_external_links_accessible() -> None:
+    """External links on the 404 page must be accessible."""
+    html = _page()
+
+    # Check visually hidden description span
+    assert '<span id="new-window-desc" class="visually-hidden">새 창에서 열림</span>' in html, (
+        "404 page must contain the visually hidden description for new window links"
+    )
+
+    # Verify all external links reference it
+    from html.parser import HTMLParser
+
+    class _LinkParser(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.links: list[dict[str, str | None]] = []
+
+        def handle_starttag(self, tag, attrs) -> None:
+            if tag == "a":
+                self.links.append(dict(attrs))
+
+    parser = _LinkParser()
+    parser.feed(html)
+
+    external_links = [a for a in parser.links if a.get("target") == "_blank"]
+    assert len(external_links) > 0, "404 page should have external links"
+
+    for anchor in external_links:
+        assert anchor.get("aria-describedby") == "new-window-desc", (
+            f"External link {anchor.get('href')} must reference #new-window-desc"
+        )
+        assert anchor.get("title") == "새 창에서 열림", (
+            f"External link {anchor.get('href')} must have the correct title"
+        )
+        rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
+        assert "noopener" in rel_tokens, (
+            f"External link {anchor.get('href')} must keep opener isolation"
+        )
+        assert "noreferrer" in rel_tokens, (
+            f"External link {anchor.get('href')} must keep the product referrer policy"
+        )

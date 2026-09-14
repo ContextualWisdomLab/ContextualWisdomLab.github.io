@@ -32,43 +32,56 @@ class _LinkParser(HTMLParser):
             self.links.append(attributes)
 
 
-def _parse_index() -> _LinkParser:
+def _parse_html(file_path: Path) -> _LinkParser:
     parser = _LinkParser()
-    parser.feed(INDEX.read_text(encoding="utf-8"))
-    assert parser.links, "homepage must contain at least one anchor"
+    parser.feed(file_path.read_text(encoding="utf-8"))
     return parser
 
 
-def _external_links(parser: _LinkParser) -> list[dict[str, str | None]]:
+def _external_links(parser: _LinkParser, file_name: str) -> list[dict[str, str | None]]:
     external = [a for a in parser.links if a.get("target") == "_blank"]
-    assert external, "homepage must contain at least one external link"
     return external
 
 
 def test_external_links_reference_the_new_window_description() -> None:
     """Every external link points at the shared visually hidden warning."""
-    parser = _parse_index()
+    for html_file in ROOT.rglob("*.html"):
+        if ".git" in html_file.parts or ".pytest_cache" in html_file.parts or "components" in html_file.parts:
+            continue
 
-    assert DESC_ID in parser.ids, (
-        f"homepage must define the #{DESC_ID} description element"
-    )
-    for anchor in _external_links(parser):
-        assert anchor.get("aria-describedby") == DESC_ID, (
-            f"External link {anchor.get('href')} must reference #{DESC_ID}"
+        parser = _parse_html(html_file)
+        external = _external_links(parser, html_file.name)
+        if not external:
+            continue
+
+        assert DESC_ID in parser.ids, (
+            f"{html_file.name} must define the #{DESC_ID} description element"
         )
+        for anchor in external:
+            assert anchor.get("aria-describedby") == DESC_ID, (
+                f"External link {anchor.get('href')} in {html_file.name} must reference #{DESC_ID}"
+            )
 
 
 def test_external_links_keep_the_localized_title() -> None:
     """The title stays as supplemental hover metadata in both locales."""
-    parser = _parse_index()
+    for html_file in ROOT.rglob("*.html"):
+        if ".git" in html_file.parts or ".pytest_cache" in html_file.parts or "components" in html_file.parts:
+            continue
 
-    for anchor in _external_links(parser):
-        assert anchor.get("title") == EXPECTED["title"], (
-            f"External link {anchor.get('href')} is missing the Korean title"
-        )
-        assert anchor.get("data-i18n-title") == EXPECTED["key"], (
-            f"External link {anchor.get('href')} is missing data-i18n-title"
-        )
+        parser = _parse_html(html_file)
+        external = _external_links(parser, html_file.name)
+
+        for anchor in external:
+            assert anchor.get("title") == EXPECTED["title"], (
+                f"External link {anchor.get('href')} in {html_file.name} is missing the Korean title"
+            )
+
+            # 404.html does not load i18n.js, so we only expect data-i18n-title on the homepage
+            if html_file.name == "index.html":
+                assert anchor.get("data-i18n-title") == EXPECTED["key"], (
+                    f"External link {anchor.get('href')} is missing data-i18n-title"
+                )
 
 
 def test_i18n_has_new_tab_translation() -> None:
@@ -82,19 +95,35 @@ def test_visually_hidden_class_is_defined() -> None:
     """The description element relies on a CSP-safe external class."""
     css = (ROOT / "styles.css").read_text(encoding="utf-8")
     assert ".visually-hidden {" in css
-    index = INDEX.read_text(encoding="utf-8")
-    assert f'id="{DESC_ID}" class="visually-hidden"' in index
+    for html_file in ROOT.rglob("*.html"):
+        if ".git" in html_file.parts or ".pytest_cache" in html_file.parts or "components" in html_file.parts:
+            continue
+
+        parser = _parse_html(html_file)
+        external = _external_links(parser, html_file.name)
+        if not external:
+            continue
+
+        html_content = html_file.read_text(encoding="utf-8")
+        assert f'id="{DESC_ID}" class="visually-hidden"' in html_content, (
+            f"{html_file.name} must define the visually-hidden class on the description element"
+        )
 
 
 def test_external_links_keep_opener_and_referrer_policy() -> None:
     """Every new-context link retains explicit opener isolation and referrer policy."""
-    parser = _parse_index()
+    for html_file in ROOT.rglob("*.html"):
+        if ".git" in html_file.parts or ".pytest_cache" in html_file.parts or "components" in html_file.parts:
+            continue
 
-    for anchor in _external_links(parser):
-        rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
-        assert "noopener" in rel_tokens, (
-            f"External link {anchor.get('href')} must keep opener isolation"
-        )
-        assert "noreferrer" in rel_tokens, (
-            f"External link {anchor.get('href')} must keep the product referrer policy"
-        )
+        parser = _parse_html(html_file)
+        external = _external_links(parser, html_file.name)
+
+        for anchor in external:
+            rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
+            assert "noopener" in rel_tokens, (
+                f"External link {anchor.get('href')} in {html_file.name} must keep opener isolation"
+            )
+            assert "noreferrer" in rel_tokens, (
+                f"External link {anchor.get('href')} in {html_file.name} must keep the product referrer policy"
+            )
