@@ -32,3 +32,7 @@
 ## 2026-08-22 - Add aria-labelledby to section landmarks
 **Learning:** `<section>`은 접근성 이름이 있을 때만 `region` 랜드마크로 노출되고, 이름이 없으면 `generic`으로 매핑되어 화면 탐색 랜드마크 목록에 나타나지 않습니다. `id` 속성만으로는 부족합니다.
 **Action:** `<section>`에는 고유한 `id`를 가진 내부 헤딩(`<h2>`)을 `aria-labelledby`로 참조시켜 접근성 이름을 부여합니다. 회귀 테스트가 참조 대상 id의 실재 여부와 아이디가 있는 모든 섹션의 레이블링을 검증합니다.
+
+## 2024-10-23 - hero 섹션에 aria-labelledby 랜드마크 이름 추가
+**Learning:** 랜드마크 영역을 스크린 리더에 올바르게 노출하기 위해서는 문서 내 모든 `<section>` 요소에 고유한 접근성 이름(`aria-labelledby`)이 필요하며, 예외적으로 첫 번째(hero) 섹션이라도 누락하면 region으로 탐색되지 않습니다.
+**Action:** 앞으로 모든 `<section>` 태그를 사용할 때는 반드시 내부에 해당하는 제목 요소의 `id`를 `aria-labelledby`로 연결하여 랜드마크 접근성을 보장해야 합니다.
