@@ -1,6 +1,7 @@
 """Regression tests for the accessible new-window warning on external links."""
 
 from html.parser import HTMLParser
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,3 +99,18 @@ def test_external_links_keep_opener_and_referrer_policy() -> None:
         assert "noreferrer" in rel_tokens, (
             f"External link {anchor.get('href')} must keep the product referrer policy"
         )
+
+
+def test_external_links_have_visual_indicator_for_palette() -> None:
+    """External links must include the visual arrow ↗ hidden from screen readers."""
+    index_html = INDEX.read_text(encoding="utf-8")
+
+    # Simple check for the visual indicator in the HTML using regex since bs4 is not available.
+    import re
+    links = re.findall(r'(<a [^>]*?target="_blank"[^>]*?>)(.*?)(</a>)', index_html, flags=re.DOTALL)
+    assert links, "homepage must contain at least one external link"
+
+    for tag, inner, end_tag in links:
+        if 'class="button' in tag:
+            continue
+        assert "↗" in inner, f"External link {tag} must contain a visual arrow indicator"
