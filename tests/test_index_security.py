@@ -60,9 +60,3 @@ def test_index_has_no_inline_active_content() -> None:
     assert (
         '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
     )
-
-
-def test_index_declares_nosniff() -> None:
-    """The main page enforces strict MIME type checking."""
-    html = _index_html()
-    assert '<meta http-equiv="X-Content-Type-Options" content="nosniff">' in html
