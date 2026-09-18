@@ -2,13 +2,14 @@
 document.querySelectorAll(".krds-tabs").forEach((tabs) => {
   const tabList = [...tabs.querySelectorAll('[role="tab"]')];
 
-  const activateTab = (nextTab, moveFocus = false) => {
-    const tabPanels = tabList.map((tab) => {
-      const panelId = tab.getAttribute("aria-controls");
-      const panel = panelId === null ? null : document.getElementById(panelId);
-      return { tab, panel };
-    });
+  // ⚡ Bolt: Cache DOM elements during initialization instead of re-querying on every activation
+  const tabPanels = tabList.map((tab) => {
+    const panelId = tab.getAttribute("aria-controls");
+    const panel = panelId === null ? null : document.getElementById(panelId);
+    return { tab, panel };
+  });
 
+  const activateTab = (nextTab, moveFocus = false) => {
     if (tabPanels.some(({ panel }) => panel === null)) {
       console.warn("[Security] Requested tab panel is unavailable.");
       return;
