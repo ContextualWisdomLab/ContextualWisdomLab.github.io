@@ -52,3 +52,7 @@
 **Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
 **Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
 **Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
+## 2026-09-18 - 하위 정적 페이지에 엄격한 CSP 적용
+**Vulnerability:** 자동 생성된 HTML 페이지(`lineageweave/ontology/index.html`)에 Content-Security-Policy (CSP)가 누락되어, 향후 주입된 콘텐츠가 제공될 경우 XSS에 취약해질 수 있는 위험이 있었습니다.
+**Learning:** 별도의 도메인이나 도구(예: 온톨로지 생성기)에서 생성된 정적 HTML 파일은 종종 CSP와 같은 기본 보안 헤더를 누락합니다. 정적 사이트의 모든 HTML 진입점에는 자체적인 `meta` CSP가 필요합니다.
+**Prevention:** 하위 디렉토리에 추가되거나 외부 도구에 의해 생성된 정적 `.html` 파일에는 항상 최소한의 엄격한 CSP(`default-src 'none'`)와 기준 보안 정책(`referrer-policy`, `require-trusted-types-for 'script'`)이 포함되도록 확인하고 강제해야 합니다.
