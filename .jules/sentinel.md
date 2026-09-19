@@ -55,4 +55,4 @@
 ## 2026-09-18 - 하위 정적 페이지에 엄격한 CSP 적용
 **Vulnerability:** 자동 생성된 HTML 페이지(`lineageweave/ontology/index.html`)에 Content-Security-Policy (CSP)가 누락되어, 향후 주입된 콘텐츠가 제공될 경우 XSS에 취약해질 수 있는 위험이 있었습니다.
 **Learning:** 별도의 도메인이나 도구(예: 온톨로지 생성기)에서 생성된 정적 HTML 파일은 종종 CSP와 같은 기본 보안 헤더를 누락합니다. 정적 사이트의 모든 HTML 진입점에는 자체적인 `meta` CSP가 필요합니다.
-**Prevention:** 하위 디렉토리에 추가되거나 외부 도구에 의해 생성된 정적 `.html` 파일에는 항상 최소한의 엄격한 CSP(`default-src 'none'`)와 기준 보안 정책(`referrer-policy`, `require-trusted-types-for 'script'`)이 포함되도록 확인하고 강제해야 합니다.
+**Prevention:** 하위 디렉토리에 추가되거나 외부 도구에 의해 생성된 정적 `.html` 파일에는 항상 최소한의 엄격한 CSP(`default-src 'none'`)와 기준 보안 정책(`referrer-policy`)이 포함되도록 확인하고 강제해야 합니다.

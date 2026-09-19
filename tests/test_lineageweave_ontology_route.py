@@ -117,6 +117,7 @@ def test_ontology_declares_strict_csp() -> None:
         assert directive in policy
     assert "'unsafe-eval'" not in policy
 
+
 def test_ontology_declares_referrer_policy() -> None:
     """The ontology page declares a strict referrer policy."""
     page = (ONTOLOGY / "index.html").read_text(encoding="utf-8")
