@@ -20,3 +20,6 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+## 2026-09-19 - Replace querySelector with getElementById and minimize DOM mutations
+**Learning:** querySelector can be strictly slower than getElementById since it has to parse the query string and is a more general-purpose search. Furthermore, making unconditional DOM attribute or property updates like `tab.setAttribute("aria-selected", true)` or `panel.hidden = false` in a loop will cause the browser to trigger layout invalidation and thrashing, even if the value hasn't logically changed.
+**Action:** When searching by a known ID, prefer the strictly faster `getElementById`. Additionally, when updating DOM attributes or properties in components (e.g. tabs or lists), always check if the current value differs from the target value (e.g. `if (tab.getAttribute("tabindex") !== newTabIndex)`) before applying changes, to prevent redundant DOM mutations and layout thrashing.
