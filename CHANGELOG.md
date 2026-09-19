@@ -34,4 +34,4 @@
 - **보안 개선**: 메인 페이지(`index.html`)의 Content-Security-Policy를 `default-src 'none'` 기반의 엄격한 화이트리스트 방식으로 강화하여 잠재적인 공격 표면을 최소화했습니다.
 
 ### Changed
-- ⚡ 다국어 전환 시 발생하는 모든 요소의 불필요한 속성 읽기(`getAttribute`)를 초기화 단계에서 메모리에 캐싱하여 최적화
+- ⚡ 탭 활성화 시 이미 올바른 상태인 요소들의 불필요한 DOM 속성(`aria-selected`, `tabindex`, `hidden`) 갱신을 생략하여 불필요한 레이아웃 재계산 방지

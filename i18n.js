@@ -372,7 +372,8 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    footerLogo = document.querySelector("#footer-logo");
+    // ⚡ Bolt: Use getElementById for significantly faster ID-based DOM lookup instead of querySelector
+    footerLogo = document.getElementById("footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -406,24 +407,19 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      // ⚡ Bolt: Cache DOM attributes during initialization to prevent O(N) DOM reads on every toggle
-      i18nNodes = Array.from(document.querySelectorAll("[data-i18n], [data-i18n-title]")).map(node => ({
-        node,
-        i18nKey: node.hasAttribute("data-i18n") ? node.getAttribute("data-i18n") : null,
-        i18nTitleKey: node.hasAttribute("data-i18n-title") ? node.getAttribute("data-i18n-title") : null
-      }));
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach(({ node, i18nKey, i18nTitleKey }) => {
-      if (i18nKey) {
-        const newText = dict[i18nKey];
+    i18nNodes.forEach((node) => {
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.getAttribute("data-i18n")];
         if (newText && node.textContent !== newText) {
           node.textContent = newText;
         }
       }
-      if (i18nTitleKey) {
-        const newTitle = dict[i18nTitleKey];
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
         }
