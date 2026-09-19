@@ -34,4 +34,4 @@
 - **보안 개선**: 메인 페이지(`index.html`)의 Content-Security-Policy를 `default-src 'none'` 기반의 엄격한 화이트리스트 방식으로 강화하여 잠재적인 공격 표면을 최소화했습니다.
 
 ### Changed
-- ⚡ 탭 전환 시 매번 발생하는 DOM 요소 탐색(`document.getElementById`)을 초기화 시 한 번만 수행하여 캐싱하도록 변경 (성능 개선)
+- ⚡ 다국어 전환 시 발생하는 모든 요소의 불필요한 속성 읽기(`getAttribute`)를 초기화 단계에서 메모리에 캐싱하여 최적화

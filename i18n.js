@@ -406,19 +406,24 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
+      // ⚡ Bolt: Cache DOM attributes during initialization to prevent O(N) DOM reads on every toggle
+      i18nNodes = Array.from(document.querySelectorAll("[data-i18n], [data-i18n-title]")).map(node => ({
+        node,
+        i18nKey: node.hasAttribute("data-i18n") ? node.getAttribute("data-i18n") : null,
+        i18nTitleKey: node.hasAttribute("data-i18n-title") ? node.getAttribute("data-i18n-title") : null
+      }));
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    i18nNodes.forEach((node) => {
-      if (node.hasAttribute("data-i18n")) {
-        const newText = dict[node.getAttribute("data-i18n")];
+    i18nNodes.forEach(({ node, i18nKey, i18nTitleKey }) => {
+      if (i18nKey) {
+        const newText = dict[i18nKey];
         if (newText && node.textContent !== newText) {
           node.textContent = newText;
         }
       }
-      if (node.hasAttribute("data-i18n-title")) {
-        const newTitle = dict[node.getAttribute("data-i18n-title")];
+      if (i18nTitleKey) {
+        const newTitle = dict[i18nTitleKey];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
         }
