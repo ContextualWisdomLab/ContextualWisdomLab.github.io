@@ -2,7 +2,7 @@
 
 Status: **Proposed**  
 Canonical writer: [ContextualWisdomLab.github.io#240](https://github.com/ContextualWisdomLab/ContextualWisdomLab.github.io/pull/240)  
-Evidence ancestor: `97e480a06ed97418d8ce6a4186eb6ec6af55c6b1` (2026-09-20)  
+Evidence ancestor: `818d38088fb22408185a987074161aba9dbb399b` (2026-09-20)  
 Current exact head and hosted evidence are recorded on the PR after every ordinary-forward update.
 
 This document is the buyer-visible design-assurance ledger for the public
@@ -107,6 +107,7 @@ must not copy another owner's source or query its database.
 
 | Gap | Owner | Action | Status |
 | --- | --- | --- | --- |
+| Literal `\\n-` merged adjacent Unreleased entries | Public Narrative | Reject escaped list separators with `tests/test_changelog.py`; store a real line break | Repaired at `818d38088fb22408185a987074161aba9dbb399b`; hosted evidence pending |
 | Existing landmark test skipped anonymous sections | Public Narrative | Validate every section and exactly one heading target | Repaired in #240; hosted evidence pending |
 | Palette entry used a stale 2024 date and `h2`-only rule | Public Narrative | Bind guidance to 2026-09-20 evidence and h1-h6 | Repaired in #240 |
 | Only ko/en resources exist | Translation authority + Public Narrative consumer | Release eight-locale resource contract, then consume by screen key | Proposed / blocked |
