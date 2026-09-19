@@ -32,7 +32,3 @@
 ## 2026-08-22 - Add aria-labelledby to section landmarks
 **Learning:** `<section>`은 접근성 이름이 있을 때만 `region` 랜드마크로 노출되고, 이름이 없으면 `generic`으로 매핑되어 화면 탐색 랜드마크 목록에 나타나지 않습니다. `id` 속성만으로는 부족합니다.
 **Action:** `<section>`에는 고유한 `id`를 가진 내부 헤딩(`<h2>`)을 `aria-labelledby`로 참조시켜 접근성 이름을 부여합니다. 회귀 테스트가 참조 대상 id의 실재 여부와 아이디가 있는 모든 섹션의 레이블링을 검증합니다.
-
-## 2024-10-15 - 다국어 환경에서 aria-label 번역 적용
-**Learning:** 언어 전환 버튼과 같이 스크린 리더가 읽는 `aria-label` 속성이 하드코딩되어 있으면 언어가 변경되어도 올바른 언어로 읽히지 않아 접근성 문제가 발생합니다.
-**Action:** `title` 속성과 마찬가지로 `aria-label` 속성도 국제화 시스템과 연동(`data-i18n-aria-label`)하여 동적으로 번역될 수 있도록 구조를 개선합니다.

@@ -2,8 +2,6 @@ const messages = {
   ko: {
     metaTitle: "맥락지혜 연구실 | Contextual Wisdom Lab",
     "nav.langKoTitle": "한국어로 보기",
-    "nav.langKoAria": "한국어",
-    "nav.langEnAria": "영어",
     "nav.langEnTitle": "View in English",
     metaDescription: "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
     logoSrc: "assets/context-wisdom-lab-logo.svg",
@@ -163,8 +161,6 @@ const messages = {
   en: {
     metaTitle: "Contextual Wisdom Lab",
     "nav.langKoTitle": "View in Korean",
-    "nav.langKoAria": "Korean",
-    "nav.langEnAria": "English",
     "nav.langEnTitle": "View in English",
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
     logoSrc: "assets/context-wisdom-lab-logo-en.svg",
@@ -410,7 +406,7 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title], [data-i18n-aria-label]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
@@ -425,12 +421,6 @@ function setLanguage(lang) {
         const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
-        }
-      }
-      if (node.hasAttribute("data-i18n-aria-label")) {
-        const newAria = dict[node.getAttribute("data-i18n-aria-label")];
-        if (newAria && node.getAttribute("aria-label") !== newAria) {
-          node.setAttribute("aria-label", newAria);
         }
       }
     });
