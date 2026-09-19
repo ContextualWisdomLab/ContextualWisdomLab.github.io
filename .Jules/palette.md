@@ -32,3 +32,7 @@
 ## 2026-08-22 - Add aria-labelledby to section landmarks
 **Learning:** `<section>`은 접근성 이름이 있을 때만 `region` 랜드마크로 노출되고, 이름이 없으면 `generic`으로 매핑되어 화면 탐색 랜드마크 목록에 나타나지 않습니다. `id` 속성만으로는 부족합니다.
 **Action:** `<section>`에는 고유한 `id`를 가진 내부 헤딩(`<h2>`)을 `aria-labelledby`로 참조시켜 접근성 이름을 부여합니다. 회귀 테스트가 참조 대상 id의 실재 여부와 아이디가 있는 모든 섹션의 레이블링을 검증합니다.
+
+## 2024-10-25 - 외부 링크 시각적 표시 추가
+**Learning:** 시각 장애인 사용자는 `title`이나 `aria-describedby`를 통해 새 창 열림 정보를 제공받지만, 비장애인 사용자에게는 외부 링크임을 나타내는 시각적 단서(indicator)가 부족함을 발견했습니다.
+**Action:** 커스텀 CSS를 추가하지 않는 제약을 준수하면서, 외부 링크(`target="_blank"`) 텍스트 끝에 `<span aria-hidden="true">↗</span>`를 추가하여 스크린 리더에는 읽히지 않게 하고 시각적인 단서만 제공했습니다.
