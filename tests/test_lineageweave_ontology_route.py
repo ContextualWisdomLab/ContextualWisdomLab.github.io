@@ -89,3 +89,35 @@ def test_support_profile_uses_the_canonical_namespace() -> None:
     assert f"@prefix : <{CANONICAL}#> ." in profile
     assert "https://contextualwisdomlab.github.io/LineageWeave/" not in profile
     assert f"<{CANONICAL}/prov-o-support-profile.ttl>" in profile
+
+
+def test_ontology_declares_strict_csp() -> None:
+    """The ontology page limits active content using a strict CSP."""
+    page = (ONTOLOGY / "index.html").read_text(encoding="utf-8")
+    match = re.search(
+        r'<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"',
+        page,
+    )
+    assert match is not None, "ontology/index.html must declare a CSP meta policy"
+    policy = match.group(1)
+
+    for directive in (
+        "default-src 'none'",
+        "script-src 'none'",
+        "style-src 'unsafe-inline'",
+        "img-src 'none'",
+        "font-src 'none'",
+        "connect-src 'none'",
+        "object-src 'none'",
+        "base-uri 'none'",
+        "form-action 'none'",
+        "frame-src 'none'",
+        "upgrade-insecure-requests",
+    ):
+        assert directive in policy
+    assert "'unsafe-eval'" not in policy
+
+def test_ontology_declares_referrer_policy() -> None:
+    """The ontology page declares a strict referrer policy."""
+    page = (ONTOLOGY / "index.html").read_text(encoding="utf-8")
+    assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in page
