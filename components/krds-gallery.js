@@ -22,7 +22,7 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
         tab.setAttribute("aria-selected", String(isSelected));
         tab.setAttribute("tabindex", isSelected ? "0" : "-1");
       }
-      if (panel.hidden === isSelected) {
+      if (panel.hidden !== !isSelected) {
         panel.hidden = !isSelected;
       }
     });
