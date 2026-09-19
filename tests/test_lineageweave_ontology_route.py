@@ -5,7 +5,6 @@ import json
 import re
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 ONTOLOGY = ROOT / "lineageweave" / "ontology"
 CANONICAL = "https://contextualwisdomlab.github.io/lineageweave/ontology"
@@ -20,10 +19,13 @@ def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None
 
     assert manifest["documentation_url"] == CANONICAL
     assert manifest["source_commit"] == SOURCE_COMMIT
-    assert manifest["source_sha256"] == hashlib.sha256(
-        published_source_copy.read_bytes()
-    ).hexdigest()
-    assert set(manifest["generated_artifacts"]) <= {path.name for path in ONTOLOGY.iterdir()}
+    assert (
+        manifest["source_sha256"]
+        == hashlib.sha256(published_source_copy.read_bytes()).hexdigest()
+    )
+    assert set(manifest["generated_artifacts"]) <= {
+        path.name for path in ONTOLOGY.iterdir()
+    }
     assert f'<link rel="canonical" href="{CANONICAL}">' in page
     assert 'id="Post"' in page and f"{CANONICAL}#Post" in page
     for name, media_type in (
@@ -34,7 +36,7 @@ def test_route_publishes_canonical_generated_artifacts_with_provenance() -> None
         assert f'href="{name}" type="{media_type}"' in page
     assert "Lookup code</dt><dd><span>None" not in page
     assert 'href="http://' not in page
-    assert 'header a { color: #fff; }' in page
+    assert "header a { color: #fff; }" in page
     assert '<a href="../../">LineageWeave</a>' in page
     assert "OWL 2 Full" in page
 
@@ -67,14 +69,15 @@ def test_project_mentions_reify_their_post_and_project() -> None:
         )
         assert node_match
         assert (
-            f"{node_match.group('node')} <{value_predicate}> <{value_iri}> ."
-            in triples
+            f"{node_match.group('node')} <{value_predicate}> <{value_iri}> ." in triples
         )
 
 
 def test_compatibility_artifact_only_maps_validated_representative_classes() -> None:
     """The copied compatibility graph does not invent broad namespace equivalence."""
-    compatibility = (ONTOLOGY / "namespace-compatibility.ttl").read_text(encoding="utf-8")
+    compatibility = (ONTOLOGY / "namespace-compatibility.ttl").read_text(
+        encoding="utf-8"
+    )
 
     assert "owl:equivalentClass" in compatibility
     assert "canonical:Post owl:equivalentClass legacy:Post" in compatibility
