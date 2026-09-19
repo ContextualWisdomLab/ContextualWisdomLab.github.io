@@ -372,7 +372,8 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    footerLogo = document.querySelector("#footer-logo");
+    // ⚡ Bolt: Replace querySelector with strictly faster getElementById
+    footerLogo = document.getElementById("footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
