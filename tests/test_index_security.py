@@ -3,7 +3,6 @@
 import re
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 
@@ -38,12 +37,12 @@ def test_index_declares_strict_csp() -> None:
         "form-action 'none'",
         "frame-src 'none'",
         "upgrade-insecure-requests",
-        "require-trusted-types-for 'script'",
         "style-src 'self'",
     ):
         assert directive in policy
     assert "'unsafe-inline'" not in policy
     assert "'unsafe-eval'" not in policy
+
 
 def test_index_has_no_inline_active_content() -> None:
     """Strict CSP remains enforceable without inline script or style exceptions."""
@@ -51,12 +50,8 @@ def test_index_has_no_inline_active_content() -> None:
 
     assert re.search(r"<style(?:\s|>)", html, flags=re.IGNORECASE) is None
     assert re.search(r"\sstyle\s*=", html, flags=re.IGNORECASE) is None
-    assert re.search(
-        r"<script(?![^>]*\bsrc=)[^>]*>", html, flags=re.IGNORECASE
-    ) is None
+    assert re.search(r"<script(?![^>]*\bsrc=)[^>]*>", html, flags=re.IGNORECASE) is None
     assert re.search(r"\son[a-z]+\s*=", html, flags=re.IGNORECASE) is None
     assert 'href="styles.css"' in html
     assert 'src="i18n.js"' in html
-    assert (
-        '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
-    )
+    assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in html

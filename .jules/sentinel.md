@@ -52,3 +52,7 @@
 **Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
 **Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
 **Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
+## 2026-09-01 - meta 태그 내 Trusted Types 지시어 제거
+**취약점:** `require-trusted-types-for` 지시어가 HTML `<meta>` 태그에 포함되어 있어 브라우저에서 무시되고 잘못된 보안 인식을 줌.
+**학습:** `require-trusted-types-for`와 같은 CSP 지시어는 HTTP 응답 헤더를 통해서만 전달되어야 하며, `<meta http-equiv="Content-Security-Policy">`를 통해 설정하면 적용되지 않습니다.
+**예방:** 브라우저에서 무시되는 무의미한 보안 지시어를 제거하여 실제 적용 가능한 정책만 유지하고, 향후 호스팅 환경(HTTP 응답 헤더 지원) 전환 시에 서버 단에서 설정하도록 합니다.
