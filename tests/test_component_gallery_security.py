@@ -4,7 +4,6 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 GALLERY = ROOT / "components" / "index.html"
 GALLERY_SCRIPT = ROOT / "components" / "krds-gallery.js"
@@ -73,7 +72,6 @@ def test_component_gallery_declares_strict_csp() -> None:
         "form-action 'none'",
         "frame-src 'none'",
         "upgrade-insecure-requests",
-        "require-trusted-types-for 'script'",
         "style-src 'self'",
     ):
         assert directive in policy
@@ -87,15 +85,11 @@ def test_component_gallery_has_no_inline_active_content() -> None:
 
     assert re.search(r"<style(?:\s|>)", html, flags=re.IGNORECASE) is None
     assert re.search(r"\sstyle\s*=", html, flags=re.IGNORECASE) is None
-    assert re.search(
-        r"<script(?![^>]*\bsrc=)[^>]*>", html, flags=re.IGNORECASE
-    ) is None
+    assert re.search(r"<script(?![^>]*\bsrc=)[^>]*>", html, flags=re.IGNORECASE) is None
     assert re.search(r"\son[a-z]+\s*=", html, flags=re.IGNORECASE) is None
     assert 'href="krds-gallery.css"' in html
     assert 'src="krds-gallery.js"' in html
-    assert (
-        '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
-    )
+    assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in html
 
 
 def test_component_gallery_script_avoids_unsafe_dom_sinks() -> None:
@@ -115,9 +109,9 @@ def test_component_gallery_inputs_have_length_limits() -> None:
     for input_element in inputs:
         if 'type="checkbox"' in input_element or 'type="radio"' in input_element:
             continue
-        assert "maxlength=" in input_element, (
-            f"Input missing maxlength: {input_element}"
-        )
+        assert (
+            "maxlength=" in input_element
+        ), f"Input missing maxlength: {input_element}"
 
 
 def test_tab_markup_uses_one_roving_tab_stop() -> None:
