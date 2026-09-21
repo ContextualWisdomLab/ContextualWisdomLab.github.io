@@ -14,11 +14,17 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
       return;
     }
 
+    // ⚡ Bolt: Only update DOM attributes if the state actually changes
+    // to prevent unnecessary layout recalculations and style invalidations.
     tabPanels.forEach(({ tab, panel }) => {
       const isSelected = tab === nextTab;
-      tab.setAttribute("aria-selected", String(isSelected));
-      tab.setAttribute("tabindex", isSelected ? "0" : "-1");
-      panel.hidden = !isSelected;
+      if (tab.getAttribute("aria-selected") !== String(isSelected)) {
+        tab.setAttribute("aria-selected", String(isSelected));
+        tab.setAttribute("tabindex", isSelected ? "0" : "-1");
+      }
+      if (panel.hidden !== !isSelected) {
+        panel.hidden = !isSelected;
+      }
     });
 
     if (moveFocus) {
