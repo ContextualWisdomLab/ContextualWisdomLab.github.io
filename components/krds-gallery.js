@@ -16,9 +16,22 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
 
     tabPanels.forEach(({ tab, panel }) => {
       const isSelected = tab === nextTab;
-      tab.setAttribute("aria-selected", String(isSelected));
-      tab.setAttribute("tabindex", isSelected ? "0" : "-1");
-      panel.hidden = !isSelected;
+
+      // ⚡ Bolt: Avoid redundant DOM mutations to prevent style invalidation and layout thrashing
+      const newAriaSelected = String(isSelected);
+      if (tab.getAttribute("aria-selected") !== newAriaSelected) {
+        tab.setAttribute("aria-selected", newAriaSelected);
+      }
+
+      const newTabIndex = isSelected ? "0" : "-1";
+      if (tab.getAttribute("tabindex") !== newTabIndex) {
+        tab.setAttribute("tabindex", newTabIndex);
+      }
+
+      const newHidden = !isSelected;
+      if (panel.hidden !== newHidden) {
+        panel.hidden = newHidden;
+      }
     });
 
     if (moveFocus) {
