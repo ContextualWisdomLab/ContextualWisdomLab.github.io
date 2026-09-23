@@ -73,6 +73,7 @@ def test_component_gallery_declares_strict_csp() -> None:
         "form-action 'none'",
         "frame-src 'none'",
         "upgrade-insecure-requests",
+        "require-trusted-types-for 'script'",
         "style-src 'self'",
     ):
         assert directive in policy
