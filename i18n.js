@@ -372,8 +372,7 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    // ⚡ Bolt: Replaced querySelector with getElementById for faster DOM lookup.
-    footerLogo = document.getElementById("footer-logo");
+    footerLogo = document.querySelector("#footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -411,18 +410,15 @@ function setLanguage(lang) {
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
-    // ⚡ Bolt: Removed hasAttribute checks before getAttribute to reduce redundant DOM calls.
     i18nNodes.forEach((node) => {
-      const i18nKey = node.getAttribute("data-i18n");
-      if (i18nKey) {
-        const newText = dict[i18nKey];
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.getAttribute("data-i18n")];
         if (newText && node.textContent !== newText) {
           node.textContent = newText;
         }
       }
-      const titleKey = node.getAttribute("data-i18n-title");
-      if (titleKey) {
-        const newTitle = dict[titleKey];
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
         }
