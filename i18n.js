@@ -372,7 +372,7 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    footerLogo = document.getElementById("footer-logo");
+    footerLogo = document.querySelector("#footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -411,16 +411,14 @@ function setLanguage(lang) {
 
     // Only update textContent if it actually changed to avoid layout recalculations
     i18nNodes.forEach((node) => {
-      const i18nKey = node.getAttribute("data-i18n");
-      if (i18nKey) {
-        const newText = dict[i18nKey];
+      if (node.hasAttribute("data-i18n")) {
+        const newText = dict[node.getAttribute("data-i18n")];
         if (newText && node.textContent !== newText) {
           node.textContent = newText;
         }
       }
-      const i18nTitleKey = node.getAttribute("data-i18n-title");
-      if (i18nTitleKey) {
-        const newTitle = dict[i18nTitleKey];
+      if (node.hasAttribute("data-i18n-title")) {
+        const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
         }
