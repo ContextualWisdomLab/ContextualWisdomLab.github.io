@@ -16,12 +16,15 @@ EXPECTED = {
 
 
 class _LinkParser(HTMLParser):
-    """Collect anchor start tags and elements carrying an id."""
+    """Collect link attributes and the hidden visual warning inside each link."""
 
     def __init__(self) -> None:
         super().__init__()
         self.links: list[dict[str, str | None]] = []
         self.ids: set[str] = set()
+        self.indicator_link_indexes: set[int] = set()
+        self._current_link_index: int | None = None
+        self._hidden_span_depth = 0
 
     def handle_starttag(self, tag, attrs) -> None:
         attributes = dict(attrs)
@@ -30,6 +33,31 @@ class _LinkParser(HTMLParser):
             self.ids.add(element_id)
         if tag == "a":
             self.links.append(attributes)
+            self._current_link_index = len(self.links) - 1
+            return
+        if (
+            tag == "span"
+            and self._current_link_index is not None
+            and attributes.get("aria-hidden") == "true"
+        ):
+            self._hidden_span_depth = 1
+        elif self._hidden_span_depth:
+            self._hidden_span_depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if self._hidden_span_depth:
+            self._hidden_span_depth -= 1
+        if tag == "a":
+            self._current_link_index = None
+            self._hidden_span_depth = 0
+
+    def handle_data(self, data: str) -> None:
+        if (
+            self._current_link_index is not None
+            and self._hidden_span_depth
+            and data.strip() == "↗"
+        ):
+            self.indicator_link_indexes.add(self._current_link_index)
 
 
 def _parse_index() -> _LinkParser:
@@ -69,6 +97,28 @@ def test_external_links_keep_the_localized_title() -> None:
         assert anchor.get("data-i18n-title") == EXPECTED["key"], (
             f"External link {anchor.get('href')} is missing data-i18n-title"
         )
+
+
+def test_non_button_external_links_have_hidden_visual_warning() -> None:
+    """Text links expose a visual new-window cue without duplicating AT output."""
+    parser = _parse_index()
+    text_link_count = 0
+
+    for index, anchor in enumerate(parser.links):
+        if anchor.get("target") != "_blank":
+            continue
+        classes = set((anchor.get("class") or "").split())
+        if "button" in classes:
+            assert index not in parser.indicator_link_indexes, (
+                f"Button-style external link {anchor.get('href')} should not gain a redundant arrow"
+            )
+            continue
+        text_link_count += 1
+        assert index in parser.indicator_link_indexes, (
+            f"Text external link {anchor.get('href')} needs an aria-hidden ↗ warning"
+        )
+
+    assert text_link_count > 0, "homepage must retain at least one text external link"
 
 
 def test_i18n_has_new_tab_translation() -> None:
