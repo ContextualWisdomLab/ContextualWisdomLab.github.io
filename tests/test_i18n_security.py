@@ -115,7 +115,6 @@ def _csp_content_test_i18n(html: str) -> str:
 
 def test_i18n_test_declares_strict_csp() -> None:
     """The i18n test page limits active content using a strict deny-by-default CSP."""
-    from pathlib import Path
 
     html = (Path(__file__).resolve().parents[1] / "test_i18n.html").read_text(
         encoding="utf-8"
