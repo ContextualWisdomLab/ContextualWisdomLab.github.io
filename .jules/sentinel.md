@@ -52,3 +52,7 @@
 **Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
 **Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
 **Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
+## 2026-09-25 - 누락된 CSP 추가
+**Vulnerability:** `lineageweave/ontology/index.html` 및 `test_i18n.html`에 Content-Security-Policy (CSP) 헤더가 누락되어 있었습니다.
+**Learning:** 애플리케이션의 메인 페이지 외에도 모든 정적 HTML 파일이 잠재적인 공격 벡터가 될 수 있으므로, 예외 없이 엄격한 CSP를 적용해야 합니다. CSP가 누락된 파일은 향후 기능이 확장될 때 XSS 및 데이터 유출 공격에 무방비하게 노출될 수 있습니다. `<meta>` 태그를 통해 설정하는 CSP에서는 `require-trusted-types-for` 지시어가 무시되므로 이를 제외해야 합니다.
+**Prevention:** 모든 HTML 문서 생성 또는 검토 시 CSP의 존재와 엄격함을 검증하는 자동화된 테스트를 작성해야 합니다. 또한, 특정 페이지의 필요(예: 인라인 스크립트/스타일)에 맞게 최소 권한의 법칙을 준수하여 CSP를 조정하되 방어를 유지해야 합니다.
