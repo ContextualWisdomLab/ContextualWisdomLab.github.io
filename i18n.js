@@ -372,7 +372,8 @@ function setLanguage(lang) {
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    footerLogo = document.querySelector("#footer-logo");
+    // ⚡ Bolt: Use getElementById for strictly faster ID lookups
+    footerLogo = document.getElementById("footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
@@ -410,15 +411,18 @@ function setLanguage(lang) {
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
+    // ⚡ Bolt: Eliminate redundant hasAttribute checks before getAttribute
     i18nNodes.forEach((node) => {
-      if (node.hasAttribute("data-i18n")) {
-        const newText = dict[node.getAttribute("data-i18n")];
+      const i18nKey = node.getAttribute("data-i18n");
+      if (i18nKey) {
+        const newText = dict[i18nKey];
         if (newText && node.textContent !== newText) {
           node.textContent = newText;
         }
       }
-      if (node.hasAttribute("data-i18n-title")) {
-        const newTitle = dict[node.getAttribute("data-i18n-title")];
+      const i18nTitleKey = node.getAttribute("data-i18n-title");
+      if (i18nTitleKey) {
+        const newTitle = dict[i18nTitleKey];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
         }
@@ -426,6 +430,7 @@ function setLanguage(lang) {
     });
   }
 
+  // ⚡ Bolt: Only update aria-pressed if the attribute actually needs to change to avoid DOM writes
   langButtons.forEach((button) => {
     const pressed = String(button.dataset.lang === lang);
     if (button.getAttribute("aria-pressed") !== pressed) {
