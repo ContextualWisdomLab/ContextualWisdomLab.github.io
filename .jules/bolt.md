@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2024-09-26 - Prevent Layout Thrashing in Tab Components
+**학습:** `krds-gallery.js` updates tab attributes indiscriminately when iterating over `tabPanels`, setting `aria-selected` and `tabindex` regardless of their current values. Calling `setAttribute` forces style invalidation and layout thrashing, hurting performance especially with multiple tabs or frequent interactions.
+**적용:** Caching DOM queries or attributes for tab switching is generally a rejected micro-optimization for cold paths, but preventing redundant DOM mutations (e.g. checking `getAttribute` prior to `setAttribute`) is valid and measurable to avoid unnecessary layout calculations.

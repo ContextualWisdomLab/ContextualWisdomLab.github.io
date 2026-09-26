@@ -16,9 +16,21 @@ document.querySelectorAll(".krds-tabs").forEach((tabs) => {
 
     tabPanels.forEach(({ tab, panel }) => {
       const isSelected = tab === nextTab;
-      tab.setAttribute("aria-selected", String(isSelected));
-      tab.setAttribute("tabindex", isSelected ? "0" : "-1");
-      panel.hidden = !isSelected;
+
+      // ⚡ Bolt: 중복된 DOM 변이를 방지하여 스타일 무효화 및 레이아웃 스래싱(Layout Thrashing)을 최적화합니다.
+      const selectedStr = String(isSelected);
+      if (tab.getAttribute("aria-selected") !== selectedStr) {
+        tab.setAttribute("aria-selected", selectedStr);
+      }
+
+      const tabIndexStr = isSelected ? "0" : "-1";
+      if (tab.getAttribute("tabindex") !== tabIndexStr) {
+        tab.setAttribute("tabindex", tabIndexStr);
+      }
+
+      if (panel.hidden !== !isSelected) {
+        panel.hidden = !isSelected;
+      }
     });
 
     if (moveFocus) {
