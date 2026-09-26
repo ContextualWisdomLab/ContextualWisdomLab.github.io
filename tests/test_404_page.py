@@ -79,3 +79,15 @@ def test_404_assets_referenced_exist_on_disk() -> None:
     """Local image/icon assets referenced by the 404 page must be present."""
     for asset in re.findall(r'(?:href|src)="(assets/[^"#?]+)"', _page()):
         assert (ROOT / asset).is_file(), f"404.html references missing asset {asset}"
+
+
+def test_404_lazy_images_have_low_fetchpriority() -> None:
+    """Deferred images on the 404 page should explicitly signal low fetch priority."""
+    html = _page()
+    # Find all image tags
+    img_tags = re.findall(r'<img[^>]+>', html, flags=re.IGNORECASE)
+
+    lazy_images = [img for img in img_tags if 'loading="lazy"' in img]
+
+    assert lazy_images, "the 404 page must retain deferred images (e.g. footer)"
+    assert all('fetchpriority="low"' in img for img in lazy_images)
