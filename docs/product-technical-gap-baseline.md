@@ -160,3 +160,29 @@ no publication, merge, or release claim is authorized from source-level evidence
 These standards explain the semantic boundary. Repository source, tests,
 current-head workflow logs, browser artifacts, and review records remain the
 acceptance evidence.
+
+## Gallery mutation-guard acceptance — #267
+
+Product source remains single-writer #267; this ledger records evidence only.
+Product evidence exact: `0c6ddb71faf6eabe24c3c1bfd3c055ea97fa1f25`.
+
+PRD: APG tab selection, focus, and panel visibility must remain deterministic.
+TRD: conditional DOM writes are a Proposed implementation detail and cannot
+become the semantic contract. Context Map and UML remain the existing
+Gallery → Tab Group → Panel presentation flow. ERD impact is none.
+
+| Concern | Evidence | Status |
+| --- | --- | --- |
+| Tab semantics | Existing Node harness covers wrapped Arrow/Home/End transitions and atomic failure | Source PASS |
+| Mutation reduction | No exact-head read/write-count contract | FAIL |
+| Browser performance | Chromium/Firefox/WebKit scripting/style/layout/paint median and p95 absent | FAIL |
+| Responsive / input | Pointer, touch, keyboard and 320/768/desktop replay absent | FAIL |
+| Locales | ko/en/ja/zh/vi/es/de/fr overflow and fallback evidence absent | FAIL |
+| Recovery | Reload and stale/conflict behavior are not affected or evidenced | Pending |
+| Review / hosted gates | Current approval and terminal required Checks absent | Pending |
+
+Action: keep #267 Draft / Proposed, add an exact mutation-count harness, then
+profile identical browser interactions with stated warm-up, sample size, and
+failure denominator. Source inspection alone must not publish a
+layout-thrashing or paint-improvement claim.
+
