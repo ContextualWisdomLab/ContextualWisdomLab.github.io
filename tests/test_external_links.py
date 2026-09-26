@@ -98,3 +98,13 @@ def test_external_links_keep_opener_and_referrer_policy() -> None:
         assert "noreferrer" in rel_tokens, (
             f"External link {anchor.get('href')} must keep the product referrer policy"
         )
+
+
+def test_external_links_have_visual_indicator() -> None:
+    """External links should have a visual indicator for new windows."""
+    index = INDEX.read_text(encoding="utf-8")
+
+    # Simple check for the icon next to the link closing tag
+    assert '<span aria-hidden="true">&nbsp;↗</span></a>' in index, (
+        "External links should have an inline visual indicator"
+    )
