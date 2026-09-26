@@ -116,22 +116,23 @@ must not copy another owner's source or query its database.
 | Page performance target is unmeasured | Public Narrative | Measure all pages; repair causal render/runtime bottleneck | Open |
 | Exact-head approval and hosted Checks absent | Repository governance | Preserve Draft until independently satisfied | Open |
 
-## External-link indicator acceptance — #265
+## External-link indicator acceptance — #268
 
-Product source remains single-writer #265. This documentation lane records evidence
-only and does not copy mutable homepage source.
+Product source remains single-writer #268. Predecessor #265 remains Draft with its valid
+history preserved, but its automated task branch repeatedly reapplies a stale snapshot.
+This documentation lane records evidence only and does not copy mutable homepage source.
 
-- Product evidence exact: `96c3ba8022816ce0f76f94095af6587675cba6ac`
+- Product evidence exact: `7911416337eab48374637f137a59e91daf43852e`
 - RED contract: `50938ba62ab7ec9fdb35bd77c2cd062a9a387b38`
   found 23 new-tab links but only 21 visual indicators; both omissions were
   primary CTA links.
 - Production repair: `ef9e2bbe62f6259fed114ae0e5933422bfc4f6f0`
   moves CTA translation keys to visible child spans and adds decorative,
   assistive-technology-hidden indicators.
-- Changelog binding and concurrent-regression recovery exact: `96c3ba8022816ce0f76f94095af6587675cba6ac`.
-  A successor deleted both executable contracts, removed the CHANGELOG entry, and
-  reverted the two CTA repairs; three ordinary-forward commits restored the
-  verified blobs without force or discarding the successor's separate metadata.
+- Changelog binding and concurrent-regression recovery exact: `7911416337eab48374637f137a59e91daf43852e`.
+  #268 starts from #265 head `b42b1ced7014598a9b552ff4ef187d2be3f183ce`,
+  preserving its full branch history, then restores the three repeatedly deleted
+  verified blobs ordinary-forward without force or destructive rebase.
 
 | Acceptance dimension | Exact evidence | Status |
 | --- | --- | --- |
@@ -144,8 +145,8 @@ only and does not copy mutable homepage source.
 | Performance | deployed page median/p95 and layout-shift evidence absent | FAIL |
 | Review / hosted gates | current exact-head independent approval and terminal required Checks absent | Pending |
 
-Keep #265 Draft / Proposed. No publication, merge, release, or carryover claim is
-authorized from source-level evidence alone.
+Keep #268 and predecessor #265 Draft / Proposed. #268 is the canonical writer;
+no publication, merge, or release claim is authorized from source-level evidence alone.
 
 ## Standards and evidence
 
