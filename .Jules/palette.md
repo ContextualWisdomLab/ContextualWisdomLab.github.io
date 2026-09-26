@@ -36,3 +36,7 @@
 ## 2026-09-20 - hero section landmark contract
 **Learning:** 기존 테스트는 `id`가 있는 section만 검사해 `id` 없는 hero가 접근성 이름 없이 남는 회귀를 허용했습니다. 임의의 element id가 아니라 실제 heading id와의 관계를 검증해야 합니다.
 **Action:** 모든 homepage section은 정확히 하나의 기존 `<h1>`–`<h6>` id를 `aria-labelledby`로 참조합니다. 실제 브라우저 접근성 트리와 보조기술 검증 전에는 정적 계약을 전달 완료 증거로 표현하지 않습니다.
+
+## 2026-09-20 - hero 섹션에 aria-labelledby 랜드마크 이름 추가
+**학습:** 랜드마크 영역을 스크린 리더에 올바르게 노출하기 위해서는 문서 내 모든 `<section>` 요소에 고유한 접근성 이름(`aria-labelledby`)이 필요하며, 예외적으로 첫 번째(hero) 섹션이라도 누락하면 region으로 탐색되지 않습니다.
+**적용:** 앞으로 모든 `<section>` 태그를 사용할 때는 반드시 내부에 해당하는 제목 요소의 `id`를 `aria-labelledby`로 연결하여 랜드마크 접근성을 보장해야 합니다.

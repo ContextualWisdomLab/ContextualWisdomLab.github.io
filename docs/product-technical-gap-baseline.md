@@ -1,8 +1,8 @@
 # Product and technical gap baseline
 
-Status: **Proposed**  
-Canonical writer: [ContextualWisdomLab.github.io#240](https://github.com/ContextualWisdomLab/ContextualWisdomLab.github.io/pull/240)  
-Evidence ancestor: `818d38088fb22408185a987074161aba9dbb399b` (2026-09-20)  
+Status: **Proposed**
+Canonical writer: [ContextualWisdomLab.github.io#240](https://github.com/ContextualWisdomLab/ContextualWisdomLab.github.io/pull/240)
+Evidence ancestor: `818d38088fb22408185a987074161aba9dbb399b` (2026-09-20)
 Current exact head and hosted evidence are recorded on the PR after every ordinary-forward update.
 
 This document is the buyer-visible design-assurance ledger for the public
