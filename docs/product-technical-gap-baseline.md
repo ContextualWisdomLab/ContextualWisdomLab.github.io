@@ -116,6 +116,34 @@ must not copy another owner's source or query its database.
 | Page performance target is unmeasured | Public Narrative | Measure all pages; repair causal render/runtime bottleneck | Open |
 | Exact-head approval and hosted Checks absent | Repository governance | Preserve Draft until independently satisfied | Open |
 
+## External-link indicator acceptance — #265
+
+Product source remains single-writer #265. This documentation lane records evidence
+only and does not copy mutable homepage source.
+
+- Product evidence exact: `f4945178065f32c44304509a3a4bd5cd430cfcd9`
+- RED contract: `50938ba62ab7ec9fdb35bd77c2cd062a9a387b38`
+  found 23 new-tab links but only 21 visual indicators; both omissions were
+  primary CTA links.
+- Production repair: `ef9e2bbe62f6259fed114ae0e5933422bfc4f6f0`
+  moves CTA translation keys to visible child spans and adds decorative,
+  assistive-technology-hidden indicators.
+- Changelog binding: `f4945178065f32c44304509a3a4bd5cd430cfcd9`.
+
+| Acceptance dimension | Exact evidence | Status |
+| --- | --- | --- |
+| Determinism | 23 `target="_blank"` links / 23 visual indicators | Source GREEN |
+| Locale persistence | translated CTA text is a child span; indicator is a sibling | Source GREEN |
+| Semantics | `aria-describedby` new-window description and hidden decoration remain separate | Source GREEN |
+| Real browser / AT | Chromium, Firefox, WebKit and assistive-technology replay absent | FAIL |
+| Responsive / touch | 320px, 768px, desktop and touch evidence absent | FAIL |
+| Eight locales | ko/en/ja/zh/vi/es/de/fr screenshots and overflow checks absent | FAIL |
+| Performance | deployed page median/p95 and layout-shift evidence absent | FAIL |
+| Review / hosted gates | current exact-head independent approval and terminal required Checks absent | Pending |
+
+Keep #265 Draft / Proposed. No publication, merge, release, or carryover claim is
+authorized from source-level evidence alone.
+
 ## Standards and evidence
 
 - World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines
