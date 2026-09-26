@@ -121,14 +121,14 @@ must not copy another owner's source or query its database.
 Product source remains single-writer #265. This documentation lane records evidence
 only and does not copy mutable homepage source.
 
-- Product evidence exact: `7cda5fe6a4aacef20d6fdca64f75c7ee3ad84535`
+- Product evidence exact: `96c3ba8022816ce0f76f94095af6587675cba6ac`
 - RED contract: `50938ba62ab7ec9fdb35bd77c2cd062a9a387b38`
   found 23 new-tab links but only 21 visual indicators; both omissions were
   primary CTA links.
 - Production repair: `ef9e2bbe62f6259fed114ae0e5933422bfc4f6f0`
   moves CTA translation keys to visible child spans and adds decorative,
   assistive-technology-hidden indicators.
-- Changelog binding and concurrent-regression recovery exact: `7cda5fe6a4aacef20d6fdca64f75c7ee3ad84535`.
+- Changelog binding and concurrent-regression recovery exact: `96c3ba8022816ce0f76f94095af6587675cba6ac`.
   A successor deleted both executable contracts, removed the CHANGELOG entry, and
   reverted the two CTA repairs; three ordinary-forward commits restored the
   verified blobs without force or discarding the successor's separate metadata.
