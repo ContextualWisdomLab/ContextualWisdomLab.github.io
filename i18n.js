@@ -369,10 +369,11 @@ function setLanguage(lang) {
 
   if (!langButtons) {
     langButtons = document.querySelectorAll("[data-lang]");
+    // ⚡ Bolt: Use getElementById instead of querySelector for faster DOM lookup
     metaDesc = document.querySelector('meta[name="description"]');
     ogDesc = document.querySelector('meta[property="og:description"]');
     twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    footerLogo = document.querySelector("#footer-logo");
+    footerLogo = document.getElementById("footer-logo");
   }
 
   if (document.documentElement.lang !== lang) {
