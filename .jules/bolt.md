@@ -20,3 +20,10 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+## 2024-09-27 - Lazy loading images priority
+**Learning:** Adding `fetchpriority="low"` to explicit lazy loaded off-screen images (`loading="lazy"`) acts as a hint to the browser's preload scanner to deprioritize non-critical resources, preventing them from competing with critical resources like the LCP candidate.
+**Action:** Always add `fetchpriority="low"` to explicitly off-screen lazily loaded images alongside `loading="lazy"` and `decoding="async"`.
+
+## 2024-09-27 - DOM selection speed
+**Learning:** `getElementById` is measurably faster than `querySelector('#id')` since it uses a hash map lookup internally rather than invoking the full CSS selector engine. This micro-optimization is suitable for element caching.
+**Action:** Replace `querySelector('#id')` with `getElementById('id')` for single ID lookups to improve initialization speed.

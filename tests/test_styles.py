@@ -71,13 +71,14 @@ def test_eager_images_leave_decoding_to_the_user_agent() -> None:
 
 
 def test_lazy_images_decode_asynchronously() -> None:
-    """Deferred images remain explicitly asynchronous and cannot pass vacuously."""
+    """Deferred images remain explicitly asynchronous and deprioritized."""
     lazy_images = [
         image for image in _homepage_images() if image.get("loading") == "lazy"
     ]
 
     assert lazy_images, "the long homepage must retain deferred images"
     assert all(image.get("decoding") == "async" for image in lazy_images)
+    assert all(image.get("fetchpriority") == "low" for image in lazy_images)
 
 
 def test_lcp_candidate_is_eager_and_high_priority() -> None:
