@@ -185,4 +185,3 @@ Action: keep #267 Draft / Proposed, add an exact mutation-count harness, then
 profile identical browser interactions with stated warm-up, sample size, and
 failure denominator. Source inspection alone must not publish a
 layout-thrashing or paint-improvement claim.
-
