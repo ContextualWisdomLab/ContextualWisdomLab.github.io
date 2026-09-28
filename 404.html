@@ -49,12 +49,13 @@
     </main>
 
     <footer class="site-footer">
+      <!-- ⚡ Bolt: explicitly deprioritize explicitly lazy-loaded images to help preload scanner -->
       <img
         src="assets/context-wisdom-lab-logo.svg"
         alt="맥락지혜 연구실 · Contextual Wisdom Lab"
         width="920"
         height="260"
-        loading="lazy"
+        fetchpriority="low" loading="lazy"
         decoding="async"
       >
       <p>
