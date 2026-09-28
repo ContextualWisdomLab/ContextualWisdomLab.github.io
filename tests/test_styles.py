@@ -161,3 +161,13 @@ def test_button_feedback_preserves_focus_and_reduced_motion() -> None:
     assert reduced_motion is not None
     assert "transition-duration: 0.01ms !important;" in reduced_motion.group("body")
     assert "scroll-behavior: auto !important;" in reduced_motion.group("body")
+
+
+def test_lazy_images_have_low_fetchpriority() -> None:
+    """Deferred images should explicitly signal low fetch priority."""
+    lazy_images = [
+        image for image in _homepage_images() if image.get("loading") == "lazy"
+    ]
+
+    assert lazy_images, "the long homepage must retain deferred images"
+    assert all(image.get("fetchpriority") == "low" for image in lazy_images)
