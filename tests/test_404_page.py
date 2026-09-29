@@ -79,3 +79,15 @@ def test_404_assets_referenced_exist_on_disk() -> None:
     """Local image/icon assets referenced by the 404 page must be present."""
     for asset in re.findall(r'(?:href|src)="(assets/[^"#?]+)"', _page()):
         assert (ROOT / asset).is_file(), f"404.html references missing asset {asset}"
+
+
+def test_external_links_have_visual_indicator() -> None:
+    """Every external link includes a visual indicator (↗) to warn users."""
+    import re
+    html = PAGE.read_text(encoding="utf-8")
+    matches = re.finditer(r'<a[^>]*target="_blank"[^>]*>(.*?)</a>', html, re.DOTALL)
+    for match in matches:
+        content = match.group(1)
+        assert '<span aria-hidden="true">&nbsp;↗</span>' in content, (
+            f"External link content '{content}' is missing the visual indicator"
+        )

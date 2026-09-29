@@ -98,3 +98,19 @@ def test_external_links_keep_opener_and_referrer_policy() -> None:
         assert "noreferrer" in rel_tokens, (
             f"External link {anchor.get('href')} must keep the product referrer policy"
         )
+
+def test_external_links_have_visual_indicator() -> None:
+    """Every external link includes a visual indicator (↗) to warn users."""
+    import re
+    index_html = INDEX.read_text(encoding="utf-8")
+
+    # We want to check that external links in the HTML actually contain the visual indicator span.
+    # We'll use regex to match target="_blank" links and ensure they end with the indicator.
+
+    # Find all anchor tags with target="_blank"
+    matches = re.finditer(r'<a[^>]*target="_blank"[^>]*>(.*?)</a>', index_html, re.DOTALL)
+    for match in matches:
+        content = match.group(1)
+        assert '<span aria-hidden="true">&nbsp;↗</span>' in content, (
+            f"External link content '{content}' is missing the visual indicator"
+        )
