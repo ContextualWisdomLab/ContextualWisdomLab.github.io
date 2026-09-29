@@ -49,6 +49,7 @@
     </main>
 
     <footer class="site-footer">
+      <!-- ⚡ Bolt: Deprioritize off-screen image to improve preload scanner efficiency -->
       <img
         src="assets/context-wisdom-lab-logo.svg"
         alt="맥락지혜 연구실 · Contextual Wisdom Lab"
@@ -56,6 +57,7 @@
         height="260"
         loading="lazy"
         decoding="async"
+        fetchpriority="low"
       >
       <p>
         <span>Founded by</span>
