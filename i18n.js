@@ -21,6 +21,13 @@ const messages = {
     "nav.work": "작업",
     "nav.skipToContent": "본문으로 건너뛰기",
     "common.newTab": "새 창에서 열림",
+    "nav.ariaHome": "Contextual Wisdom Lab 홈",
+    "nav.ariaPrimary": "주 탐색",
+    "nav.ariaLanguage": "언어",
+    "hero.ariaActions": "홈페이지 작업",
+    "ladder.ariaList": "데이터에서 지혜로 가는 단계",
+    "nav.ariaIntro": "소개 탐색",
+
     "hero.title": "맥락지혜 연구실",
     "hero.labName": "Contextual Wisdom Lab",
     "hero.thesis": "구슬이 서 말이어도 꿰어야 보배이듯, 문서, 메일, 로그, 회의록을 맥락 안에서 엮어 사람이 무엇을 결정하고 무엇을 실행할지 보이게 하는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
@@ -180,6 +187,13 @@ const messages = {
     "nav.work": "Work",
     "nav.skipToContent": "Skip to main content",
     "common.newTab": "Opens in a new window",
+    "nav.ariaHome": "Contextual Wisdom Lab home",
+    "nav.ariaPrimary": "Primary navigation",
+    "nav.ariaLanguage": "Language",
+    "hero.ariaActions": "Homepage actions",
+    "ladder.ariaList": "Data to wisdom ladder",
+    "nav.ariaIntro": "Introduction navigation",
+
     "hero.title": "Contextual Wisdom Lab",
     "hero.labName": "Research Lab",
     "hero.thesis": "A research lab building AI decision support systems. Even a heap of beads becomes treasure only when threaded; we compose context across documents, mail, logs, and meeting notes so people can see what to decide and what to do next.",
@@ -406,7 +420,7 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title], [data-i18n-aria-label]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
@@ -423,6 +437,13 @@ function setLanguage(lang) {
           node.setAttribute("title", newTitle);
         }
       }
+      if (node.hasAttribute("data-i18n-aria-label")) {
+        const newAriaLabel = dict[node.getAttribute("data-i18n-aria-label")];
+        if (newAriaLabel && node.getAttribute("aria-label") !== newAriaLabel) {
+          node.setAttribute("aria-label", newAriaLabel);
+        }
+      }
+
     });
   }
 
