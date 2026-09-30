@@ -80,6 +80,17 @@ def test_lazy_images_decode_asynchronously() -> None:
     assert all(image.get("decoding") == "async" for image in lazy_images)
 
 
+def test_lazy_images_are_deprioritized() -> None:
+    """Deferred images explicitly lower their fetch priority for the preload scanner."""
+    lazy_images = [
+        image for image in _homepage_images() if image.get("loading") == "lazy"
+    ]
+
+    assert lazy_images, "the long homepage must retain deferred images"
+    assert all(image.get("fetchpriority") == "low" for image in lazy_images)
+
+
+
 def test_lcp_candidate_is_eager_and_high_priority() -> None:
     """The declared LCP candidate is eager without a forced decode strategy."""
     lcp_candidates = [
