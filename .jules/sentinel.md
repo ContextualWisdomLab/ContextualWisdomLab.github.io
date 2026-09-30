@@ -52,3 +52,7 @@
 **Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
 **Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
 **Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
+## 2026-08-30 - 브라우저 API 환경 검증을 통한 가용성 확보 (krds-gallery)
+**Vulnerability:** 컴포넌트 갤러리 스크립트(`components/krds-gallery.js`)에서 환경 검증(예: `typeof document !== 'undefined'`) 없이 브라우저 전용 API(`document`)에 전역 수준에서 접근할 경우, 비브라우저 환경(Node.js 등)이나 SSR 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 가용성 문제가 있었습니다.
+**Learning:** `i18n.js`와 마찬가지로 모든 정적 유틸리티/UI 스크립트는 렌더링 컨텍스트 검증 없이 브라우저 API에 접근하면 안 됩니다. Fail securely 원칙에 따라, 런타임 환경에서 해당 객체가 정의되어 있는지 항상 확인해야 합니다.
+**Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof document !== 'undefined'` 와 같은 환경 검증 검사를 추가하여 예측 불가능한 환경에서도 스크립트 가용성을 보호해야 합니다.
