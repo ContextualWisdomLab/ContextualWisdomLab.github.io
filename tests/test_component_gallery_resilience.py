@@ -273,3 +273,19 @@ assertState(0);
 '''
     completed = _run_gallery_harness(harness)
     assert completed.returncode == 0, completed.stderr
+
+
+def test_gallery_environment_validation() -> None:
+    """Executing the script in a non-browser context must not throw."""
+    harness = r'''
+const fs = require("node:fs");
+const script = fs.readFileSync(0, "utf8");
+
+global.window = undefined;
+global.document = undefined;
+global.navigator = undefined;
+
+eval(script);
+'''
+    completed = _run_gallery_harness(harness)
+    assert completed.returncode == 0, completed.stderr
