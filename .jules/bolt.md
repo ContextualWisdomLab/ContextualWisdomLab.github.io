@@ -20,3 +20,7 @@
 ## 2026-08-08 - 애니메이션 성능을 위해 top/left 대신 transform 사용
 **Learning:** 이 skip-link 전환을 `top`에서 `transform`으로 바꾸면 애니메이션 중 레이아웃 재계산을 피하는 데 유리합니다. 개발자 도구에서 이 전환의 Layout 이벤트가 관찰되지 않았지만, 브라우저·장치별 GPU 가속이나 메인 스레드 비용 0ms를 보장하지는 않습니다.
 **Action:** 레이아웃 속성 대신 `transform` 전환을 우선 검토하고, 성능 효과는 브라우저별 측정으로 확인하며 절대적인 GPU·비용 보장으로 기록하지 않습니다.
+
+## 2024-10-01 - Add fetchpriority="low" to explicitly lazy-loaded images
+**학습:** Explicitly lazy-loaded off-screen images (`loading="lazy"`) can still be eagerly queued by the browser's preload scanner if they are discovered early in the HTML document. While they won't block the main thread, they can compete for early network resources with higher priority assets.
+**적용:** Added `fetchpriority="low"` to all images with `loading="lazy"` to explicitly tell the browser's preload scanner to deprioritize these off-screen resources, further optimizing the load path for critical assets.
