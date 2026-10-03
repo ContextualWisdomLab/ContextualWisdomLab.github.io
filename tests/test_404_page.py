@@ -79,3 +79,24 @@ def test_404_assets_referenced_exist_on_disk() -> None:
     """Local image/icon assets referenced by the 404 page must be present."""
     for asset in re.findall(r'(?:href|src)="(assets/[^"#?]+)"', _page()):
         assert (ROOT / asset).is_file(), f"404.html references missing asset {asset}"
+
+def test_404_external_links_have_static_accessible_warning() -> None:
+    """Script-free new-window links expose a static in-document warning."""
+    html = _page()
+    assert r"<body>\n" not in html
+    assert (
+        '<span id="new-window-desc" class="visually-hidden">'
+        "새 창에서 열림</span>"
+    ) in html
+
+    external_links = re.findall(
+        r'<a\b[^>]*\btarget="_blank"[^>]*>',
+        html,
+        flags=re.IGNORECASE,
+    )
+    assert external_links, "404 page must contain at least one new-window link"
+    for link in external_links:
+        assert 'aria-describedby="new-window-desc"' in link
+        assert 'title="새 창에서 열림"' in link
+        assert "data-i18n-title=" not in link
+
