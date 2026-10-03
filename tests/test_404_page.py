@@ -83,6 +83,7 @@ def test_404_assets_referenced_exist_on_disk() -> None:
 def test_404_external_links_have_static_accessible_warning() -> None:
     """Script-free new-window links expose a static in-document warning."""
     html = _page()
+    assert r"<body>\n" not in html
     assert (
         '<span id="new-window-desc" class="visually-hidden">'
         "새 창에서 열림</span>"
