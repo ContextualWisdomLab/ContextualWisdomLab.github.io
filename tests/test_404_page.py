@@ -79,3 +79,17 @@ def test_404_assets_referenced_exist_on_disk() -> None:
     """Local image/icon assets referenced by the 404 page must be present."""
     for asset in re.findall(r'(?:href|src)="(assets/[^"#?]+)"', _page()):
         assert (ROOT / asset).is_file(), f"404.html references missing asset {asset}"
+
+def test_404_external_links_reference_the_new_window_description() -> None:
+    """External links on the 404 page must point to a new-window description."""
+    html = _page()
+    assert '<span id="new-window-desc"' in html, "404 page must contain new-window description"
+
+    # Check that external links have aria-describedby and title
+    # There should be exactly two external links on this page
+    external_links = re.findall(r'<a[^>]+target="_blank"[^>]+>', html)
+    assert len(external_links) == 2, "Expected 2 external links on the 404 page"
+
+    for link in external_links:
+        assert 'aria-describedby="new-window-desc"' in link, f"Missing aria-describedby in external link: {link}"
+        assert 'title="새 창에서 열림"' in link, f"Missing Korean title in external link: {link}"
