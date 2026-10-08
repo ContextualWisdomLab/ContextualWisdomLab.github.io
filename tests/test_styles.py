@@ -78,6 +78,7 @@ def test_lazy_images_decode_asynchronously() -> None:
 
     assert lazy_images, "the long homepage must retain deferred images"
     assert all(image.get("decoding") == "async" for image in lazy_images)
+    assert all(image.get("fetchpriority") == "low" for image in lazy_images)
 
 
 def test_lcp_candidate_is_eager_and_high_priority() -> None:
