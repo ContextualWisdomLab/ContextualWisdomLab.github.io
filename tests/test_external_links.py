@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
+PAGE404 = ROOT / "404.html"
 I18N = ROOT / "i18n.js"
 
 DESC_ID = "new-window-desc"
@@ -38,6 +39,12 @@ def _parse_index() -> _LinkParser:
     assert parser.links, "homepage must contain at least one anchor"
     return parser
 
+def _parse_404() -> _LinkParser:
+    parser = _LinkParser()
+    parser.feed(PAGE404.read_text(encoding="utf-8"))
+    assert parser.links, "404 page must contain at least one anchor"
+    return parser
+
 
 def _external_links(parser: _LinkParser) -> list[dict[str, str | None]]:
     external = [a for a in parser.links if a.get("target") == "_blank"]
@@ -47,28 +54,26 @@ def _external_links(parser: _LinkParser) -> list[dict[str, str | None]]:
 
 def test_external_links_reference_the_new_window_description() -> None:
     """Every external link points at the shared visually hidden warning."""
-    parser = _parse_index()
-
-    assert DESC_ID in parser.ids, (
-        f"homepage must define the #{DESC_ID} description element"
-    )
-    for anchor in _external_links(parser):
-        assert anchor.get("aria-describedby") == DESC_ID, (
-            f"External link {anchor.get('href')} must reference #{DESC_ID}"
+    for p_name, parser in [("homepage", _parse_index()), ("404 page", _parse_404())]:
+        assert DESC_ID in parser.ids, (
+            f"{p_name} must define the #{DESC_ID} description element"
         )
+        for anchor in _external_links(parser):
+            assert anchor.get("aria-describedby") == DESC_ID, (
+                f"External link {anchor.get('href')} in {p_name} must reference #{DESC_ID}"
+            )
 
 
 def test_external_links_keep_the_localized_title() -> None:
     """The title stays as supplemental hover metadata in both locales."""
-    parser = _parse_index()
-
-    for anchor in _external_links(parser):
-        assert anchor.get("title") == EXPECTED["title"], (
-            f"External link {anchor.get('href')} is missing the Korean title"
-        )
-        assert anchor.get("data-i18n-title") == EXPECTED["key"], (
-            f"External link {anchor.get('href')} is missing data-i18n-title"
-        )
+    for p_name, parser in [("homepage", _parse_index()), ("404 page", _parse_404())]:
+        for anchor in _external_links(parser):
+            assert anchor.get("title") == EXPECTED["title"], (
+                f"External link {anchor.get('href')} in {p_name} is missing the Korean title"
+            )
+            assert anchor.get("data-i18n-title") == EXPECTED["key"], (
+                f"External link {anchor.get('href')} in {p_name} is missing data-i18n-title"
+            )
 
 
 def test_i18n_has_new_tab_translation() -> None:
@@ -88,13 +93,12 @@ def test_visually_hidden_class_is_defined() -> None:
 
 def test_external_links_keep_opener_and_referrer_policy() -> None:
     """Every new-context link retains explicit opener isolation and referrer policy."""
-    parser = _parse_index()
-
-    for anchor in _external_links(parser):
-        rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
-        assert "noopener" in rel_tokens, (
-            f"External link {anchor.get('href')} must keep opener isolation"
-        )
-        assert "noreferrer" in rel_tokens, (
-            f"External link {anchor.get('href')} must keep the product referrer policy"
-        )
+    for p_name, parser in [("homepage", _parse_index()), ("404 page", _parse_404())]:
+        for anchor in _external_links(parser):
+            rel_tokens = {token.lower() for token in (anchor.get("rel") or "").split()}
+            assert "noopener" in rel_tokens, (
+                f"External link {anchor.get('href')} in {p_name} must keep opener isolation"
+            )
+            assert "noreferrer" in rel_tokens, (
+                f"External link {anchor.get('href')} in {p_name} must keep the product referrer policy"
+            )
