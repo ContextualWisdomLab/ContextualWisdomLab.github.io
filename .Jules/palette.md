@@ -32,3 +32,7 @@
 ## 2026-08-22 - Add aria-labelledby to section landmarks
 **Learning:** `<section>`은 접근성 이름이 있을 때만 `region` 랜드마크로 노출되고, 이름이 없으면 `generic`으로 매핑되어 화면 탐색 랜드마크 목록에 나타나지 않습니다. `id` 속성만으로는 부족합니다.
 **Action:** `<section>`에는 고유한 `id`를 가진 내부 헤딩(`<h2>`)을 `aria-labelledby`로 참조시켜 접근성 이름을 부여합니다. 회귀 테스트가 참조 대상 id의 실재 여부와 아이디가 있는 모든 섹션의 레이블링을 검증합니다.
+
+## 2024-10-09 - Naruon Naruon 404 페이지의 외부 링크에 다국어 title 속성 추가
+**학습:** 외부 링크에 '새 창에서 열림'을 안내하는 속성이 index.html에는 적용되어 있었으나 404.html에는 누락되어 있었습니다.
+**적용:** 404.html의 외부 링크에도 aria-describedby와 data-i18n-title을 포함하여 스크린 리더와 다국어 전환 기능을 모두 지원하도록 수정해야 합니다.
