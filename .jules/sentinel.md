@@ -52,3 +52,7 @@
 **Vulnerability:** 공유 유틸리티 스크립트(`i18n.js`)에서 환경 검증(예: `typeof window !== 'undefined'`) 없이 브라우저 전용 API(`window`, `localStorage`, `document`, `navigator`)에 접근할 경우, SSR(Server-Side Rendering) 환경이나 비브라우저 환경에서 실행 시 처리되지 않은 예외(Unhandled Exception)가 발생하여 스크립트 실행이 중단되는 가용성 문제가 있었습니다.
 **Learning:** 정적 사이트라 하더라도 유틸리티 스크립트가 다양한 렌더링 컨텍스트(예: 빌드 단계, 테스트 환경, 추후 SSR 도입 시 등)에서 호출될 수 있으므로, 방어적 프로그래밍 관점에서 외부 API 호출 전에는 반드시 환경 컨텍스트를 검증해야 함을 확인했습니다.
 **Prevention:** 브라우저 전역 객체에 접근하기 전에 항상 `typeof window !== 'undefined'` 와 같은 환경 검증 검사를 추가하여(fail securely 원칙 준수) 예측 불가능한 환경에서도 애플리케이션의 가용성을 보호해야 합니다.
+## 2026-10-10 - 404.html 외부 링크 새 탭 접근성 및 다국어 속성 누락 수정
+**Vulnerability:** 404 페이지 내의 외부 링크(GitHub 등)에 접근성 향상을 위한 title과 aria-describedby 속성이 누락되어 다국어 전환 및 스크린리더 지원이 부족했음을 확인했습니다.
+**Learning:** 정적인 title 속성을 사용할 경우 다국어 전환 시 반영되지 않으며, aria-describedby 속성이 누락되어 스크린 리더 사용자에게 새 창 열림을 알리지 못합니다.
+**Prevention:** 404.html 내의 모든 target="_blank" 링크에 index.html과 동일한 수준의 속성(aria-describedby, title, data-i18n-title)을 적용하고 공통 visually-hidden 요소를 추가해야합니다.
