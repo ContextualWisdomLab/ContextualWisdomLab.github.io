@@ -4,6 +4,14 @@ const messages = {
     "nav.langKoTitle": "한국어로 보기",
     "nav.langEnTitle": "View in English",
     metaDescription: "맥락지혜 연구실은 흩어진 기업 자료를 맥락 안에서 판단 가능한 구조로 바꾸는 AI 의사결정 지원 시스템을 연구하고 만듭니다.",
+    "aria.home": "Contextual Wisdom Lab 홈",
+    "aria.primaryNav": "주요 내비게이션",
+    "aria.language": "언어",
+    "aria.langKo": "한국어",
+    "aria.langEn": "English",
+    "aria.heroActions": "홈페이지 액션",
+    "aria.ladder": "데이터에서 지혜로 넘어가는 단계",
+    "aria.introLnb": "소개 내비게이션",
     logoSrc: "assets/context-wisdom-lab-logo.svg",
     logoAlt: "맥락지혜 연구실 · Contextual Wisdom Lab",
     "nav.intro": "소개",
@@ -163,6 +171,14 @@ const messages = {
     "nav.langKoTitle": "View in Korean",
     "nav.langEnTitle": "View in English",
     metaDescription: "A research lab building AI decision support systems that connect scattered enterprise material into judgment inside concrete contexts.",
+    "aria.home": "Contextual Wisdom Lab home",
+    "aria.primaryNav": "Primary navigation",
+    "aria.language": "Language",
+    "aria.langKo": "한국어",
+    "aria.langEn": "English",
+    "aria.heroActions": "Homepage actions",
+    "aria.ladder": "Data to wisdom ladder",
+    "aria.introLnb": "Introduction navigation",
     logoSrc: "assets/context-wisdom-lab-logo-en.svg",
     logoAlt: "Contextual Wisdom Lab",
     "nav.intro": "Intro",
@@ -406,7 +422,7 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title], [data-i18n-aria-label]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
@@ -421,6 +437,12 @@ function setLanguage(lang) {
         const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
+        }
+      }
+      if (node.hasAttribute("data-i18n-aria-label")) {
+        const newAriaLabel = dict[node.getAttribute("data-i18n-aria-label")];
+        if (newAriaLabel && node.getAttribute("aria-label") !== newAriaLabel) {
+          node.setAttribute("aria-label", newAriaLabel);
         }
       }
     });
