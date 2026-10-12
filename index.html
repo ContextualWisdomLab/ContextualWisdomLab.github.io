@@ -32,7 +32,9 @@
     >
     <meta name="twitter:image" content="https://contextualwisdomlab.github.io/assets/context-wisdom-lab-avatar.png">
     <link rel="canonical" href="https://contextualwisdomlab.github.io/"> <!-- nosemgrep: html.security.audit.missing-integrity.missing-integrity - SRI does not apply: rel=canonical is a metadata relation, not a fetched subresource -->
-    <link rel="icon" href="assets/context-wisdom-lab-avatar.png">
+    <!-- ⚡ Bolt: Use SVG favicon to reduce initial download size (1.5KB vs 84KB) -->
+    <link rel="icon" href="assets/context-wisdom-lab-avatar.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/context-wisdom-lab-avatar.png" sizes="1024x1024">
     <link rel="apple-touch-icon" href="assets/context-wisdom-lab-avatar.png">
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#16263d">
