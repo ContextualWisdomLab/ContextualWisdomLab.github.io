@@ -19,6 +19,12 @@ const messages = {
     "nav.forks": "Fork",
     "nav.references": "참고문헌",
     "nav.work": "작업",
+    "nav.home": "맥락지혜 연구실 홈",
+    "nav.primary": "주요 탐색",
+    "nav.language": "언어",
+    "hero.actions": "홈페이지 작업",
+    "ladder.list": "데이터에서 지혜로 가는 단계",
+    "nav.introLnb": "소개 탐색",
     "nav.skipToContent": "본문으로 건너뛰기",
     "common.newTab": "새 창에서 열림",
     "hero.title": "맥락지혜 연구실",
@@ -178,6 +184,12 @@ const messages = {
     "nav.forks": "Forks",
     "nav.references": "References",
     "nav.work": "Work",
+    "nav.home": "Contextual Wisdom Lab home",
+    "nav.primary": "Primary navigation",
+    "nav.language": "Language",
+    "hero.actions": "Homepage actions",
+    "ladder.list": "Data to wisdom ladder",
+    "nav.introLnb": "Introduction navigation",
     "nav.skipToContent": "Skip to main content",
     "common.newTab": "Opens in a new window",
     "hero.title": "Contextual Wisdom Lab",
@@ -406,7 +418,7 @@ function setLanguage(lang) {
 
   if (!isInitialDefault) {
     if (!i18nNodes) {
-      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title]");
+      i18nNodes = document.querySelectorAll("[data-i18n], [data-i18n-title], [data-i18n-aria-label]");
     }
 
     // Only update textContent if it actually changed to avoid layout recalculations
@@ -421,6 +433,12 @@ function setLanguage(lang) {
         const newTitle = dict[node.getAttribute("data-i18n-title")];
         if (newTitle && node.getAttribute("title") !== newTitle) {
           node.setAttribute("title", newTitle);
+        }
+      }
+      if (node.hasAttribute("data-i18n-aria-label")) {
+        const newAriaLabel = dict[node.getAttribute("data-i18n-aria-label")];
+        if (newAriaLabel && node.getAttribute("aria-label") !== newAriaLabel) {
+          node.setAttribute("aria-label", newAriaLabel);
         }
       }
     });
